@@ -25,6 +25,7 @@ import type { CartItem, Product } from "./types";
 import { asset } from "./lib/utils";
 import { Clients } from "./components/CompanySections";
 import { Footer } from "./components/Footer";
+import { InkRain } from "./components/InkRain";
 import { useScrollReveal } from "./hooks/useScrollReveal";
 const categories = [
   ["Digital printing", "product-p78.webp", "Printing Products"],
@@ -103,61 +104,72 @@ export function App() {
           </a>
         </div>
       </div>
-      <header className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-4">
-        <a href="#home">
-          <img
-            src={asset("assets/logo.png")}
-            alt="PHULO Multi Graphics"
-            className="h-24 w-44 object-contain"
-          />
-        </a>
-        <p className="hidden text-lg font-medium text-slate-600 lg:block">
-          Print. Personalise. Inspire.
-        </p>
-        <div className="flex flex-wrap items-center gap-2">
-          {auth.user ? (
-            <>
-              <Button variant="ghost" size="sm" asChild>
-                <a href="#account">
-                  <UserRound size={20} />
-                  <span className="hidden sm:inline">{auth.user.name}</span>
-                </a>
-              </Button>
-              {auth.user.role === "admin" && (
+      <header className="print-header">
+        <InkRain />
+        <div className="header-content relative z-10 mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 pt-5 pb-10">
+          <a
+            href="#home"
+            className="header-logo rounded-xl bg-white/85 px-3 py-1"
+          >
+            <img
+              src={asset("assets/logo.png")}
+              alt="PHULO Multi Graphics"
+              className="h-24 w-44 object-contain"
+            />
+          </a>
+          <p className="header-tagline hidden rounded-full bg-white/90 px-6 py-3 text-xl font-semibold lg:block">
+            <span>Print.</span> <span>Personalise.</span> <span>Inspire.</span>
+          </p>
+          <div className="header-actions flex flex-wrap items-center gap-3">
+            {auth.user ? (
+              <>
                 <Button variant="ghost" size="sm" asChild>
-                  <a href="#admin">
-                    <ShieldCheck size={20} />
-                    Admin
+                  <a href="#account">
+                    <UserRound size={20} />
+                    <span className="hidden sm:inline">{auth.user.name}</span>
                   </a>
                 </Button>
-              )}
+                {auth.user.role === "admin" && (
+                  <Button variant="ghost" size="sm" asChild>
+                    <a href="#admin">
+                      <ShieldCheck size={20} />
+                      Admin
+                    </a>
+                  </Button>
+                )}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={logout}
+                  aria-label="Sign out"
+                >
+                  <LogOut size={20} />
+                </Button>
+              </>
+            ) : (
               <Button
-                variant="ghost"
-                size="icon"
-                onClick={logout}
-                aria-label="Sign out"
+                className="header-signin"
+                size="sm"
+                onClick={() => setAuthOpen(true)}
+                disabled={auth.loading}
               >
-                <LogOut size={20} />
+                <UserRound size={20} />
+                {auth.loading ? "Checking…" : "Sign in"}
               </Button>
-            </>
-          ) : (
+            )}
             <Button
-              variant="ghost"
+              className="header-order"
+              variant="outline"
               size="sm"
-              onClick={() => setAuthOpen(true)}
-              disabled={auth.loading}
+              onClick={() => setCartOpen(true)}
             >
-              <UserRound size={20} />
-              {auth.loading ? "Checking…" : "Sign in"}
+              <ShoppingBag size={20} />
+              <span>My order</span>
+              <span className="flex size-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
+                {cart.reduce((s, i) => s + i.quantity, 0)}
+              </span>
             </Button>
-          )}
-          <Button variant="outline" size="sm" onClick={() => setCartOpen(true)}>
-            <ShoppingBag size={20} />
-            <span className="hidden sm:inline">My order</span>
-            <span className="rounded bg-slate-100 px-1.5 text-sm text-primary">
-              {cart.reduce((s, i) => s + i.quantity, 0)}
-            </span>
-          </Button>
+          </div>
         </div>
       </header>
       <nav
