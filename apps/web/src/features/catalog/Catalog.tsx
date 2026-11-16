@@ -5,11 +5,8 @@ import {
   ChevronRight,
   Heart,
   Printer,
-  Gift,
   Palette,
-  Image,
   Sparkles,
-  Layers,
 } from "lucide-react";
 import { useApiQuery } from "../../hooks/useApiQuery";
 import { useDebouncedValue } from "../../hooks/useDebouncedValue";
@@ -19,26 +16,18 @@ import { Loading, ErrorState, Empty } from "../../components/Feedback";
 import type { Product } from "../../types";
 import { money } from "../../lib/utils";
 import { Artwork } from "./Artwork";
-const groupIcons = [Layers, Printer, Gift, Palette, Image];
-const groups = [
-  "All products",
-  "Printing Products",
-  "Gifting Items",
-  "Customised Products",
-  "Image Library",
-] as const;
 interface Props {
   group: string;
   onOpen: (p: Product) => void;
-  onGroup: (group: string) => void;
 }
-export function Catalog({ group, onOpen, onGroup }: Props) {
+export function Catalog({ group, onOpen }: Props) {
   const [search, setSearch] = useState(""),
     [category, setCategory] = useState(""),
     [sort, setSort] = useState("featured"),
     [page, setPage] = useState(1),
     [wishes, setWishes] = useState<string[]>([]);
   const query = useDebouncedValue(search);
+  useEffect(() => setCategory(""), [group]);
   useEffect(() => setPage(1), [query, category, sort, group]);
   const params = new URLSearchParams({
     page: String(page),
@@ -120,27 +109,6 @@ export function Catalog({ group, onOpen, onGroup }: Props) {
             <Palette size={22} /> A little more colour.
           </div>
         </div>
-      </div>
-      <div className="collection-tabs mb-5 flex flex-wrap gap-3">
-        {groups.map((g, index) => {
-          const Icon = groupIcons[index]!;
-          return (
-            <Button
-              key={g}
-              variant={group === g ? "default" : "outline"}
-              size="sm"
-              className="collection-tab"
-              aria-pressed={group === g}
-              onClick={() => {
-                setCategory("");
-                onGroup(g);
-              }}
-            >
-              <Icon size={20} />
-              {g}
-            </Button>
-          );
-        })}
       </div>
       <div className="mb-7 grid gap-3 rounded-2xl border border-cyan-100 bg-[#edf6fc] p-4 sm:grid-cols-[1fr_1fr_auto]">
         <div className="relative">

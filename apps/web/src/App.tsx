@@ -160,16 +160,21 @@ export function App() {
           </Button>
         </div>
       </header>
-      <nav className="border-y border-slate-200 bg-white sticky top-0 z-30 shadow-sm">
-        <div className="mx-auto flex max-w-7xl items-center gap-5 overflow-x-auto px-5 text-sm whitespace-nowrap">
+      <nav
+        aria-label="Main navigation"
+        className="colour-nav sticky top-0 z-30 shadow-md"
+      >
+        <div className="nav-row mx-auto flex max-w-7xl flex-nowrap items-center gap-2 overflow-x-auto px-5 py-2 text-sm whitespace-nowrap">
           <Button
-            className="my-0 h-12 rounded-none"
+            className="nav-categories my-0 h-12 rounded-xl"
             onClick={() => browse("All products")}
           >
             <Menu size={20} />
             All categories
           </Button>
-          <a href="#home">Home</a>
+          <a href="#home" aria-current={isHome ? "page" : undefined}>
+            Home
+          </a>
           {[
             "Printing Products",
             "Gifting Items",
@@ -179,17 +184,25 @@ export function App() {
             <button
               key={g}
               className={
-                "py-4 " +
+                "nav-item " +
                 (route === "catalog" && group === g
                   ? "font-bold text-primary"
                   : "")
+              }
+              aria-current={
+                route === "catalog" && group === g ? "page" : undefined
               }
               onClick={() => browse(g)}
             >
               {g}
             </button>
           ))}
-          <a href="#contact">Contact us</a>
+          <a
+            href="#contact"
+            aria-current={route === "contact" ? "page" : undefined}
+          >
+            Contact us
+          </a>
         </div>
       </nav>
       <main id="main-content" tabIndex={-1}>
@@ -323,11 +336,7 @@ export function App() {
           </>
         )}
         {(isHome || route === "catalog") && (
-          <Catalog
-            group={group}
-            onGroup={setGroup}
-            onOpen={(p) => setSelected(p)}
-          />
+          <Catalog group={group} onOpen={(p) => setSelected(p)} />
         )}{" "}
         {route === "account" && <Account onSignIn={() => setAuthOpen(true)} />}{" "}
         {route === "admin" && <Admin />}

@@ -143,40 +143,6 @@
 .collection-title {
   animation: title-enter 0.45s ease-out both;
 }
-.collection-tab {
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s,
-    background-color 0.2s;
-}
-.collection-tab:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 7px 16px #10375915;
-}
-.collection-tab[aria-pressed="true"] {
-  background: #103759;
-  border-bottom: 3px solid #12c9ed;
-}
-.collection-tab:nth-child(2)[aria-pressed="false"] {
-  background: #e0f7ff;
-  border-color: #9bd8ec;
-  color: #103759;
-}
-.collection-tab:nth-child(3)[aria-pressed="false"] {
-  background: #ffedf6;
-  border-color: #efb5d4;
-  color: #7c164f;
-}
-.collection-tab:nth-child(4)[aria-pressed="false"] {
-  background: #fff4cc;
-  border-color: #e8cd70;
-  color: #604800;
-}
-.collection-tab:nth-child(5)[aria-pressed="false"] {
-  background: #efeaff;
-  border-color: #cebef0;
-  color: #4d287d;
-}
 @keyframes ink-float {
   0%,
   100% {
@@ -253,4 +219,70 @@
 .site-footer nav button:hover,
 .footer-contact-link:hover {
   color: #b91c70;
+}
+
+.colour-nav {
+  background: linear-gradient(100deg, #e3f8ff, #fff0f7 55%, #fff5d4);
+  border-block: 1px solid #dfddec;
+}
+.nav-row {
+  scrollbar-width: thin;
+  scrollbar-color: #99bacb transparent;
+}
+.nav-row > a,
+.nav-row > .nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  flex-shrink: 0;
+  padding: 12px 15px;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #103759;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.nav-row > a::after,
+.nav-row > .nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  left: 20%;
+  right: 20%;
+  height: 3px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #0098bd, #c62679, #dbab09);
+  transform: scaleX(0);
+  transition: transform 0.25s;
+}
+.nav-row > a:hover,
+.nav-row > .nav-item:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px #10375912;
+}
+.nav-row > [aria-current="page"] {
+  background: #fff;
+  color: #9f175e;
+}
+.nav-row > a:hover::after,
+.nav-row > .nav-item:hover::after,
+.nav-row > [aria-current="page"]::after {
+  transform: scaleX(1);
+}
+.nav-categories {
+  background: linear-gradient(110deg, #103759, #13677d);
+  box-shadow: 0 4px 10px #10375920;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.nav-categories:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px #10375935;
 }
