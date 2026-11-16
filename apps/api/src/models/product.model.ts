@@ -15,6 +15,15 @@ const schema = new Schema(
       ],
       index: true,
     },
+    sourceOrder: { type: Number, min: 0, default: 100000 },
+    sourceProductId: { type: Number, min: 1 },
+    sourceVersion: { type: String },
+    categoryIds: {
+      type: [Number],
+      default: [],
+      validate: (ids: number[]) => ids.length <= 16,
+    },
+    priceDisplay: { type: String, maxlength: 250, default: "" },
     price: { type: Number, min: 0, default: null },
     unit: { type: String, required: true, maxlength: 30, default: "item" },
     description: { type: String, maxlength: 2000, default: "" },
@@ -40,6 +49,7 @@ const schema = new Schema(
   { timestamps: true, strict: "throw" },
 );
 schema.index({ published: 1, group: 1, createdAt: -1 });
+schema.index({ published: 1, categoryIds: 1 });
 export const Product = model("Product", schema);
 export function productDto(p: any) {
   return {
@@ -48,6 +58,9 @@ export function productDto(p: any) {
     title: p.title,
     category: p.category,
     group: p.group,
+    sourceProductId: p.sourceProductId,
+    categoryIds: p.categoryIds,
+    priceDisplay: p.priceDisplay,
     price: p.price,
     unit: p.unit,
     description: p.description,

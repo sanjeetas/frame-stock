@@ -27,6 +27,7 @@ export const productQuery = pagination
   .extend({
     search: z.string().trim().max(100).optional(),
     category: z.string().max(100).optional(),
+    categoryId: z.coerce.number().int().positive().optional(),
     group: z
       .enum([
         "Printing Products",
@@ -59,6 +60,10 @@ export const productBody = z
       "Customised Products",
       "Image Library",
     ]),
+    sourceOrder: z.number().int().min(0).optional(),
+    sourceProductId: z.number().int().positive().optional(),
+    categoryIds: z.array(z.number().int().positive()).max(16).optional(),
+    priceDisplay: z.string().max(250).optional(),
     price: z.number().min(0).max(1e8).nullable(),
     unit: z.string().trim().min(1).max(30),
     description: z.string().max(2000).default(""),

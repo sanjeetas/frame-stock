@@ -32,6 +32,7 @@ export function resourceRoutes(auth: AuthService, config: Config) {
       },
     },
   });
+  r.get("/categories", catalog.categories);
   r.get("/products", validate({ query: s.productQuery }), catalog.list);
   r.get("/products/:id", validate({ params: s.idParams }), catalog.get);
   r.use("/orders", identity);

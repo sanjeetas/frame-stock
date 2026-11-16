@@ -5,7 +5,6 @@ import {
   UserRound,
   LogOut,
   ShieldCheck,
-  Menu,
   Phone,
   CheckCircle2,
   Clock3,
@@ -21,22 +20,26 @@ import { Account } from "./features/orders/Account";
 import { Admin } from "./features/admin/Admin";
 import { Button } from "./components/ui/button";
 import { ErrorState } from "./components/Feedback";
-import type { CartItem, Product } from "./types";
+import type { CartItem, Product, Category } from "./types";
 import { asset } from "./lib/utils";
 import { Clients } from "./components/CompanySections";
 import { Footer } from "./components/Footer";
 import { InkRain } from "./components/InkRain";
+import { Navigation } from "./components/Navigation";
+import { useApiQuery } from "./hooks/useApiQuery";
 import { useScrollReveal } from "./hooks/useScrollReveal";
 const categories = [
-  ["Digital printing", "product-p78.webp", "Printing Products"],
-  ["Signage & boards", "product-p6.webp", "Printing Products"],
-  ["Customised products", "product-p45.webp", "Customised Products"],
-  ["Gifting items", "product-p42.webp", "Gifting Items"],
-  ["Image library", "library-samples.svg", "Image Library"],
-  ["Rollups & standees", "product-p24.webp", "Printing Products"],
+  ["Digital printing", "product-p78.webp", "All products", "220"],
+  ["Signage & boards", "product-p6.webp", "All products", "219"],
+  ["Customised products", "product-p45.webp", "All products", "228"],
+  ["Gifting items", "product-p42.webp", "All products", "227"],
+  ["Image library", "library-samples.svg", "All products", "203"],
+  ["Rollups & standees", "product-p24.webp", "All products", "223"],
 ];
 export function App() {
   useScrollReveal();
+  const taxonomy = useApiQuery<Category[]>("/categories");
+  const [categoryId, setCategoryId] = useState("");
   const auth = useAuth(),
     [route, setRoute] = useState(location.hash.slice(1) || "home"),
     [group, setGroup] = useState("All products"),
@@ -60,8 +63,9 @@ export function App() {
       return () => clearTimeout(t);
     }
   }, [notice]);
-  function browse(g: string) {
+  function browse(g: string, category?: string) {
     setGroup(g);
+    setCategoryId(category || "");
     location.hash = "catalog";
     if (route === "catalog")
       document
@@ -118,7 +122,9 @@ export function App() {
             />
           </a>
           <p className="header-tagline hidden rounded-full bg-white/90 px-6 py-3 text-xl font-semibold lg:block">
-            <span>Print.</span> <span>Personalise.</span> <span>Inspire.</span>
+            Printing & Personalization
+            <br />
+            Made Easy
           </p>
           <div className="header-actions flex flex-wrap items-center gap-3">
             {auth.user ? (
@@ -172,52 +178,21 @@ export function App() {
           </div>
         </div>
       </header>
-      <nav
-        aria-label="Main navigation"
-        className="colour-nav sticky top-0 z-30 shadow-md"
-      >
-        <div className="nav-row mx-auto flex max-w-7xl flex-nowrap items-center gap-2 overflow-x-auto px-5 py-2 text-sm whitespace-nowrap">
-          <Button
-            className="nav-categories my-0 h-12 rounded-xl"
-            onClick={() => browse("All products")}
-          >
-            <Menu size={20} />
-            All categories
-          </Button>
-          <a href="#home" aria-current={isHome ? "page" : undefined}>
-            Home
-          </a>
-          {[
-            "Printing Products",
-            "Gifting Items",
-            "Customised Products",
-            "Image Library",
-          ].map((g) => (
-            <button
-              key={g}
-              className={
-                "nav-item " +
-                (route === "catalog" && group === g
-                  ? "font-bold text-primary"
-                  : "")
-              }
-              aria-current={
-                route === "catalog" && group === g ? "page" : undefined
-              }
-              onClick={() => browse(g)}
-            >
-              {g}
-            </button>
-          ))}
-          <a
-            href="#contact"
-            aria-current={route === "contact" ? "page" : undefined}
-          >
-            Contact us
-          </a>
-        </div>
-      </nav>
+      <Navigation
+        categories={taxonomy.data?.data || []}
+        route={route}
+        group={group}
+        onBrowse={browse}
+      />
       <main id="main-content" tabIndex={-1}>
+        {taxonomy.error && (
+          <div className="mx-auto max-w-7xl px-5">
+            <ErrorState
+              message={"Category list could not be loaded. " + taxonomy.error}
+              retry={taxonomy.reload}
+            />
+          </div>
+        )}
         {logoutError && (
           <div className="mx-auto max-w-7xl px-5">
             <ErrorState message={logoutError} />
@@ -232,35 +207,24 @@ export function App() {
           <>
             <section className="mx-auto mt-6 grid max-w-7xl gap-5 px-5 lg:grid-cols-[235px_1fr]">
               <aside className="hidden rounded-lg border border-slate-200 bg-white lg:block">
-                {[
-                  "Signage & Boards",
-                  "Digital & Graphic Prints",
-                  "Flex & Vinyl Printing",
-                  "Mirror Acrylic",
-                  "Router Cutting",
-                  "Standees & Displays",
-                  "Marketing & Office Prints",
-                  "Customised Products",
-                  "Gifting Items",
-                  "Image Library",
-                ].map((c) => (
-                  <button
-                    key={c}
-                    className="block w-full border-b border-slate-100 px-4 py-3 text-left text-sm hover:bg-slate-50"
-                    onClick={() =>
-                      browse(
-                        c === "Gifting Items" ||
-                          c === "Customised Products" ||
-                          c === "Image Library"
-                          ? c
-                          : "Printing Products",
-                      )
-                    }
-                  >
-                    {c}
-                    <span className="float-right">›</span>
-                  </button>
-                ))}
+                {(taxonomy.data?.data || [])
+                  .filter((category) =>
+                    [
+                      219, 229, 220, 221, 222, 223, 224, 225, 226, 227, 228,
+                    ].includes(category.id),
+                  )
+                  .map((category) => (
+                    <button
+                      key={category.id}
+                      className="block w-full border-b border-slate-100 px-4 py-3 text-left text-sm hover:bg-cyan-50"
+                      onClick={() =>
+                        browse("All products", String(category.id))
+                      }
+                    >
+                      {category.name}
+                      <span className="float-right">›</span>
+                    </button>
+                  ))}
               </aside>
               <div className="print-hero relative grid min-h-110 items-center gap-8 overflow-hidden rounded-3xl p-7 md:grid-cols-[1.1fr_1fr] md:p-10">
                 <div className="relative z-10 max-w-md">
@@ -328,11 +292,11 @@ export function App() {
                 Explore our categories
               </h2>
               <div className="grid grid-cols-3 gap-5 md:grid-cols-6">
-                {categories.map(([label, image, g]) => (
+                {categories.map(([label, image, g, category]) => (
                   <button
                     key={label}
                     className="category-tile rounded-2xl p-3 text-center transition-transform hover:-translate-y-1"
-                    onClick={() => browse(g!)}
+                    onClick={() => browse(g!, category)}
                   >
                     <img
                       src={asset("assets/" + image)}
@@ -348,7 +312,16 @@ export function App() {
           </>
         )}
         {(isHome || route === "catalog") && (
-          <Catalog group={group} onOpen={(p) => setSelected(p)} />
+          <Catalog
+            group={group}
+            categoryId={categoryId}
+            categories={taxonomy.data?.data || []}
+            onCategory={(id) => {
+              setCategoryId(id);
+              setGroup("All products");
+            }}
+            onOpen={(p) => setSelected(p)}
+          />
         )}{" "}
         {route === "account" && <Account onSignIn={() => setAuthOpen(true)} />}{" "}
         {route === "admin" && <Admin />}

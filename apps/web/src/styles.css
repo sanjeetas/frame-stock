@@ -481,3 +481,78 @@
 .header-tagline {
   font-size: 1.05rem;
 }
+
+.reference-paint {
+  position: absolute;
+  inset: 0;
+}
+.reference-paint-top,
+.reference-paint-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  height: 38%;
+}
+.reference-paint-top {
+  top: 0;
+}
+.reference-paint-bottom {
+  bottom: 0;
+}
+.reference-paint img {
+  position: absolute;
+  width: 100%;
+  height: 400%;
+  max-width: none;
+}
+.reference-paint-top img {
+  top: 0;
+}
+.reference-paint-bottom img {
+  bottom: 0;
+}
+.header-tagline {
+  color: #103759;
+  font-style: italic;
+  line-height: 1.4;
+  border-radius: 0;
+  border-left: 1px solid #91a0b0;
+  background: #ffffffdb;
+  box-shadow: none;
+}
+.header-signin {
+  background: #fff;
+  color: #103759;
+  border-color: #103759;
+  box-shadow: none;
+}
+.header-signin:hover {
+  background: #e9f7ff;
+}
+.header-order {
+  background: #c60077;
+  color: #fff;
+  border-color: #c60077;
+}
+.header-order:hover {
+  background: #a30062;
+}
+.header-order > span:last-child {
+  background: #fff;
+  color: #a30062;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reference-paint {
+    display: none;
+  }
+}
+
+.ink-rain[data-paused="false"] .paint-pool {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ink-rain .paint-pool {
+    display: block !important;
+  }
+}

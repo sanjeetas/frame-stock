@@ -1,0 +1,184 @@
+[
+  {
+    "id": 228,
+    "name": "CUSTOMISED PRODUCTS",
+    "slug": "customised-products",
+    "parent": 0,
+    "count": 3
+  },
+  {
+    "id": 20,
+    "name": "Customized Products",
+    "slug": "customized-products",
+    "parent": 0,
+    "count": 3
+  },
+  {
+    "id": 211,
+    "name": "Digital Products",
+    "slug": "digital-products",
+    "parent": 0,
+    "count": 1
+  },
+  {
+    "id": 200,
+    "name": "Display Solutions",
+    "slug": "display-solutions",
+    "parent": 0,
+    "count": 1
+  },
+  {
+    "id": 198,
+    "name": "Exhibition Branding",
+    "slug": "exhibition-branding",
+    "parent": 0,
+    "count": 1
+  },
+  {
+    "id": 229,
+    "name": "Flex, Vinyl & Banner Printing",
+    "slug": "flex-vinyl-banner-printing",
+    "parent": 0,
+    "count": 14
+  },
+  {
+    "id": 220,
+    "name": "Flex, Vinyl, Canvas & Digital Printing / Digital & Graphic Prints",
+    "slug": "flex-vinyl-canvas-digital-printing-digital-graphic-prints",
+    "parent": 0,
+    "count": 41
+  },
+  {
+    "id": 227,
+    "name": "GIFTING ITEMS",
+    "slug": "gifting-items",
+    "parent": 0,
+    "count": 6
+  },
+  {
+    "id": 208,
+    "name": "Glass | Acrylic Branding",
+    "slug": "glass-acrylic-branding",
+    "parent": 206,
+    "count": 1
+  },
+  {
+    "id": 205,
+    "name": "Hoardings",
+    "slug": "hoardings",
+    "parent": 0,
+    "count": 1
+  },
+  {
+    "id": 203,
+    "name": "Image Library",
+    "slug": "image-library",
+    "parent": 0,
+    "count": 1
+  },
+  {
+    "id": 196,
+    "name": "Indoor Branding – Graphics",
+    "slug": "indoor-branding-graphics",
+    "parent": 0,
+    "count": 1
+  },
+  {
+    "id": 226,
+    "name": "Laser & Cutting Work",
+    "slug": "laser-cutting-work",
+    "parent": 0,
+    "count": 2
+  },
+  {
+    "id": 206,
+    "name": "Laser and cutting work",
+    "slug": "laser-cut",
+    "parent": 0,
+    "count": 3
+  },
+  {
+    "id": 197,
+    "name": "Light Box Graphics",
+    "slug": "light-box-graphics",
+    "parent": 0,
+    "count": 1
+  },
+  {
+    "id": 225,
+    "name": "Marketing & Office Prints",
+    "slug": "marketing-office-prints",
+    "parent": 0,
+    "count": 7
+  },
+  {
+    "id": 221,
+    "name": "Mirror Acrylic",
+    "slug": "mirror-acrylic",
+    "parent": 0,
+    "count": 6
+  },
+  {
+    "id": 231,
+    "name": "Poster",
+    "slug": "poster",
+    "parent": 219,
+    "count": 3
+  },
+  {
+    "id": 222,
+    "name": "Router Cutting",
+    "slug": "router-cutting",
+    "parent": 0,
+    "count": 8
+  },
+  {
+    "id": 202,
+    "name": "Semi Permanent Structures",
+    "slug": "semi-permanent-structures",
+    "parent": 0,
+    "count": 1
+  },
+  {
+    "id": 219,
+    "name": "Signage & Boards",
+    "slug": "signage-boards",
+    "parent": 0,
+    "count": 10
+  },
+  {
+    "id": 223,
+    "name": "Standees & Display Products",
+    "slug": "standees-display-products",
+    "parent": 0,
+    "count": 5
+  },
+  {
+    "id": 224,
+    "name": "Stickers & Decals",
+    "slug": "stickers-decals",
+    "parent": 0,
+    "count": 4
+  },
+  {
+    "id": 209,
+    "name": "Vehicle Branding",
+    "slug": "vehicle-branding",
+    "parent": 206,
+    "count": 1
+  },
+  {
+    "id": 201,
+    "name": "Venue Branding",
+    "slug": "venue-branding",
+    "parent": 0,
+    "count": 1
+  },
+  {
+    "id": 199,
+    "name": "Wall Branding",
+    "slug": "wall-branding",
+    "parent": 0,
+    "count": 1
+  }
+]

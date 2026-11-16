@@ -13,33 +13,41 @@ import { useDebouncedValue } from "../../hooks/useDebouncedValue";
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { Loading, ErrorState, Empty } from "../../components/Feedback";
-import type { Product } from "../../types";
+import type { Product, Category } from "../../types";
 import { money } from "../../lib/utils";
 import { Artwork } from "./Artwork";
 interface Props {
   group: string;
+  categoryId: string;
+  categories: Category[];
+  onCategory: (id: string) => void;
   onOpen: (p: Product) => void;
 }
-export function Catalog({ group, onOpen }: Props) {
+export function Catalog({
+  group,
+  categoryId,
+  categories,
+  onCategory,
+  onOpen,
+}: Props) {
   const [search, setSearch] = useState(""),
-    [category, setCategory] = useState(""),
     [sort, setSort] = useState("featured"),
     [page, setPage] = useState(1),
     [wishes, setWishes] = useState<string[]>([]);
   const query = useDebouncedValue(search);
-  useEffect(() => setCategory(""), [group]);
-  useEffect(() => setPage(1), [query, category, sort, group]);
+  useEffect(() => setPage(1), [query, categoryId, sort, group]);
   const params = new URLSearchParams({
     page: String(page),
     limit: "12",
     sort,
     ...(query ? { search: query } : {}),
-    ...(category ? { category } : {}),
+    ...(categoryId ? { categoryId } : {}),
     ...(group !== "All products" ? { group } : {}),
   });
   const { data, loading, error, reload } = useApiQuery<Product[]>(
     "/products?" + params,
   );
+  const category = categories.find((item) => String(item.id) === categoryId);
   return (
     <section id="catalog" className="mx-auto max-w-7xl px-5 py-10">
       <div className="collection-banner mb-7 grid items-center gap-8 rounded-3xl p-7 text-white md:grid-cols-[1.3fr_1fr] md:p-10">
@@ -51,7 +59,9 @@ export function Catalog({ group, onOpen }: Props) {
             key={group}
             className="collection-title text-4xl font-bold leading-tight sm:text-5xl"
           >
-            {group === "All products" ? (
+            {category ? (
+              category.name
+            ) : group === "All products" ? (
               <>
                 Big ideas.
                 <br />
@@ -110,7 +120,7 @@ export function Catalog({ group, onOpen }: Props) {
           </div>
         </div>
       </div>
-      <div className="mb-7 grid gap-3 rounded-2xl border border-cyan-100 bg-[#edf6fc] p-4 sm:grid-cols-[1fr_1fr_auto]">
+      <div className="mb-7 grid gap-3 rounded-2xl border border-cyan-100 bg-[#edf6fc] p-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
         <div className="relative">
           <label htmlFor="catalog-search" className="sr-only">
             Search catalog
@@ -128,13 +138,20 @@ export function Catalog({ group, onOpen }: Props) {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <Input
+        <select
+          className="min-w-0 w-full"
           aria-label="Filter by category"
-          placeholder="Category, e.g. Nature"
-          value={category}
-          maxLength={100}
-          onChange={(e) => setCategory(e.target.value)}
-        />
+          value={categoryId}
+          onChange={(event) => onCategory(event.target.value)}
+        >
+          <option value="">All categories</option>
+          {categories.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.parent ? "↳ " : ""}
+              {item.name}
+            </option>
+          ))}
+        </select>
         <select
           aria-label="Sort products"
           value={sort}
@@ -198,9 +215,9 @@ export function Catalog({ group, onOpen }: Props) {
                 </button>
                 <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
                   <span className="text-sm font-bold text-primary">
-                    {money(p.price)}
+                    {p.priceDisplay || money(p.price)}
                     <span className="ml-1 text-xs font-normal text-slate-500">
-                      {p.price !== null ? "/ " + p.unit : ""}
+                      {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
                     </span>
                   </span>
                   <Button variant="outline" size="sm" onClick={() => onOpen(p)}>

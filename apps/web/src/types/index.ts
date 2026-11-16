@@ -4,7 +4,17 @@ export interface User {
   email: string;
   role: "user" | "admin";
 }
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  parent: number;
+  count: number;
+}
 export interface Product {
+  sourceProductId?: number;
+  categoryIds?: number[];
+  priceDisplay?: string;
   id: string;
   slug: string;
   title: string;

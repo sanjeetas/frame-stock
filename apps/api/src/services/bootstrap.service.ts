@@ -35,6 +35,24 @@ export async function seedCatalog() {
     };
   });
   await Product.bulkWrite(operations, { ordered: false });
+  // Apply this requested source snapshot once; later admin edits survive restarts.
+  await Product.bulkWrite(
+    rows.map(({ id, kind, hasFile, ...candidate }) => ({
+      updateOne: {
+        filter: {
+          slug: z.string().parse(id),
+          sourceVersion: { $ne: "phulo-source-v1" },
+        },
+        update: {
+          $set: {
+            ...productBody.parse(candidate),
+            sourceVersion: "phulo-source-v1",
+          },
+        },
+      },
+    })),
+    { ordered: false },
+  );
   await applyCatalogImageCorrections();
 }
 export async function bootstrapApplication(

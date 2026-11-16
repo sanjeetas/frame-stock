@@ -133,3 +133,8 @@ Public 800px product previews from the matching PHULO storefront product. Catalo
 ### Client logos supplied in the reference website
 
 - `assets/clients/1.png` through `8.png` — client logos from https://phulo.in/wp-content/uploads/2025/05/1.png through /8.png, matched to the user-provided client screenshot.
+
+### PHULO source catalogue snapshot
+
+- Product names, prices, price ranges and category memberships: public WooCommerce Store API `https://phulo.in/wp-json/wc/store/v1/products` (122 published products). Taxonomy: `/wp-json/wc/store/v1/products/categories` (26 categories). Source IDs are stored in each catalogue row; Existing `product-p*` previews are reused where their source upload matches; `assets/source-{sourceProductId}.*` contains previews for the additional source products.
+- `assets/ink-splash-reference.gif`: original animation supplied by the user at https://chatgpt.com/s/p_403941c46c9081919d9340d874166f2c. Only the top paint and bottom splash strips are displayed; website branding and buttons remain live HTML controls.

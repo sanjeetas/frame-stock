@@ -117,9 +117,9 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                   {p.description}
                 </DialogDescription>
                 <p className="mb-5 text-xl font-bold text-primary">
-                  {money(p.price)}{" "}
+                  {p.priceDisplay || money(p.price)}{" "}
                   <span className="text-xs font-normal">
-                    {p.price !== null ? "/ " + p.unit : ""}
+                    {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
                   </span>
                 </p>
                 <form onSubmit={add} className="space-y-4">

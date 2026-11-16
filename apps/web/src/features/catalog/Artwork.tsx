@@ -17,6 +17,12 @@ export function Artwork({
         loading="lazy"
       />
     );
+  if (product.sourceProductId)
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-slate-100 p-6 text-center text-sm text-slate-500">
+        Product image not provided
+      </div>
+    );
   return (
     <svg
       className={className + " h-full w-full"}

@@ -668,3 +668,83 @@ test("catalog image corrections replace only known placeholders and preserve adm
     "https://example.test/admin-uploaded-mug.jpg",
   );
 });
+
+test("source catalog preserves WooCommerce prices and parent/subcategory memberships", async () => {
+  const { seedCatalog } = await import("../src/services/bootstrap.service.js");
+  const { readFile } = await import("node:fs/promises");
+  const rows = JSON.parse(
+    await readFile(
+      new URL("../../../public/catalog.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  await seedCatalog();
+  const categories = (await request(app).get("/api/categories").expect(200))
+    .body.data;
+  assert.equal(categories.length, 26);
+  assert.equal(
+    categories.find((category: any) => category.id === 231).parent,
+    219,
+  );
+  for (const categoryId of [219, 231, 220, 206, 227]) {
+    const included = new Set([categoryId]);
+    for (let i = 0; i < categories.length; i++)
+      for (const category of categories)
+        if (included.has(category.parent)) included.add(category.id);
+    const expected = rows.filter(
+      (row: any) =>
+        row.sourceProductId &&
+        row.categoryIds.some((id: number) => included.has(id)),
+    );
+    const response = await request(app)
+      .get(`/api/products?categoryId=${categoryId}&limit=100`)
+      .expect(200);
+    assert.equal(response.body.meta.total, expected.length);
+    assert.deepEqual(
+      response.body.data.map((row: any) => row.sourceProductId),
+      expected.map((row: any) => row.sourceProductId),
+    );
+    for (const row of response.body.data) {
+      const source = expected.find(
+        (item: any) => item.sourceProductId === row.sourceProductId,
+      );
+      // A previous test intentionally changed p1's price; this migration must preserve later admin edits.
+      if (row.slug !== "p1") assert.equal(row.price, source.price);
+      assert.equal(row.title, source.title);
+      assert.deepEqual(row.categoryIds, source.categoryIds);
+    }
+  }
+  await request(app).get("/api/products?categoryId=bad").expect(400);
+  await request(app)
+    .get("/api/products?categoryId=999999")
+    .expect(200)
+    .expect((response) => assert.equal(response.body.meta.total, 0));
+  assert.equal(
+    (await Product.findOne({ sourceProductId: 29306 }))?.price,
+    null,
+  );
+  assert.equal(
+    (await Product.findOne({ sourceProductId: 27310 }))?.priceDisplay,
+    "₹ 1,800.00 – ₹ 4,200.00",
+  );
+  const product = await Product.findOne({ sourceProductId: 29311 });
+  assert.ok(product);
+  const response = await mutation(
+    admin,
+    "patch",
+    "/api/admin/products/" + product._id,
+    csrfAdmin,
+  )
+    .send({
+      title: product.title,
+      category: product.category,
+      group: product.group,
+      price: 499,
+      unit: product.unit,
+      image: product.image,
+    })
+    .expect(200);
+  assert.equal(response.body.data.priceDisplay, "");
+  await seedCatalog();
+  assert.equal((await Product.findById(product._id))?.price, 499);
+});

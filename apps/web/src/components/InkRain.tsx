@@ -1,5 +1,6 @@
 import { useId, useState, type CSSProperties } from "react";
 import { Pause, Play } from "lucide-react";
+import { asset } from "../lib/utils";
 
 const inks = ["#00b8e4", "#ed2698", "#f4c900", "#8c48ed"];
 
@@ -10,6 +11,16 @@ export function InkRain() {
   return (
     <>
       <div className="ink-rain" data-paused={paused} aria-hidden="true">
+        {!paused && (
+          <div className="reference-paint">
+            <div className="reference-paint-top">
+              <img src={asset("assets/ink-splash-reference.gif")} alt="" />
+            </div>
+            <div className="reference-paint-bottom">
+              <img src={asset("assets/ink-splash-reference.gif")} alt="" />
+            </div>
+          </div>
+        )}
         {inks.map((ink, index) => {
           const gradient = `${id}-paint-${index}`;
           return (

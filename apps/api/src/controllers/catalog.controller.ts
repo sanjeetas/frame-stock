@@ -25,3 +25,6 @@ export const update: RequestHandler = async (req, res) =>
   );
 export const hide: RequestHandler = async (req, res) =>
   ok(res, await products.hideProduct(req.validated.params.id));
+
+export const categories: RequestHandler = async (_req, res) =>
+  ok(res, await products.listCategories());

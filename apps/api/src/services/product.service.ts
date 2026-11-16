@@ -1,8 +1,23 @@
+import { readFile } from "node:fs/promises";
 import { randomBytes } from "node:crypto";
 import type { z } from "zod";
 import { Product, productDto } from "../models/product.model.js";
 import { AppError } from "../lib.js";
 import type { productQuery, productBody } from "../schemas/index.js";
+export async function listCategories() {
+  return JSON.parse(
+    await readFile(
+      new URL("../../../../public/categories.json", import.meta.url),
+      "utf8",
+    ),
+  ) as {
+    id: number;
+    parent: number;
+    name: string;
+    slug: string;
+    count: number;
+  }[];
+}
 export async function listProducts(
   query: z.infer<typeof productQuery>,
   admin = false,
@@ -10,6 +25,15 @@ export async function listProducts(
   const filter: Record<string, unknown> = admin ? {} : { published: true };
   if (query.group) filter.group = query.group;
   if (query.category) filter.category = query.category;
+  if (query.categoryId) {
+    const categories = await listCategories();
+    const ids = new Set([query.categoryId]);
+    // Descendants are bounded by the imported taxonomy; keep parent queries inclusive.
+    for (let i = 0; i < categories.length; i++)
+      for (const category of categories)
+        if (ids.has(category.parent)) ids.add(category.id);
+    filter.categoryIds = { $in: [...ids] };
+  }
   if (query.search) {
     const escaped = Array.from(query.search)
       .map((char) => ("\\^$.*+?()[]{}|".includes(char) ? "\\" + char : char))
@@ -20,7 +44,7 @@ export async function listProducts(
     ];
   }
   const sorts = {
-    featured: { createdAt: -1, _id: 1 },
+    featured: { sourceOrder: 1, _id: 1 },
     low: { price: 1, _id: 1 },
     high: { price: -1, _id: 1 },
     az: { title: 1, _id: 1 },
@@ -54,8 +78,23 @@ export async function saveProduct(
   body: z.infer<typeof productBody>,
   id?: string,
 ) {
+  const existing = id ? await Product.findById(id) : null;
+  if (id && !existing)
+    throw new AppError(404, "NOT_FOUND", "Product not found.");
+  const taxonomy = await listCategories();
   const data = {
     ...body,
+    // Clear source formatting only when an admin actually changes the numeric price.
+    priceDisplay:
+      body.priceDisplay ??
+      (existing?.price === body.price ? existing.priceDisplay : ""),
+    categoryIds:
+      body.categoryIds ??
+      (existing?.category === body.category
+        ? existing.categoryIds
+        : taxonomy
+            .filter((category) => category.name === body.category)
+            .map((category) => category.id)),
     kind:
       body.group === "Image Library"
         ? ("image" as const)
