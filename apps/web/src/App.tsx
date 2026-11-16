@@ -23,8 +23,9 @@ import { Button } from "./components/ui/button";
 import { ErrorState } from "./components/Feedback";
 import type { CartItem, Product } from "./types";
 import { asset } from "./lib/utils";
-import { ContactDetails, Clients } from "./components/CompanySections";
-import { company } from "./lib/company";
+import { Clients } from "./components/CompanySections";
+import { Footer } from "./components/Footer";
+import { useScrollReveal } from "./hooks/useScrollReveal";
 const categories = [
   ["Digital printing", "product-p78.webp", "Printing Products"],
   ["Signage & boards", "product-p6.webp", "Printing Products"],
@@ -34,6 +35,7 @@ const categories = [
   ["Rollups & standees", "product-p24.webp", "Printing Products"],
 ];
 export function App() {
+  useScrollReveal();
   const auth = useAuth(),
     [route, setRoute] = useState(location.hash.slice(1) || "home"),
     [group, setGroup] = useState("All products"),
@@ -370,58 +372,8 @@ export function App() {
             );
           })}
         </section>
-        <ContactDetails />
       </main>
-      <footer className="bg-[#f1f6fb]">
-        <div className="mx-auto grid max-w-7xl gap-8 px-5 py-10 text-base leading-8 md:grid-cols-[2fr_1fr_1fr]">
-          <div>
-            <a href="#home">
-              <img
-                src={asset("assets/logo.png")}
-                alt="PHULO Multi Graphics"
-                className="mb-4 h-24 w-44 object-contain"
-              />
-            </a>
-            <p className="text-slate-500">All Types Of Printing Solutions</p>
-            <a className="block" href="tel:+918451010020">
-              +91 8451010020
-            </a>
-            <a href="mailto:phulomultigraphics@gmail.com">
-              phulomultigraphics@gmail.com
-            </a>
-            <p className="mt-3 text-slate-500">{company.address}</p>
-          </div>
-          <div>
-            <h3 className="mb-3 font-semibold">Quick links</h3>
-            <a href="#home" className="block">
-              Home
-            </a>
-            <a href="#account" className="block">
-              My account & orders
-            </a>
-            <button onClick={() => browse("Image Library")} className="block">
-              Image library
-            </button>
-            <a href="#contact" className="block">
-              Contact us
-            </a>
-          </div>
-          <div>
-            <h3 className="mb-3 font-semibold">How it works</h3>
-            <p>Printing → Confirmed WhatsApp quote</p>
-            <p>Gifting → Order request</p>
-            <p>Customised → Design confirmation</p>
-            <p>Images → Preview free / HD paid</p>
-            <p className="mt-3 text-slate-500">
-              Image reuse or resale is not allowed.
-            </p>
-          </div>
-          <p className="border-t border-slate-200 pt-5 text-sm text-slate-500 md:col-span-3">
-            © {new Date().getFullYear()} Phulo Multi Graphics. All rights
-            reserved.
-          </p>
-        </div>
-      </footer>
+      <Footer onBrowse={browse} />
       <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
       <ProductDialog
         key={selected?.id || "none"}
