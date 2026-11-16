@@ -1,17 +1,27 @@
 services:
   - type: web
-    name: phulo-multi-graphics
+    name: phulo-mern
     runtime: docker
     plan: starter
     healthCheckPath: /api/health
     envVars:
-      - key: ADMIN_PASSWORD
-        sync: false
       - key: NODE_ENV
         value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: FRONTEND_ORIGIN
+        sync: false
+      - key: ACCESS_TOKEN_SECRET
+        generateValue: true
+      - key: CSRF_SECRET
+        generateValue: true
       - key: DATA_DIR
         value: /app/data
+      - key: TRUST_PROXY_HOPS
+        value: "1"
+      - key: COOKIE_SAME_SITE
+        value: lax
     disk:
-      name: phulo-data
+      name: phulo-uploads
       mountPath: /app/data
       sizeGB: 1

@@ -1,0 +1,146 @@
+import { z } from "zod";
+export const id = z.string().regex(/^[a-f\d]{24}$/i, "Invalid resource ID");
+export const idParams = z.object({ id }).strict();
+const email = z
+  .email()
+  .max(254)
+  .transform((v) => v.toLowerCase());
+const password = z
+  .string()
+  .min(12)
+  .max(128)
+  .refine(
+    (v) => new TextEncoder().encode(v).length <= 256,
+    "Password is too long",
+  );
+export const registerBody = z
+  .object({ name: z.string().trim().min(2).max(100), email, password })
+  .strict();
+export const loginBody = z
+  .object({ email, password: z.string().min(1).max(128) })
+  .strict();
+export const pagination = z.object({
+  page: z.coerce.number().int().min(1).max(10000).default(1),
+  limit: z.coerce.number().int().min(1).max(100).default(12),
+});
+export const productQuery = pagination
+  .extend({
+    search: z.string().trim().max(100).optional(),
+    category: z.string().max(100).optional(),
+    group: z
+      .enum([
+        "Printing Products",
+        "Gifting Items",
+        "Customised Products",
+        "Image Library",
+      ])
+      .optional(),
+    sort: z.enum(["featured", "low", "high", "az"]).default("featured"),
+  })
+  .strict();
+const preview = z
+  .string()
+  .max(2000)
+  .refine(
+    (v) =>
+      v === "" ||
+      /^assets\/[\w.-]+$/.test(v) ||
+      /^\/api\/previews\/[a-f\d]{32}\.(png|webp|jpg)$/.test(v) ||
+      /^https:\/\//.test(v),
+    "Use an HTTPS URL or a local preview path",
+  );
+export const productBody = z
+  .object({
+    title: z.string().trim().min(1).max(150),
+    category: z.string().trim().min(1).max(100),
+    group: z.enum([
+      "Printing Products",
+      "Gifting Items",
+      "Customised Products",
+      "Image Library",
+    ]),
+    price: z.number().min(0).max(1e8).nullable(),
+    unit: z.string().trim().min(1).max(30),
+    description: z.string().max(2000).default(""),
+    image: preview.default(""),
+    editable: z.boolean().default(false),
+    published: z.boolean().default(true),
+    bg: z
+      .string()
+      .regex(/^#[a-f\d]{6}$/i)
+      .default("#e7ecd9"),
+    fg: z
+      .string()
+      .regex(/^#[a-f\d]{6}$/i)
+      .default("#365044"),
+    variant: z.number().int().min(0).max(100).default(0),
+  })
+  .strict();
+export const settings = z
+  .object({
+    headline: z.string().max(90),
+    subtitle: z.string().max(140),
+    bg: z.string().regex(/^#[a-f\d]{6}$/i),
+    fg: z.string().regex(/^#[a-f\d]{6}$/i),
+    font: z.enum(["Georgia", "Arial", "monospace"]),
+    size: z.number().int().min(24).max(100),
+    y: z.number().int().min(130).max(650),
+    square: z.boolean(),
+    hasUploadedImage: z.boolean().default(false),
+  })
+  .strict();
+export const designBody = z
+  .object({ title: z.string().trim().min(1).max(100), settings })
+  .strict();
+export const orderBody = z
+  .object({
+    name: z.string().trim().min(2).max(100),
+    phone: z.string().regex(/^\+?[\d ()-]{8,20}$/),
+    address: z.string().max(1000).default(""),
+    notes: z.string().max(2000).default(""),
+    items: z
+      .array(
+        z
+          .object({
+            productId: id,
+            quantity: z.number().int().min(1).max(10000),
+            customization: z
+              .object({
+                requirements: z.string().max(2000).default(""),
+                design: settings.optional(),
+              })
+              .strict()
+              .default({ requirements: "" }),
+          })
+          .strict(),
+      )
+      .min(1)
+      .max(30),
+  })
+  .strict();
+export const orderStatus = z
+  .object({
+    status: z.enum([
+      "pending",
+      "confirmed",
+      "dispatched",
+      "completed",
+      "cancelled",
+    ]),
+  })
+  .strict();
+export const orderQuery = pagination
+  .extend({ status: orderStatus.shape.status.optional() })
+  .strict();
+export const filenameQuery = z
+  .object({
+    filename: z
+      .string()
+      .min(1)
+      .max(150)
+      .regex(/^[\w .()-]+\.(png|jpe?g|webp|pdf|zip|psd|ai|eps|svg)$/i),
+  })
+  .strict();
+export const downloadParams = z
+  .object({ id, itemIndex: z.coerce.number().int().min(0).max(29) })
+  .strict();

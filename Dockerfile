@@ -1,9 +1,23 @@
+FROM node:24-bookworm-slim AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+COPY apps/api/package.json ./apps/api/package.json
+COPY apps/web/package.json ./apps/web/package.json
+RUN MONGOMS_DISABLE_POSTINSTALL=1 npm ci
+COPY apps ./apps
+COPY public ./public
+RUN npm run build && npm prune --omit=dev
+
 FROM node:24-bookworm-slim
 WORKDIR /app
-COPY package.json server.mjs ./
-COPY public ./public
+ENV NODE_ENV=production PORT=3000 DATA_DIR=/app/data
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/apps/api/package.json ./apps/api/package.json
+COPY --from=build /app/apps/api/dist ./apps/api/dist
+COPY --from=build /app/apps/web/dist ./apps/web/dist
+COPY --from=build /app/public/catalog.json ./public/catalog.json
 RUN mkdir -p /app/data && chown -R node:node /app
 USER node
-ENV PORT=3000 DATA_DIR=/app/data NODE_ENV=production
 EXPOSE 3000
-CMD ["node", "server.mjs"]
+CMD ["node", "apps/api/dist/server.js"]

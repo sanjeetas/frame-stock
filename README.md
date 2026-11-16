@@ -1,60 +1,134 @@
-# PHULO Multi Graphics
+# PHULO Multi Graphics — MERN
 
-A Phulo storefront rebuild based on the public phulo.in site and the supplied product/service catalog. Includes 109 catalog entries, a stock-library search experience, custom design previews, WhatsApp order drafting, and a real backend admin panel.
+PHULO catalog, image-library/customizer, customer accounts and admin operations built with React + TypeScript + Tailwind CSS, shadcn-style UI components/Radix primitives and Lucide; Express + TypeScript, Mongoose and MongoDB on the backend. The prior plain-JavaScript/SQLite server and admin-password login have been removed, including their legacy authentication endpoints.
 
-## Deployment status and limits
+## Quick setup
 
-GitHub Pages hosts the **frontend preview only**. It supports browsing, search, wishlist, cart, design editing, watermarked preview export and a WhatsApp order draft. It cannot execute the Node backend. On Pages, the admin page explains backend setup; it does not simulate a working login or store shared orders.
+Requires Node 24+, npm and MongoDB with transaction support (Atlas or a replica set). The lockfile pins compatible stable dependencies.
 
-The included **Node 24 backend** adds secure admin sessions, shared catalog edits, public watermarked preview uploads, private originals, persistent order requests and admin-approved HD downloads. Run it on a host with a persistent writable disk. The storefront and backend must share the same origin; no credentials are placed in frontend code.
+```sh
+npm ci
+cp .env.example .env
+# Edit .env: fill TWO independent ACCESS_TOKEN_SECRET and CSRF_SECRET values.
+# Generate each separately:
+node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"
+# Start a local MongoDB replica set; its port is bound to loopback only.
+docker compose up -d --wait mongo
+npm run seed
+npm run dev
+```
 
-This is a custom implementation, not an export of the original WordPress installation or its private admin data. Exact source files, licensed theme/plugins, private HD resources and payment credentials were not supplied. Public category/product images are reference illustrations and are recorded in ASSET-SOURCES.md. The image library starts with eight original procedural sample artworks, not a licensed Shutterstock catalog. Prices for HD images remain “Request a quote” because no HD rates were supplied. Category images illustrate products; they are not guaranteed exact SKU photographs.
+Open http://localhost:5173. Vite proxies `/api` to Express at http://localhost:3000. The frontend reads/writes actual APIs and MongoDB. There is no local catalog fallback, fake login, or simulated order success when the backend is unavailable.
 
-## Local backend
+To create the first admin, set `ADMIN_NAME`, `ADMIN_EMAIL`, and a unique 12–128 character `ADMIN_PASSWORD` in the ignored `.env`, then run:
 
-Requires Node 24 or later. No npm dependencies or installation step.
+```sh
+npm run admin:create
+```
 
-1. Set `ADMIN_PASSWORD` in your shell or hosting environment to a strong unique password. Do not commit it. No default admin password exists.
-2. Run `npm start`.
-3. Open http://localhost:3000 and http://localhost:3000/admin.html.
-4. Run `npm test` and `npm run check` for validation.
+Remove the bootstrap admin password from the environment afterward. Existing accounts are never silently promoted or overwritten. Public registration only creates `user` accounts and rejects role/owner/userId inputs.
 
-By default SQLite data, original files and public previews are stored in ignored `data/`. Set `DATA_DIR` to your persistent disk path in production. Back this directory up. Set `NODE_ENV=production` behind HTTPS so session cookies are Secure. Admin sessions expire after 8 hours; login attempts are rate limited per network address. The application is intended for a single backend instance. A host-managed reverse proxy should provide TLS and request limits.
+## Environment variables
 
-## Render / Docker deployment
+| Variable                                      | Purpose                                                                                                                                                                        |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `MONGODB_URI`                                 | Atlas connection string or local replica-set URI. Standalone MongoDB is insufficient for atomic refresh-token rotation.                                                        |
+| `ACCESS_TOKEN_SECRET`                         | Independent random signing secret, at least 32 characters.                                                                                                                     |
+| `CSRF_SECRET`                                 | Separate random CSRF signing secret, at least 32 characters.                                                                                                                   |
+| `FRONTEND_ORIGIN`                             | Exact frontend origin; default `http://localhost:5173`. HTTPS is required in production.                                                                                       |
+| `PORT`                                        | Express port, default `3000`.                                                                                                                                                  |
+| `NODE_ENV`                                    | `development`, `test`, or `production`. Production cookies are Secure.                                                                                                         |
+| `ACCESS_TOKEN_TTL_SECONDS`                    | Default 600; maximum 900.                                                                                                                                                      |
+| `REFRESH_TOKEN_TTL_DAYS`                      | Absolute session lifetime; default 7, maximum 30.                                                                                                                              |
+| `COOKIE_SAME_SITE`                            | `lax` by default. `none` requires production HTTPS.                                                                                                                            |
+| `TRUST_PROXY_HOPS`                            | Default 0. Set to the exact number of trusted ingress proxies only when direct backend access is controlled.                                                                   |
+| `DATA_DIR`                                    | Persistent directory for private originals and public previews. `.env.example` uses `../../data` because npm runs the API from `apps/api`. Use an absolute path in production. |
+| `ADMIN_NAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` | Used only by the explicit bootstrap command. Not a server login bypass.                                                                                                        |
+| `VITE_API_BASE_URL`                           | Optional frontend build variable, default `/api`. Set in `apps/web/.env` or build environment for a remote API.                                                                |
+| `VITE_BASE_PATH`                              | Frontend asset base, default `/`. The Pages workflow uses `/frame-stock/`.                                                                                                     |
 
-A Dockerfile and Render blueprint are provided as one supported hosting option. Render's persistent disk plan is paid; no hosting purchase or deployment has been made automatically.
+Do not place any server secret in `VITE_*` variables. Frontend build variables are public. Both example environment files are provided; real `.env` files are ignored.
 
-1. Connect this repository to a Docker-capable host (or create a Render Blueprint using render.yaml).
-2. Set ADMIN_PASSWORD privately on the host. Configure an HTTPS URL.
-3. Mount persistent storage at /app/data and use DATA_DIR=/app/data.
-4. Launch the service. The backend serves both public/ and /api routes on its PORT.
-5. Open /admin.html on the backend URL, sign in, and verify the catalog and uploads.
+## Structure
 
-If using a custom domain, point it to this backend host after verification. The existing phulo.in WordPress website is not modified by this repository.
+```text
+apps/api/src/
+  config/         environment and MongoDB setup
+  models/         users, sessions, refresh hashes, products, orders, designs
+  schemas/        strict Zod params/query/body validation
+  middleware/     authenticate, authorizeRoles, CSRF, errors, validation
+  controllers/    HTTP handlers and explicit response DTOs
+  services/       authentication, ownership, catalog/orders/files/design logic
+  routes/         public, authenticated and explicitly admin-only endpoints
+  scripts/        catalog seed and explicit admin creation
+apps/api/tests/   integration tests using a real temporary MongoDB replica set
+apps/web/src/
+  components/ui/  reusable shadcn-style Button, Input, Card and Dialog
+  features/       auth, catalog, design editor, customer orders and admin
+  hooks/          API query lifecycle and debounced input
+  lib/            typed API client, cookie/CSRF handling and helpers
+  types/          frontend request/display types
+public/           existing reference assets and seed catalog (no private files)
+```
 
-## Admin workflow
+## Authentication and authorization
 
-- Add/edit titles, groups, categories, descriptions, prices and units; hide or republish products.
-- Upload a public PNG/JPEG/WebP preview up to 8 MB. For library images the uploader downsizes to 800 px and adds repeating PHULO watermarks. External preview URLs must be low resolution and already watermarked.
-- Upload a private original up to 20 MB: PNG/JPEG/WebP, PDF, ZIP, PSD, AI, EPS or SVG. These originals are stored outside the public directory and served as attachment downloads only.
-- Review order requests and customization settings; confirm the final quote with the customer.
-- **Verify payment outside the site** before using “Payment verified — release HD link.” This marks the order completed and creates a random, expiring customer download link. Nothing charges a card automatically.
-- Download links expire after 7 days. Issuing a new link, or changing status, revokes the prior link. One link serves the first digital item with an uploaded original; use separate orders for separate HD assets.
+- `POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/refresh`, `POST /api/auth/logout`, `GET /api/auth/me`, `GET /api/auth/csrf`.
+- Passwords are Argon2id hashes (64 MiB, 3 iterations, parallelism 1), never plaintext. Login uses a dummy Argon2 hash when an email is absent and a generic invalid-credentials response.
+- Short-lived JWT access cookies and opaque rotating refresh cookies are HttpOnly; both are Secure in production. Refresh cookies are scoped to `/api/auth`; neither token appears in JSON, localStorage, sessionStorage or JavaScript state.
+- Only refresh-token SHA-256 hashes are stored. Rotation consumes the old hash and inserts its successor in a MongoDB transaction. Reusing a consumed token revokes the entire login-session family. Sessions have an absolute expiry; TTL indexes clean up expired records.
+- Every authenticated request verifies the JWT, its live session and the active MongoDB user. Roles come from that user record; role changes and logout/replay revocation affect existing access cookies immediately. Logout revokes the current session even when only its valid access cookie remains.
+- Mutating cookie-authenticated endpoints require an exact allowed Origin plus `X-CSRF-Token`. Fetch the signed token from `/api/auth/csrf`, retaining the HttpOnly CSRF cookie. The React API client handles this and refresh rotation automatically, with per-tab single-flight and browser Web Locks where available.
+- Missing/expired/invalid identity returns 401. Wrong role or another user’s owned resource returns 403. Admins do not get a blanket ownership bypass.
+- Helmet headers, exact-origin credentialed CORS, bounded JSON/raw uploads, and global/login/register/refresh/write rate limits are configured. Rate-limit stores are per-process; use a shared store before scaling to multiple API instances.
 
-## Customer workflow
+## Resource APIs and permissions
 
-Printing → request quote on WhatsApp based on size, material and design.
-Gifting → fixed catalog price; submit order request, confirm availability/payment/dispatch.
-Customised products → edit text, colours, font, sizing, square format and your uploaded photo/logo; download watermarked PNG; save design parameters with the order.
-Images → watermarked sample preview free; request HD quote; original released after manual payment verification.
+All list responses include `meta: { page, limit, total, pages }`. Success responses use `{ success: true, data, meta? }`; errors use `{ success: false, error: { code, message, issues? } }`. Stack traces, password hashes, token hashes and private file paths are excluded.
 
-The customizer exports a **watermarked preview**, not the HD licensed original or a PSD editor. Uploaded customer logo/photo pixels remain in their browser; only design parameters and an upload indicator are stored with an order. The customer must send their original separately when confirming the order. Saving a design does not auto-upload personal images.
+| Endpoint                                                               | Access                                                                                                |
+| ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `GET /api/products`, `GET /api/products/:id`                           | Public, published catalog only; pagination/search/category/group/sort.                                |
+| `GET/POST /api/orders`, `GET /api/orders/:id`                          | Signed-in user; only their own orders. Server calculates prices from catalog records.                 |
+| `PATCH /api/orders/:id/cancel`                                         | Owner; pending orders only.                                                                           |
+| `GET /api/orders/:id/download/:itemIndex`                              | Authenticated owner of a completed order; original must be uploaded. No public bearer-download links. |
+| `GET/POST /api/designs`, `GET/PATCH/DELETE /api/designs/:id`           | Owner only, including when caller is an admin.                                                        |
+| `GET/POST /api/admin/products`, `PATCH/DELETE /api/admin/products/:id` | Explicit admin permission. Delete hides the item.                                                     |
+| `POST /api/admin/products/:id/preview`                                 | Admin; octet-stream PNG/JPEG/WebP ≤8 MB. Server resizes and watermarks library previews.              |
+| `POST /api/admin/products/:id/file?filename=…`                         | Admin; octet-stream original ≤20 MB, stored outside public/.                                          |
+| `GET /api/admin/orders`, `PATCH /api/admin/orders/:id`                 | Explicit admin permission to review and update order status.                                          |
+| `GET /api/previews/:filename`                                          | Public raster previews only.                                                                          |
 
-## Catalog provenance
+Admins verify payment outside the application before marking an order `completed`. There is no automatic payment gateway. Original HD/PSD files were not supplied; the library contains original sample artwork, and uploaded original files are needed for real HD downloads. Watermarked preview/custom PNG downloads work without an HD license. Customer photo/logo pixels stay in their browser; design parameters can be stored in MongoDB and attached to orders. A canvas proof is not a PSD editor.
 
-Product names, quoted prices, units and business contact details come from the supplied DOCX and the public Phulo website. Where they differ, the document price is used (e.g. Black Back White Flex Only ₹8/sq.ft, Acrylic China ₹30/sq.ft per mm). Unknown values are left as quotes. The source document itself is not committed to the public repository.
+## Verification
 
-## Checks
+```sh
+npm run check
+npm test
+npm run build
+```
 
-The Node integration tests cover pricing, admin authentication, session revocation, origin checks, hidden products, server-side order totals, upload validation and protected/approved/revoked downloads. Syntax and static asset checks supplement these tests. Browser visual QA was unavailable in the managed environment; production appearance and canvas interactions need a browser check.
+Tests use a real ephemeral MongoDB 8 replica set through mongodb-memory-server, not mocked Mongoose calls. The first test run downloads a MongoDB binary into ignored `.cache/mongodb`; optionally set `MONGOMS_DOWNLOAD_DIR` to an existing compatible binary cache. No production database or secrets are needed for tests.
+
+Coverage includes Argon2id/password redaction, register/login/me/refresh/logout, cookie flags, missing/forged/expired tokens, refresh replay and concurrent reuse, session expiry, live role changes, wrong-role access, cross-user read/update/delete denial, CSRF/origin rejection, validation/rate limits, server-priced orders, protected HD downloads, literal search, and idempotent catalog seeding.
+
+Production builds and TypeScript checks supplement these flows. Browser visual/interaction QA was unavailable in the managed environment.
+
+## Production and GitHub Pages
+
+Recommended: deploy the Docker image behind HTTPS with MongoDB Atlas (or a secured replica set), and a persistent `/app/data` disk. The Express server serves the built React app on the same origin. Set `FRONTEND_ORIGIN` to that HTTPS origin and `DATA_DIR=/app/data`.
+
+```sh
+npm run build
+npm start
+# For a production image without dev dependencies, bootstrap via compiled scripts:
+node --env-file-if-exists=.env apps/api/dist/scripts/seed.js
+node --env-file-if-exists=.env apps/api/dist/scripts/create-admin.js
+```
+
+`Dockerfile` and `render.yaml` are provided. Render's disk plan is paid; no account, hosting purchase, MongoDB Atlas cluster or production deployment has been created automatically. The production URI and hosting configuration remain required.
+
+GitHub Pages only serves the built React frontend. Set repository Actions variable `VITE_API_BASE_URL` to the deployed API URL, then rebuild. A cross-site API requires the Pages origin in `FRONTEND_ORIGIN` and `SameSite=None; Secure`; browser third-party-cookie restrictions can prevent that setup, so same-origin hosting is recommended. Without a backend, Pages displays a clear API connection error instead of fake catalog or authentication success.
+
+The original phulo.in WordPress website is not modified. No original WordPress database/private admin was imported. Existing public reference images and catalog data are preserved; see [ASSET-SOURCES.md](ASSET-SOURCES.md).

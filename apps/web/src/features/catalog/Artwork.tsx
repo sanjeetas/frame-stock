@@ -1,0 +1,79 @@
+import type { Product } from "../../types";
+import { imageUrl } from "../../lib/utils";
+export function Artwork({
+  product,
+  className = "",
+}: {
+  product: Product;
+  className?: string;
+}) {
+  if (product.image)
+    return (
+      <img
+        className={className + " h-full w-full object-contain"}
+        src={imageUrl(product.image)}
+        alt={`${product.title} — category illustration`}
+        loading="lazy"
+      />
+    );
+  return (
+    <svg
+      className={className + " h-full w-full"}
+      viewBox="0 0 640 480"
+      role="img"
+      aria-label={product.title + " watermarked preview"}
+    >
+      <defs>
+        <pattern
+          id={"w" + product.id}
+          width="200"
+          height="100"
+          patternTransform="rotate(-25)"
+          patternUnits="userSpaceOnUse"
+        >
+          <text x="10" y="55" fill={product.fg} opacity=".18" fontSize="18">
+            PHULO PREVIEW
+          </text>
+        </pattern>
+      </defs>
+      <rect width="640" height="480" fill={product.bg} />
+      {product.variant % 2 === 0 ? (
+        <>
+          {Array.from({ length: 7 }, (_, i) => (
+            <ellipse
+              key={i}
+              cx={200 + i * 40}
+              cy={160 + (i % 2) * 70}
+              rx="32"
+              ry="95"
+              fill={product.fg}
+              opacity={0.3 + i * 0.07}
+              transform={`rotate(${i % 2 ? 35 : -35} ${200 + i * 40} ${160 + (i % 2) * 70})`}
+            />
+          ))}
+        </>
+      ) : (
+        <>
+          <circle cx="450" cy="100" r="46" fill="#f5d691" />
+          <path
+            d="M0 350L170 120L330 300L470 140L640 340V480H0"
+            fill={product.fg}
+            opacity=".45"
+          />
+          <path
+            d="M0 410L220 245L370 370L530 250L640 385V480H0"
+            fill={product.fg}
+            opacity=".7"
+          />
+        </>
+      )}
+      <text x="34" y="410" fill={product.fg} fontSize="31" fontFamily="Georgia">
+        {product.title}
+      </text>
+      <text x="36" y="440" fill={product.fg} fontSize="10" letterSpacing="3">
+        PHULO ORIGINAL SAMPLE
+      </text>
+      <rect width="640" height="480" fill={`url(#w${product.id})`} />
+    </svg>
+  );
+}

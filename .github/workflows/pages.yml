@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Check MERN app and deploy frontend
 on:
   push:
     branches: [main]
@@ -15,20 +15,29 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '24'
-      - name: Check source and protected download flow
+          node-version: "24"
+          cache: npm
+      - run: npm ci
+        env:
+          MONGOMS_DISABLE_POSTINSTALL: "1"
+      - name: Typecheck and integration tests on real MongoDB
         run: |
           npm run check
           npm test
+      - name: Build API and React frontend
+        env:
+          VITE_BASE_PATH: /frame-stock/
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+        run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: 'public'
-      - name: Deploy
+          path: apps/web/dist
+      - name: Deploy frontend
         id: deployment
         uses: actions/deploy-pages@v4

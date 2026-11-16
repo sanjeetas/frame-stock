@@ -1,0 +1,3 @@
+@import "tailwindcss";
+@theme {--color-primary:#0c3459;--color-accent:#df3489;--font-sans:Inter,Arial,sans-serif;}
+@layer base{body{@apply m-0 bg-white font-sans text-slate-800 antialiased;}button,a,input,select,textarea{-webkit-tap-highlight-color:transparent;}button,a{@apply cursor-pointer;}button:disabled{@apply cursor-not-allowed;}h1,h2,h3{@apply tracking-tight;}button:focus-visible,a:focus-visible,select:focus-visible{@apply outline-2 outline-offset-4 outline-cyan-600;}select{@apply rounded-md border border-slate-200 bg-white p-2 text-sm;}input[type=color]{@apply h-10 w-full rounded border border-slate-200 p-1;}}
