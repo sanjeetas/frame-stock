@@ -1,5 +1,16 @@
 import { useEffect, useState } from "react";
-import { Search, ChevronLeft, ChevronRight, Heart } from "lucide-react";
+import {
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  Printer,
+  Gift,
+  Palette,
+  Image,
+  Sparkles,
+  Layers,
+} from "lucide-react";
 import { useApiQuery } from "../../hooks/useApiQuery";
 import { useDebouncedValue } from "../../hooks/useDebouncedValue";
 import { Input } from "../../components/ui/input";
@@ -8,6 +19,7 @@ import { Loading, ErrorState, Empty } from "../../components/Feedback";
 import type { Product } from "../../types";
 import { money } from "../../lib/utils";
 import { Artwork } from "./Artwork";
+const groupIcons = [Layers, Printer, Gift, Palette, Image];
 const groups = [
   "All products",
   "Printing Products",
@@ -41,38 +53,96 @@ export function Catalog({ group, onOpen, onGroup }: Props) {
   );
   return (
     <section id="catalog" className="mx-auto max-w-7xl px-5 py-10">
-      <div className="mb-7 flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="mb-2 text-sm font-bold tracking-[.2em] text-cyan-700">
-            PHULO COLLECTION
+      <div className="collection-banner mb-7 grid items-center gap-8 rounded-3xl p-7 text-white md:grid-cols-[1.3fr_1fr] md:p-10">
+        <div className="relative z-10">
+          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-xs font-bold tracking-[.16em] text-cyan-100">
+            <Sparkles size={18} /> THE PRINT & PERSONALISE COLLECTION
           </p>
-          <h2 className="text-3xl font-bold">
-            {group === "All products" ? "Find your next idea." : group}
-          </h2>
-          <p className="mt-2 text-sm text-slate-500">
-            Browse, personalise and send us your requirements.
-          </p>
-        </div>
-        {data && (
-          <p className="text-sm text-slate-500">{data.meta?.total} results</p>
-        )}
-      </div>
-      <div className="mb-5 flex flex-wrap gap-2">
-        {groups.map((g) => (
-          <Button
-            key={g}
-            variant={group === g ? "default" : "outline"}
-            size="sm"
-            onClick={() => {
-              setCategory("");
-              onGroup(g);
-            }}
+          <h2
+            key={group}
+            className="collection-title text-4xl font-bold leading-tight sm:text-5xl"
           >
-            {g}
-          </Button>
-        ))}
+            {group === "All products" ? (
+              <>
+                Big ideas.
+                <br />
+                <span className="text-[#ffe16a]">Full colour.</span>
+              </>
+            ) : (
+              group
+            )}
+          </h2>
+          <p className="mt-4 max-w-lg text-base leading-7 text-blue-100">
+            Print it. Gift it. Make it yours. Discover standout prints,
+            personalised products and designs for every idea.
+          </p>
+          <div className="mt-6 flex flex-wrap items-center gap-3 text-sm">
+            <span className="rounded-full bg-white px-4 py-2 font-semibold text-primary">
+              Made for your imagination
+            </span>
+            {data && (
+              <span className="rounded-full border border-white/30 px-4 py-2">
+                {data.meta?.total} results to explore
+              </span>
+            )}
+          </div>
+        </div>
+        <div
+          className="print-art relative mx-auto h-60 w-full max-w-80"
+          aria-hidden="true"
+        >
+          <div className="ink-orbit ink-cyan" />
+          <div className="ink-orbit ink-pink" />
+          <div className="ink-orbit ink-yellow" />
+          <div className="print-sheet absolute inset-x-9 top-5 rounded-2xl bg-white p-5 text-primary shadow-2xl">
+            <div className="mb-5 flex items-center justify-between">
+              <Printer size={30} />
+              <span className="text-xs font-bold tracking-widest">
+                CREATE / PRINT
+              </span>
+            </div>
+            <div className="flex gap-2">
+              {["#08bde3", "#ef3b96", "#ffd548", "#113655"].map((color) => (
+                <span
+                  key={color}
+                  className="h-14 flex-1 rounded-lg"
+                  style={{ backgroundColor: color }}
+                />
+              ))}
+            </div>
+            <p className="mt-4 text-2xl font-black tracking-tight">
+              GOOD IDEAS.
+              <br />
+              GREAT IMPRESSIONS.
+            </p>
+          </div>
+          <div className="print-sticker absolute -right-1 bottom-0 flex items-center gap-2 rounded-xl bg-[#ffe16a] px-4 py-3 text-sm font-bold text-primary shadow-xl">
+            <Palette size={22} /> A little more colour.
+          </div>
+        </div>
       </div>
-      <div className="mb-7 grid gap-3 border-y border-slate-200 py-4 sm:grid-cols-[1fr_1fr_auto]">
+      <div className="collection-tabs mb-5 flex flex-wrap gap-3">
+        {groups.map((g, index) => {
+          const Icon = groupIcons[index]!;
+          return (
+            <Button
+              key={g}
+              variant={group === g ? "default" : "outline"}
+              size="sm"
+              className="collection-tab"
+              aria-pressed={group === g}
+              onClick={() => {
+                setCategory("");
+                onGroup(g);
+              }}
+            >
+              <Icon size={20} />
+              {g}
+            </Button>
+          );
+        })}
+      </div>
+      <div className="mb-7 grid gap-3 rounded-2xl border border-cyan-100 bg-[#edf6fc] p-4 sm:grid-cols-[1fr_1fr_auto]">
         <div className="relative">
           <label htmlFor="catalog-search" className="sr-only">
             Search catalog
