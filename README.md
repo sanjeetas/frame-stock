@@ -138,3 +138,9 @@ Atlas access must allow the deployed service's outbound addresses. Use Render's 
 GitHub Pages only serves the built React frontend. Set repository Actions variable `VITE_API_BASE_URL` to the deployed API URL, then rebuild. A cross-site API requires the Pages origin in `FRONTEND_ORIGIN` and `SameSite=None; Secure`; browser third-party-cookie restrictions can prevent that setup, so same-origin hosting is recommended. Without a backend, Pages displays a clear API connection error instead of fake catalog or authentication success.
 
 The original phulo.in WordPress website is not modified. No original WordPress database/private admin was imported. Existing public reference images and catalog data are preserved; see [ASSET-SOURCES.md](ASSET-SOURCES.md).
+
+## Category and product imagery
+
+Catalog image references use product-specific previews matched against the PHULO storefront and visually reviewed. Magnetic sign and MDF cut-panel examples have separately recorded public reference sources; the rate-card preview is an original generated SAMPLE DESIGN mockup. See ASSET-SOURCES.md. Home category thumbnails show the corresponding printed product type. Library sample artwork uses category-specific nature, landscape, floral, business, festival, wedding and abstract illustrations.
+
+On startup, catalog-image-corrections.json replaces only the known previous default image for each catalog slug. It does not overwrite admin-uploaded/custom image URLs or modify prices, availability, customer orders, private originals or other product fields.

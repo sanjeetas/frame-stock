@@ -1,3 +1,4 @@
+import { SampleIllustration } from "./SampleIllustration";
 import type { Product } from "../../types";
 import { imageUrl } from "../../lib/utils";
 export function Artwork({
@@ -12,7 +13,7 @@ export function Artwork({
       <img
         className={className + " h-full w-full object-contain"}
         src={imageUrl(product.image)}
-        alt={`${product.title} — category illustration`}
+        alt={`${product.title} — product preview`}
         loading="lazy"
       />
     );
@@ -37,36 +38,7 @@ export function Artwork({
         </pattern>
       </defs>
       <rect width="640" height="480" fill={product.bg} />
-      {product.variant % 2 === 0 ? (
-        <>
-          {Array.from({ length: 7 }, (_, i) => (
-            <ellipse
-              key={i}
-              cx={200 + i * 40}
-              cy={160 + (i % 2) * 70}
-              rx="32"
-              ry="95"
-              fill={product.fg}
-              opacity={0.3 + i * 0.07}
-              transform={`rotate(${i % 2 ? 35 : -35} ${200 + i * 40} ${160 + (i % 2) * 70})`}
-            />
-          ))}
-        </>
-      ) : (
-        <>
-          <circle cx="450" cy="100" r="46" fill="#f5d691" />
-          <path
-            d="M0 350L170 120L330 300L470 140L640 340V480H0"
-            fill={product.fg}
-            opacity=".45"
-          />
-          <path
-            d="M0 410L220 245L370 370L530 250L640 385V480H0"
-            fill={product.fg}
-            opacity=".7"
-          />
-        </>
-      )}
+      <SampleIllustration product={product} />
       <text x="34" y="410" fill={product.fg} fontSize="31" fontFamily="Georgia">
         {product.title}
       </text>

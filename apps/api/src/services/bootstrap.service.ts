@@ -35,6 +35,7 @@ export async function seedCatalog() {
     };
   });
   await Product.bulkWrite(operations, { ordered: false });
+  await applyCatalogImageCorrections();
 }
 export async function bootstrapApplication(
   input: Record<string, string | undefined>,
@@ -63,4 +64,35 @@ export async function bootstrapApplication(
       role: "admin",
     });
   }
+}
+
+export async function applyCatalogImageCorrections() {
+  const source = fileURLToPath(
+    new URL(
+      "../../../../public/catalog-image-corrections.json",
+      import.meta.url,
+    ),
+  );
+  const localImage = z.string().regex(/^assets\/[\w.-]+$/);
+  const corrections = z
+    .array(
+      z
+        .object({
+          slug: z.string().regex(/^[\w-]{1,80}$/),
+          previousImage: localImage,
+          image: localImage,
+        })
+        .strict(),
+    )
+    .parse(JSON.parse(await readFile(source, "utf8")));
+  // Only replace known old placeholders; preserve admin uploads and custom image URLs.
+  await Product.bulkWrite(
+    corrections.map((row) => ({
+      updateOne: {
+        filter: { slug: row.slug, image: row.previousImage },
+        update: { $set: { image: row.image } },
+      },
+    })),
+    { ordered: false },
+  );
 }

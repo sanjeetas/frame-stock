@@ -196,7 +196,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                 <p className="mt-4 text-xs leading-5 text-slate-500">
                   {p.kind === "image"
                     ? "Free watermarked preview. HD files require a confirmed quote, uploaded original, and admin payment verification."
-                    : "Images illustrate the product category. Final size, material, availability and pricing are confirmed before production."}
+                    : "Product images show representative print examples. Final size, material, availability and pricing are confirmed before production."}
                 </p>
               </div>
             </div>

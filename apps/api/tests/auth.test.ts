@@ -637,3 +637,34 @@ test("bootstrap seeds and creates an admin once without overwriting passwords or
   });
   assert.equal(derived.FRONTEND_ORIGIN, "https://phulo-test.onrender.com");
 });
+
+test("catalog image corrections replace only known placeholders and preserve admin edits", async () => {
+  const { applyCatalogImageCorrections } =
+    await import("../src/services/bootstrap.service.js");
+  const { readFile } = await import("node:fs/promises");
+  const catalog = JSON.parse(
+    await readFile(
+      new URL("../../../public/catalog.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  await Product.updateOne(
+    { slug: "p1" },
+    { $set: { image: "assets/acrylic.webp", price: 777 } },
+  );
+  await Product.updateOne(
+    { slug: "p42" },
+    { $set: { image: "https://example.test/admin-uploaded-mug.jpg" } },
+  );
+  await applyCatalogImageCorrections();
+  await applyCatalogImageCorrections();
+  assert.equal(
+    (await Product.findOne({ slug: "p1" }))?.image,
+    catalog.find((p: { id: string }) => p.id === "p1").image,
+  );
+  assert.equal((await Product.findOne({ slug: "p1" }))?.price, 777);
+  assert.equal(
+    (await Product.findOne({ slug: "p42" }))?.image,
+    "https://example.test/admin-uploaded-mug.jpg",
+  );
+});

@@ -24,12 +24,12 @@ import { ErrorState } from "./components/Feedback";
 import type { CartItem, Product } from "./types";
 import { asset } from "./lib/utils";
 const categories = [
-  ["Digital printing", "digital.png", "Printing Products"],
-  ["Signage & boards", "acrylic.webp", "Printing Products"],
-  ["Customised products", "exhibition.jpg", "Customised Products"],
-  ["Gifting items", "display.jpg", "Gifting Items"],
-  ["Image library", "venue.jpg", "Image Library"],
-  ["Rollups & standees", "standee.jpg", "Printing Products"],
+  ["Digital printing", "product-p78.webp", "Printing Products"],
+  ["Signage & boards", "product-p6.webp", "Printing Products"],
+  ["Customised products", "product-p45.webp", "Customised Products"],
+  ["Gifting items", "product-p42.webp", "Gifting Items"],
+  ["Image library", "library-samples.svg", "Image Library"],
+  ["Rollups & standees", "product-p24.webp", "Printing Products"],
 ];
 export function App() {
   const auth = useAuth(),

@@ -8,7 +8,7 @@
     "unit": "item",
     "description": "Poster – Starting at ₹160 – Used for promotions and advertisements.",
     "kind": "product",
-    "image": "assets/acrylic.webp",
+    "image": "assets/product-p1.webp",
     "editable": false,
     "published": true
   },
@@ -21,7 +21,7 @@
     "unit": "item",
     "description": "Bulk Posters (25 pcs) – ₹350 – Cost-effective marketing.",
     "kind": "product",
-    "image": "assets/acrylic.webp",
+    "image": "assets/product-p2.webp",
     "editable": false,
     "published": true
   },
@@ -34,7 +34,7 @@
     "unit": "item",
     "description": "Outdoor Signs – Starting at ₹250 – Weather-resistant signage.",
     "kind": "product",
-    "image": "assets/acrylic.webp",
+    "image": "assets/product-p3.webp",
     "editable": false,
     "published": true
   },
@@ -47,7 +47,7 @@
     "unit": "item",
     "description": "Board Signs – Starting at ₹220 – Indoor and outdoor boards.",
     "kind": "product",
-    "image": "assets/acrylic.webp",
+    "image": "assets/product-p4.png",
     "editable": false,
     "published": true
   },
@@ -60,7 +60,7 @@
     "unit": "item",
     "description": "Plastic Signboards – Starting at ₹550 – Lightweight and durable.",
     "kind": "product",
-    "image": "assets/acrylic.webp",
+    "image": "assets/product-p5.webp",
     "editable": false,
     "published": true
   },
@@ -73,7 +73,7 @@
     "unit": "item",
     "description": "Acrylic Signs – Starting at ₹1200 – Premium glossy signage.",
     "kind": "product",
-    "image": "assets/acrylic.webp",
+    "image": "assets/product-p6.webp",
     "editable": false,
     "published": true
   },
@@ -86,7 +86,7 @@
     "unit": "item",
     "description": "Frame Boards – Starting at ₹600 – Framed display boards.",
     "kind": "product",
-    "image": "assets/acrylic.webp",
+    "image": "assets/product-p7.webp",
     "editable": false,
     "published": true
   },
@@ -99,7 +99,7 @@
     "unit": "item",
     "description": "Canvas Signs – Starting at ₹820 – Premium artistic finish.",
     "kind": "product",
-    "image": "assets/acrylic.webp",
+    "image": "assets/product-p8.webp",
     "editable": false,
     "published": true
   },
@@ -112,7 +112,7 @@
     "unit": "item",
     "description": "Magnetic Signs – ₹220 – Temporary signage on metal surfaces.",
     "kind": "product",
-    "image": "assets/acrylic.webp",
+    "image": "assets/product-magnetic-sign.jpg",
     "editable": false,
     "published": true
   },
@@ -125,7 +125,7 @@
     "unit": "item",
     "description": "Name Plates – Starting at ₹275 – Home and office nameplates.",
     "kind": "product",
-    "image": "assets/acrylic.webp",
+    "image": "assets/product-p10.webp",
     "editable": false,
     "published": true
   },
@@ -138,7 +138,7 @@
     "unit": "item",
     "description": "Black Back Star Flex Print – Price per sq.ft (WhatsApp based)",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p11.webp",
     "editable": false,
     "published": true
   },
@@ -151,7 +151,7 @@
     "unit": "item",
     "description": "Normal Flex Print – Price per sq.ft (WhatsApp based)",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p12.webp",
     "editable": false,
     "published": true
   },
@@ -164,7 +164,7 @@
     "unit": "item",
     "description": "Backlight Vinyl Print – Price per sq.ft (WhatsApp based)",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p13.webp",
     "editable": false,
     "published": true
   },
@@ -177,7 +177,7 @@
     "unit": "item",
     "description": "Clear Vinyl Print – Price per sq.ft (WhatsApp based)",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p14.webp",
     "editable": false,
     "published": true
   },
@@ -190,7 +190,7 @@
     "unit": "item",
     "description": "Frosted Vinyl Print – Price per sq.ft (WhatsApp based)",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p15.webp",
     "editable": false,
     "published": true
   },
@@ -203,7 +203,7 @@
     "unit": "item",
     "description": "Indoor & Outdoor Vinyl Print – Price per sq.ft (WhatsApp based)",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p16.webp",
     "editable": false,
     "published": true
   },
@@ -216,7 +216,7 @@
     "unit": "item",
     "description": "One Way Vision Print – Price per sq.ft (WhatsApp based)",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p17.webp",
     "editable": false,
     "published": true
   },
@@ -229,7 +229,7 @@
     "unit": "item",
     "description": "Flag Print – Price per sq.ft (WhatsApp based)",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p18.webp",
     "editable": false,
     "published": true
   },
@@ -242,7 +242,7 @@
     "unit": "item",
     "description": "Satin Fabric Banner – Price per sq.ft (WhatsApp based)",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p19.jpg",
     "editable": false,
     "published": true
   },
@@ -255,7 +255,7 @@
     "unit": "sq.ft",
     "description": "Solvent Canvas Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p60.webp",
     "editable": false,
     "published": true
   },
@@ -268,7 +268,7 @@
     "unit": "item",
     "description": "Photo Paper Print",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p21.webp",
     "editable": false,
     "published": true
   },
@@ -281,7 +281,7 @@
     "unit": "item",
     "description": "HP Inkjet Digital Vinyl Print",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p22.webp",
     "editable": false,
     "published": true
   },
@@ -294,7 +294,7 @@
     "unit": "item",
     "description": "Translight Backlit Print",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p23.webp",
     "editable": false,
     "published": true
   },
@@ -307,7 +307,7 @@
     "unit": "item",
     "description": "Standee / Rollup – ₹1350",
     "kind": "product",
-    "image": "assets/standee.jpg",
+    "image": "assets/product-p24.webp",
     "editable": false,
     "published": true
   },
@@ -320,7 +320,7 @@
     "unit": "item",
     "description": "Tabletop Standees – ₹850",
     "kind": "product",
-    "image": "assets/standee.jpg",
+    "image": "assets/product-p25.webp",
     "editable": false,
     "published": true
   },
@@ -333,7 +333,7 @@
     "unit": "item",
     "description": "Tabletop Signs – ₹250",
     "kind": "product",
-    "image": "assets/standee.jpg",
+    "image": "assets/product-p26.webp",
     "editable": false,
     "published": true
   },
@@ -346,7 +346,7 @@
     "unit": "item",
     "description": "Acrylic Display Stands – ₹750",
     "kind": "product",
-    "image": "assets/standee.jpg",
+    "image": "assets/product-p27.webp",
     "editable": false,
     "published": true
   },
@@ -359,7 +359,7 @@
     "unit": "item",
     "description": "Danglers (10 pcs) – ₹150",
     "kind": "product",
-    "image": "assets/standee.jpg",
+    "image": "assets/product-p28.webp",
     "editable": false,
     "published": true
   },
@@ -372,7 +372,7 @@
     "unit": "item",
     "description": "Window Stickers – Starting ₹210",
     "kind": "product",
-    "image": "assets/wall.jpg",
+    "image": "assets/product-p29.webp",
     "editable": false,
     "published": true
   },
@@ -385,7 +385,7 @@
     "unit": "item",
     "description": "Custom Car Door Decals – Starting ₹250",
     "kind": "product",
-    "image": "assets/wall.jpg",
+    "image": "assets/product-p30.webp",
     "editable": false,
     "published": true
   },
@@ -398,7 +398,7 @@
     "unit": "item",
     "description": "Visiting Card Stickers (10 pcs) – ₹150",
     "kind": "product",
-    "image": "assets/wall.jpg",
+    "image": "assets/product-p31.webp",
     "editable": false,
     "published": true
   },
@@ -411,7 +411,7 @@
     "unit": "item",
     "description": "Vinyl Stickers – As per size",
     "kind": "product",
-    "image": "assets/wall.jpg",
+    "image": "assets/product-p32.webp",
     "editable": false,
     "published": true
   },
@@ -424,7 +424,7 @@
     "unit": "item",
     "description": "Flyers (25 pcs) – ₹250",
     "kind": "product",
-    "image": "assets/indoor.png",
+    "image": "assets/product-p33.webp",
     "editable": false,
     "published": true
   },
@@ -437,7 +437,7 @@
     "unit": "item",
     "description": "Bulk Flyers (2500 pcs) – ₹6500",
     "kind": "product",
-    "image": "assets/indoor.png",
+    "image": "assets/product-p34.webp",
     "editable": false,
     "published": true
   },
@@ -450,7 +450,7 @@
     "unit": "item",
     "description": "Postcards (20 pcs) – ₹150",
     "kind": "product",
-    "image": "assets/indoor.png",
+    "image": "assets/product-p35.jpg",
     "editable": false,
     "published": true
   },
@@ -463,7 +463,7 @@
     "unit": "item",
     "description": "Menu Cards (20 pcs) – ₹250",
     "kind": "product",
-    "image": "assets/indoor.png",
+    "image": "assets/product-p36.webp",
     "editable": false,
     "published": true
   },
@@ -476,7 +476,7 @@
     "unit": "item",
     "description": "Rate Cards (20 pcs) – ₹250",
     "kind": "product",
-    "image": "assets/indoor.png",
+    "image": "assets/product-rate-cards.png",
     "editable": false,
     "published": true
   },
@@ -489,7 +489,7 @@
     "unit": "item",
     "description": "Brochure Printing – As per requirement",
     "kind": "product",
-    "image": "assets/indoor.png",
+    "image": "assets/product-p38.webp",
     "editable": false,
     "published": true
   },
@@ -502,7 +502,7 @@
     "unit": "item",
     "description": "Visiting Card Printing – As per requirement",
     "kind": "product",
-    "image": "assets/indoor.png",
+    "image": "assets/product-p39.webp",
     "editable": false,
     "published": true
   },
@@ -515,7 +515,7 @@
     "unit": "item",
     "description": "Laser Cut – Price depends on design",
     "kind": "product",
-    "image": "assets/outdoor.jpg",
+    "image": "assets/product-p40.webp",
     "editable": false,
     "published": true
   },
@@ -528,7 +528,7 @@
     "unit": "item",
     "description": "MDF Laser Cut – Price depends on thickness",
     "kind": "product",
-    "image": "assets/outdoor.jpg",
+    "image": "assets/product-mdf-laser-cut.png",
     "editable": false,
     "published": true
   },
@@ -541,7 +541,7 @@
     "unit": "item",
     "description": "Printed Mugs – ₹450 – Ready-made item.",
     "kind": "product",
-    "image": "assets/digital.png",
+    "image": "assets/product-p42.webp",
     "editable": false,
     "published": true
   },
@@ -554,7 +554,7 @@
     "unit": "item",
     "description": "Photo Frame (8×8 inch table stand) – ₹450 – Direct dispatch.",
     "kind": "product",
-    "image": "assets/digital.png",
+    "image": "assets/product-p43.webp",
     "editable": false,
     "published": true
   },
@@ -567,7 +567,7 @@
     "unit": "item",
     "description": "Canvas Printed Bags – ₹1000 – Design confirmation required.",
     "kind": "product",
-    "image": "assets/digital.png",
+    "image": "assets/product-p44.webp",
     "editable": true,
     "published": true
   },
@@ -580,7 +580,7 @@
     "unit": "item",
     "description": "Round Neck T-Shirts – ₹750 – Custom print.",
     "kind": "product",
-    "image": "assets/digital.png",
+    "image": "assets/product-p45.webp",
     "editable": true,
     "published": true
   },
@@ -593,7 +593,7 @@
     "unit": "item",
     "description": "Paper Bags – ₹450 – Custom size and branding.",
     "kind": "product",
-    "image": "assets/digital.png",
+    "image": "assets/product-p46.webp",
     "editable": true,
     "published": true
   },
@@ -606,7 +606,7 @@
     "unit": "sq.ft",
     "description": "White Flex Only • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p47.webp",
     "editable": false,
     "published": true
   },
@@ -619,7 +619,7 @@
     "unit": "sq.ft",
     "description": "Black Back White Flex Only • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p48.webp",
     "editable": false,
     "published": true
   },
@@ -632,7 +632,7 @@
     "unit": "sq.ft",
     "description": "Solvent Normal Flex Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p49.webp",
     "editable": false,
     "published": true
   },
@@ -645,7 +645,7 @@
     "unit": "sq.ft",
     "description": "Solvent Matt Flex Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p50.webp",
     "editable": false,
     "published": true
   },
@@ -658,7 +658,7 @@
     "unit": "sq.ft",
     "description": "Solvent Star Glossy Flex Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p51.webp",
     "editable": false,
     "published": true
   },
@@ -671,7 +671,7 @@
     "unit": "sq.ft",
     "description": "Solvent Star Matt Flex Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p52.webp",
     "editable": false,
     "published": true
   },
@@ -684,7 +684,7 @@
     "unit": "sq.ft",
     "description": "Solvent Back lit Flex Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p53.webp",
     "editable": false,
     "published": true
   },
@@ -697,7 +697,7 @@
     "unit": "sq.ft",
     "description": "Solvent Black to Back Star Matt Flex Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p54.webp",
     "editable": false,
     "published": true
   },
@@ -710,7 +710,7 @@
     "unit": "sq.ft",
     "description": "Solvent vinyl Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p55.webp",
     "editable": false,
     "published": true
   },
@@ -723,7 +723,7 @@
     "unit": "sq.ft",
     "description": "Solvent Clear Vinyl Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p56.webp",
     "editable": false,
     "published": true
   },
@@ -736,7 +736,7 @@
     "unit": "sq.ft",
     "description": "Solvent One way Vision Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p57.webp",
     "editable": false,
     "published": true
   },
@@ -749,7 +749,7 @@
     "unit": "sq.ft",
     "description": "Solvent Vinyl Print with 3 MM Sun board Mounting • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p58.webp",
     "editable": false,
     "published": true
   },
@@ -762,7 +762,7 @@
     "unit": "sq.ft",
     "description": "Solvent Vinyl Print with 5 MM Sun board Mounting • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p59.webp",
     "editable": false,
     "published": true
   },
@@ -775,7 +775,7 @@
     "unit": "sq.ft",
     "description": "Eco Vinyl Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p61.webp",
     "editable": false,
     "published": true
   },
@@ -788,7 +788,7 @@
     "unit": "sq.ft",
     "description": "Eco Vinyl Print & Matt Lamination • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p62.webp",
     "editable": false,
     "published": true
   },
@@ -801,7 +801,7 @@
     "unit": "sq.ft",
     "description": "Eco Vinyl Print with 3 MM Sun board Mounting • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p63.webp",
     "editable": false,
     "published": true
   },
@@ -814,7 +814,7 @@
     "unit": "sq.ft",
     "description": "Eco Vinyl Print with 5 MM Sun board Mounting • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p64.webp",
     "editable": false,
     "published": true
   },
@@ -827,7 +827,7 @@
     "unit": "sq.ft",
     "description": "Eco Clear Vinyl Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p65.webp",
     "editable": false,
     "published": true
   },
@@ -840,7 +840,7 @@
     "unit": "sq.ft",
     "description": "Eco Canvas Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p66.webp",
     "editable": false,
     "published": true
   },
@@ -853,7 +853,7 @@
     "unit": "sq.ft",
     "description": "Hp Digital Vinyl Print & Matt Lamination • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p62.webp",
     "editable": false,
     "published": true
   },
@@ -866,7 +866,7 @@
     "unit": "sq.ft",
     "description": "Hp Digital Vinyl Print & Matt Lamination with 3 MM SB • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p68.webp",
     "editable": false,
     "published": true
   },
@@ -879,7 +879,7 @@
     "unit": "sq.ft",
     "description": "Hp Digital Vinyl Print & Matt Lamination with 5 MM SB • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p69.webp",
     "editable": false,
     "published": true
   },
@@ -892,7 +892,7 @@
     "unit": "sq.ft",
     "description": "Hp Digital Canvas Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p70.webp",
     "editable": false,
     "published": true
   },
@@ -905,7 +905,7 @@
     "unit": "sq.ft",
     "description": "Hp Digital Canvas Print With Coating Waterproof • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p71.webp",
     "editable": false,
     "published": true
   },
@@ -918,7 +918,7 @@
     "unit": "sq.ft",
     "description": "Hp Digital Silk Fabric Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p72.webp",
     "editable": false,
     "published": true
   },
@@ -931,7 +931,7 @@
     "unit": "sq.ft",
     "description": "Hp Digital Normal Paper Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p73.webp",
     "editable": false,
     "published": true
   },
@@ -944,7 +944,7 @@
     "unit": "sq.ft",
     "description": "Hp Digital Photo Paper Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p74.webp",
     "editable": false,
     "published": true
   },
@@ -957,7 +957,7 @@
     "unit": "sq.ft",
     "description": "Hp Digital Clear Vinyl Print • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p75.webp",
     "editable": false,
     "published": true
   },
@@ -970,7 +970,7 @@
     "unit": "pcs",
     "description": "Hp Digital Newspaper Print • Price per pcs",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p76.webp",
     "editable": false,
     "published": true
   },
@@ -983,7 +983,7 @@
     "unit": "sq.ft",
     "description": "Colour Vinyl Plotter Cutting • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p77.webp",
     "editable": false,
     "published": true
   },
@@ -996,7 +996,7 @@
     "unit": "pcs",
     "description": "Konica Digital Card Paper Print (12\" X 18\") 300n GSM • Price per pcs",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p78.webp",
     "editable": false,
     "published": true
   },
@@ -1009,7 +1009,7 @@
     "unit": "pcs",
     "description": "Konica Digital Sticker Paper Print (12\" X 18\") • Price per pcs",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p79.webp",
     "editable": false,
     "published": true
   },
@@ -1022,7 +1022,7 @@
     "unit": "pcs",
     "description": "Konica Digital Clear Sticker Paper Print (12\" X 18\") • Price per pcs",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p80.webp",
     "editable": false,
     "published": true
   },
@@ -1035,7 +1035,7 @@
     "unit": "pcs",
     "description": "Konica Digital Normal Paper Print ( A3 ) • Price per pcs",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p81.webp",
     "editable": false,
     "published": true
   },
@@ -1048,7 +1048,7 @@
     "unit": "pcs",
     "description": "Konica Digital Normal Paper Print ( A4 ) • Price per pcs",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p82.webp",
     "editable": false,
     "published": true
   },
@@ -1061,7 +1061,7 @@
     "unit": "sq.ft",
     "description": "Konica Digital Green Legal Paper Print (8\" X 14\") • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p83.webp",
     "editable": false,
     "published": true
   },
@@ -1074,7 +1074,7 @@
     "unit": "sq.ft",
     "description": "3 MM Sun Board Sheet (48\" X 96\") • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p84.webp",
     "editable": false,
     "published": true
   },
@@ -1087,7 +1087,7 @@
     "unit": "sq.ft",
     "description": "5 MM Sun Board Sheet (48\" X 96\") • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p85.webp",
     "editable": false,
     "published": true
   },
@@ -1100,7 +1100,7 @@
     "unit": "sq.ft",
     "description": "Roll up Standee (3' X 6') Only Standee • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p86.webp",
     "editable": false,
     "published": true
   },
@@ -1113,7 +1113,7 @@
     "unit": "sq.ft",
     "description": "Roll up Standee (2.5' X 6') Only Standee • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p87.webp",
     "editable": false,
     "published": true
   },
@@ -1126,7 +1126,7 @@
     "unit": "sq.ft",
     "description": "Only Pasting & Mounting Charges in Mumbai Limit • Price per sq.ft",
     "kind": "product",
-    "image": "assets/flex.webp",
+    "image": "assets/product-p88.webp",
     "editable": false,
     "published": true
   },
@@ -1139,7 +1139,7 @@
     "unit": "sheet",
     "description": "Material and size confirmation required.",
     "kind": "product",
-    "image": "assets/mirror.webp",
+    "image": "assets/product-p89.webp",
     "editable": false,
     "published": true
   },
@@ -1152,7 +1152,7 @@
     "unit": "sheet",
     "description": "Material and size confirmation required.",
     "kind": "product",
-    "image": "assets/mirror.webp",
+    "image": "assets/product-p90.webp",
     "editable": false,
     "published": true
   },
@@ -1165,7 +1165,7 @@
     "unit": "sheet",
     "description": "Material and size confirmation required.",
     "kind": "product",
-    "image": "assets/mirror.webp",
+    "image": "assets/product-p91.webp",
     "editable": false,
     "published": true
   },
@@ -1178,7 +1178,7 @@
     "unit": "sheet",
     "description": "Material and size confirmation required.",
     "kind": "product",
-    "image": "assets/mirror.webp",
+    "image": "assets/product-p92.webp",
     "editable": false,
     "published": true
   },
@@ -1191,7 +1191,7 @@
     "unit": "sq.ft / mm",
     "description": "Material and size confirmation required.",
     "kind": "product",
-    "image": "assets/mirror.webp",
+    "image": "assets/product-p93.webp",
     "editable": false,
     "published": true
   },
@@ -1204,7 +1204,7 @@
     "unit": "sq.ft / mm",
     "description": "Material and size confirmation required.",
     "kind": "product",
-    "image": "assets/mirror.webp",
+    "image": "assets/product-p94.webp",
     "editable": false,
     "published": true
   },
@@ -1217,7 +1217,7 @@
     "unit": "sq.ft",
     "description": "Final quote depends on design and cutting requirements.",
     "kind": "product",
-    "image": "assets/outdoor.jpg",
+    "image": "assets/product-p95.png",
     "editable": false,
     "published": true
   },
@@ -1230,7 +1230,7 @@
     "unit": "sq.ft",
     "description": "Final quote depends on design and cutting requirements.",
     "kind": "product",
-    "image": "assets/outdoor.jpg",
+    "image": "assets/product-p96.webp",
     "editable": false,
     "published": true
   },
@@ -1243,7 +1243,7 @@
     "unit": "sq.ft",
     "description": "Final quote depends on design and cutting requirements.",
     "kind": "product",
-    "image": "assets/outdoor.jpg",
+    "image": "assets/product-p97.webp",
     "editable": false,
     "published": true
   },
@@ -1256,7 +1256,7 @@
     "unit": "sq.ft",
     "description": "Final quote depends on design and cutting requirements.",
     "kind": "product",
-    "image": "assets/outdoor.jpg",
+    "image": "assets/product-p98.webp",
     "editable": false,
     "published": true
   },
@@ -1269,7 +1269,7 @@
     "unit": "sq.ft",
     "description": "Final quote depends on design and cutting requirements.",
     "kind": "product",
-    "image": "assets/outdoor.jpg",
+    "image": "assets/product-p99.webp",
     "editable": false,
     "published": true
   },
@@ -1282,7 +1282,7 @@
     "unit": "sq.ft",
     "description": "Final quote depends on design and cutting requirements.",
     "kind": "product",
-    "image": "assets/outdoor.jpg",
+    "image": "assets/product-p100.webp",
     "editable": false,
     "published": true
   },
@@ -1295,7 +1295,7 @@
     "unit": "sq.ft",
     "description": "Final quote depends on design and cutting requirements.",
     "kind": "product",
-    "image": "assets/outdoor.jpg",
+    "image": "assets/product-p101.webp",
     "editable": false,
     "published": true
   },
@@ -1308,7 +1308,7 @@
     "unit": "sq.ft",
     "description": "Final quote depends on design and cutting requirements.",
     "kind": "product",
-    "image": "assets/outdoor.jpg",
+    "image": "assets/product-p102.webp",
     "editable": false,
     "published": true
   },
