@@ -62,6 +62,33 @@ export function Admin() {
         ? `/admin/orders?page=${orderPage}&limit=10${status ? "&status=" + status : ""}`
         : null,
     );
+  const storage = useApiQuery<{ usedBytes: number; limitBytes: number }>(
+    allowed ? "/admin/storage" : null,
+  );
+  async function removeOriginal() {
+    if (
+      !editing ||
+      !window.confirm(
+        "Remove this private original? Existing paid orders cannot download it until a replacement is uploaded.",
+      )
+    )
+      return;
+    setBusy(true);
+    setProductError("");
+    try {
+      await api("/admin/products/" + editing.id + "/file", {
+        method: "DELETE",
+      });
+      setEditing({ ...editing, hasFile: false });
+      products.reload();
+      storage.reload();
+      setSuccess("Private original removed.");
+    } catch (error) {
+      setProductError((error as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
   async function hide(p: Product) {
     setBusy(true);
     setError("");
@@ -146,6 +173,7 @@ export function Admin() {
         );
       setOpen(false);
       products.reload();
+      storage.reload();
       setSuccess("Product and selected files saved.");
     } catch (e) {
       setProductError(
@@ -172,6 +200,14 @@ export function Admin() {
     <section className="mx-auto max-w-7xl px-5 py-10">
       <p className="text-xs tracking-widest text-cyan-700">PHULO OPERATIONS</p>
       <h1 className="mt-2 mb-6 text-3xl font-bold">Admin dashboard</h1>
+      {storage.data && (
+        <p className="mb-5 rounded-lg bg-slate-50 p-3 text-xs text-slate-600">
+          Library storage:{" "}
+          {(storage.data.data.usedBytes / 1024 / 1024).toFixed(1)} MB of{" "}
+          {Math.round(storage.data.data.limitBytes / 1024 / 1024)} MB · Files
+          are stored in MongoDB and survive server restarts.
+        </p>
+      )}
       <div className="mb-6 flex gap-3">
         <Button
           variant={tab === "products" ? "default" : "outline"}
@@ -533,6 +569,16 @@ export function Admin() {
                 ? "An original is uploaded. A new upload replaces it."
                 : "No original file uploaded yet."}
             </p>
+            {editing?.hasFile && (
+              <Button
+                type="button"
+                variant="destructive"
+                disabled={busy}
+                onClick={removeOriginal}
+              >
+                Remove private original
+              </Button>
+            )}
             <div className="flex gap-6 text-sm">
               <label className="flex items-center gap-2">
                 <input

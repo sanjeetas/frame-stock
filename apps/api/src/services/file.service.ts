@@ -1,7 +1,6 @@
 import { randomBytes } from "node:crypto";
-import { mkdir, writeFile, access } from "node:fs/promises";
-import { resolve, join } from "node:path";
 import sharp from "sharp";
+import { bucket, storeBlob, removeBlob } from "./blob.service.js";
 import { Product } from "../models/product.model.js";
 import { ownedOrder } from "./order.service.js";
 import { AppError } from "../lib.js";
@@ -16,13 +15,22 @@ export async function saveOriginal(
     throw new AppError(400, "INVALID_FILE", "Choose a file to upload.");
   const product = await Product.findById(id);
   if (!product) throw new AppError(404, "NOT_FOUND", "Product not found.");
-  const folder = resolve(config.DATA_DIR, "originals");
-  await mkdir(folder, { recursive: true });
-  const path = join(folder, randomBytes(24).toString("hex"));
-  await writeFile(path, bytes, { mode: 0o600 });
-  product.set("originalFile", { path, name });
-  product.hasFile = true;
-  await product.save();
+  const gridfsId = await storeBlob("originals", bytes, name, config);
+  try {
+    const previous = await Product.findByIdAndUpdate(
+      id,
+      { $set: { originalFile: { gridfsId, name }, hasFile: true } },
+      { returnDocument: "before" },
+    ).select("+originalFile");
+    if (!previous) throw new AppError(404, "NOT_FOUND", "Product not found.");
+    if (previous.originalFile?.gridfsId)
+      await removeBlob("originals", previous.originalFile.gridfsId).catch(
+        () => undefined,
+      );
+  } catch (error) {
+    await removeBlob("originals", gridfsId);
+    throw error;
+  }
   return { uploaded: true };
 }
 export async function savePreview(id: string, bytes: Buffer, config: Config) {
@@ -42,8 +50,11 @@ export async function savePreview(id: string, bytes: Buffer, config: Config) {
       .toBuffer();
     if (product.kind === "image") {
       const info = await sharp(resized).metadata();
+      // Outlined vector letters avoid relying on fonts installed in a slim container.
+      const letters =
+        "M12 36V66M12 36H25C40 36 40 52 25 52H12M45 36V66M66 36V66M45 51H66M78 36V54Q78 66 89 66Q100 66 100 54V36M112 36V66H132M155 36A12 15 0 1 0 155 66A12 15 0 1 0 155 36";
       const watermark = Buffer.from(
-        `<svg width="${info.width}" height="${info.height}"><defs><pattern id="w" width="210" height="110" patternUnits="userSpaceOnUse" patternTransform="rotate(-25)"><text x="5" y="50" fill="#fff" stroke="#16344b" stroke-width="0.4" opacity="0.5" font-size="19" font-family="Arial">PHULO PREVIEW</text></pattern></defs><rect width="100%" height="100%" fill="url(#w)"/></svg>`,
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${info.width}" height="${info.height}"><defs><pattern id="w" width="200" height="100" patternUnits="userSpaceOnUse" patternTransform="rotate(-25)"><path d="${letters}" fill="none" stroke="#fff" stroke-width="3" opacity="0.35"/><path d="${letters}" fill="none" stroke="#16344b" stroke-width="1.6" opacity="0.4"/></pattern></defs><rect width="100%" height="100%" fill="url(#w)"/></svg>`,
       );
       output = await sharp(resized)
         .composite([{ input: watermark }])
@@ -57,13 +68,28 @@ export async function savePreview(id: string, bytes: Buffer, config: Config) {
       "Choose a PNG, JPEG or WebP image with at most 25 million pixels.",
     );
   }
-  const name = randomBytes(16).toString("hex") + ".png",
-    folder = resolve(config.DATA_DIR, "previews");
-  await mkdir(folder, { recursive: true });
-  await writeFile(join(folder, name), output);
-  product.image = "/api/previews/" + name;
-  await product.save();
-  return { image: product.image };
+  const name = randomBytes(16).toString("hex") + ".png";
+  const gridfsId = await storeBlob("previews", output, name, config);
+  const image = "/api/previews/" + name;
+  try {
+    const previous = await Product.findByIdAndUpdate(
+      id,
+      { $set: { image } },
+      { returnDocument: "before" },
+    );
+    if (!previous) throw new AppError(404, "NOT_FOUND", "Product not found.");
+    const oldName = previous.image?.match(
+      /^\/api\/previews\/([a-f0-9]{32}\.png)$/,
+    )?.[1];
+    if (oldName) {
+      const old = await bucket("previews").find({ filename: oldName }).next();
+      if (old) await removeBlob("previews", old._id).catch(() => undefined);
+    }
+  } catch (error) {
+    await removeBlob("previews", gridfsId);
+    throw error;
+  }
+  return { image };
 }
 export async function downloadFile(
   orderId: string,
@@ -87,10 +113,22 @@ export async function downloadFile(
       "NOT_FOUND",
       "Original file has not been uploaded yet.",
     );
-  try {
-    await access(product.originalFile.path);
-  } catch {
+  const metadata = await bucket("originals")
+    .find({ _id: product.originalFile.gridfsId })
+    .next();
+  if (!metadata)
     throw new AppError(404, "NOT_FOUND", "File is unavailable. Contact PHULO.");
-  }
   return product.originalFile;
+}
+
+export async function deleteOriginal(id: string) {
+  const previous = await Product.findByIdAndUpdate(
+    id,
+    { $unset: { originalFile: 1 }, $set: { hasFile: false } },
+    { returnDocument: "before" },
+  ).select("+originalFile");
+  if (!previous) throw new AppError(404, "NOT_FOUND", "Product not found.");
+  if (previous.originalFile?.gridfsId)
+    await removeBlob("originals", previous.originalFile.gridfsId);
+  return { deleted: true };
 }

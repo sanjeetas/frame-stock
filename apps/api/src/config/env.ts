@@ -17,13 +17,19 @@ const schema = z.object({
   REFRESH_TOKEN_TTL_DAYS: z.coerce.number().int().min(1).max(30).default(7),
   COOKIE_SAME_SITE: z.enum(["lax", "strict", "none"]).default("lax"),
   TRUST_PROXY_HOPS: z.coerce.number().int().min(0).max(3).default(0),
-  DATA_DIR: z.string().default("./data"),
+  UPLOAD_STORAGE_LIMIT_MB: z.coerce.number().int().min(1).max(400).default(400),
 });
 export type Config = z.infer<typeof schema>;
 export function parseConfig(
   input: NodeJS.ProcessEnv | Record<string, unknown>,
 ): Config {
-  const env = schema.parse(input);
+  const env = schema.parse({
+    ...input,
+    FRONTEND_ORIGIN:
+      input.FRONTEND_ORIGIN ||
+      input.RENDER_EXTERNAL_URL ||
+      "http://localhost:5173",
+  });
   const frontend = new URL(env.FRONTEND_ORIGIN);
   if (!["http:", "https:"].includes(frontend.protocol))
     throw new Error("Frontend origin must use HTTP or HTTPS");

@@ -1,9 +1,10 @@
+import { pipeline } from "node:stream/promises";
+import { bucket } from "./services/blob.service.js";
 import express from "express";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import cors from "cors";
 import { rateLimit } from "express-rate-limit";
-import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync } from "node:fs";
 import { z } from "zod";
@@ -63,15 +64,20 @@ export async function createApp(config: Config) {
   app.get("/api/health", (_req, res) => ok(res, { status: "ok" }));
   app.use("/api/auth", authRoutes(auth, config));
   app.use("/api", resourceRoutes(auth, config));
-  app.get("/api/previews/:filename", (req, res, next) => {
+  app.get("/api/previews/:filename", async (req, res, next) => {
     const name = z
       .string()
       .regex(/^[a-f\d]{32}\.png$/)
       .safeParse(req.params.filename);
     if (!name.success)
       return next(new AppError(404, "NOT_FOUND", "Preview not found."));
-    res.sendFile(resolve(config.DATA_DIR, "previews", name.data), (err) => {
-      if (err) next(new AppError(404, "NOT_FOUND", "Preview not found."));
+    const b = bucket("previews"),
+      file = await b.find({ filename: name.data }).next();
+    if (!file) throw new AppError(404, "NOT_FOUND", "Preview not found.");
+    res.type("image/png");
+    await pipeline(b.openDownloadStream(file._id), res).catch((error) => {
+      if (res.headersSent) res.destroy();
+      else next(error);
     });
   });
   app.use("/api", (_req, _res, next) =>

@@ -29,7 +29,7 @@ const schema = new Schema(
     originalFile: {
       type: new Schema(
         {
-          path: { type: String, required: true },
+          gridfsId: { type: Schema.Types.ObjectId, required: true },
           name: { type: String, required: true },
         },
         { _id: false },

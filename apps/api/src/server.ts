@@ -1,3 +1,4 @@
+import { bootstrapApplication } from "./services/bootstrap.service.js";
 import { User } from "./models/user.model.js";
 import { Session, RefreshToken } from "./models/session.model.js";
 import { Product } from "./models/product.model.js";
@@ -18,6 +19,7 @@ async function start() {
     Order.init(),
     Design.init(),
   ]);
+  await bootstrapApplication(process.env);
   const app = await createApp(config);
   const server = app.listen(config.PORT, () =>
     console.log(`PHULO API listening on port ${config.PORT}`),

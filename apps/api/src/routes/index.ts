@@ -1,3 +1,5 @@
+import { pipeline } from "node:stream/promises";
+import { bucket, storageStatus } from "../services/blob.service.js";
 import express, { Router } from "express";
 import { rateLimit } from "express-rate-limit";
 import { z } from "zod";
@@ -51,14 +53,22 @@ export function resourceRoutes(auth: AuthService, config: Config) {
   r.get(
     "/orders/:id/download/:itemIndex",
     validate({ params: s.downloadParams }),
-    async (req, res) => {
+    async (req, res, next) => {
       const f = await files.downloadFile(
         req.validated.params.id,
         req.validated.params.itemIndex,
         req.identity!.userId,
       );
       res.set("Cache-Control", "no-store");
-      res.download(f.path, f.name);
+      res.attachment(f.name);
+      res.type("application/octet-stream");
+      await pipeline(
+        bucket("originals").openDownloadStream(f.gridfsId),
+        res,
+      ).catch((error) => {
+        if (res.headersSent) res.destroy();
+        else next(error);
+      });
     },
   );
   r.use("/designs", identity);
@@ -85,6 +95,9 @@ export function resourceRoutes(auth: AuthService, config: Config) {
     designs.remove,
   );
   r.use("/admin", identity, roles);
+  r.get("/admin/storage", async (_req, res) =>
+    ok(res, await storageStatus(config)),
+  );
   r.get(
     "/admin/products",
     validate({ query: s.productQuery }),
@@ -126,6 +139,13 @@ export function resourceRoutes(auth: AuthService, config: Config) {
           config,
         ),
       ),
+  );
+  r.delete(
+    "/admin/products/:id/file",
+    protect,
+    validate({ params: s.idParams }),
+    async (req, res) =>
+      ok(res, await files.deleteOriginal(req.validated.params.id)),
   );
   r.post(
     "/admin/products/:id/preview",

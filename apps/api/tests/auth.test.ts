@@ -68,7 +68,6 @@ before(
       replSet: { count: 1 },
     });
     config.MONGODB_URI = repl.getUri();
-    config.DATA_DIR = directory;
     await connectDatabase(config.MONGODB_URI);
     await Promise.all([
       User.init(),
@@ -488,4 +487,153 @@ test("catalog seed uses MongoDB and is idempotent", async () => {
   assert.equal(await Product.countDocuments(), count);
   assert.ok(count >= 110);
   assert.equal((await Product.findOne({ title: "Printed Mugs" }))?.price, 450);
+});
+
+test("GridFS keeps originals over 16 MB across app restarts and reclaims replaced/deleted files", async () => {
+  const { bucket } = await import("../src/services/blob.service.js");
+  await admin.get("/api/admin/storage").expect(200);
+  const content = Buffer.alloc(17 * 1024 * 1024, 41);
+  await admin
+    .post("/api/admin/products/" + productId + "/file?filename=large.zip")
+    .set("Origin", origin)
+    .set("X-CSRF-Token", csrfAdmin)
+    .set("Content-Type", "application/octet-stream")
+    .send(content)
+    .expect(200);
+  assert.equal(
+    await mongoose.connection
+      .db!.collection("phulo_originals.files")
+      .countDocuments(),
+    1,
+  );
+  const logged = await login(alice, "alice@example.test", csrfAlice);
+  const cookie = (logged.headers["set-cookie"] as unknown as string[])
+    .find((v) => v.startsWith("phulo_access="))!
+    .split(";")[0]!;
+  const restarted = await createApp(config);
+  const response = await request(restarted)
+    .get("/api/orders/" + orderId + "/download/0")
+    .set("Cookie", cookie)
+    .expect(200);
+  assert.equal(Buffer.isBuffer(response.body), true);
+  assert.equal(response.body.length, content.length);
+  assert.deepEqual(response.body, content);
+  const after = await admin.get("/api/admin/storage").expect(200);
+  assert.equal(after.body.data.usedBytes, content.length);
+  await mutation(
+    alice,
+    "delete",
+    "/api/admin/products/" + productId + "/file",
+    csrfAlice,
+  ).expect(403);
+  await mutation(
+    admin,
+    "delete",
+    "/api/admin/products/" + productId + "/file",
+    csrfAdmin,
+  ).expect(200);
+  assert.equal(
+    await mongoose.connection
+      .db!.collection("phulo_originals.files")
+      .countDocuments(),
+    0,
+  );
+  assert.equal(
+    (await admin.get("/api/admin/storage").expect(200)).body.data.usedBytes,
+    0,
+  );
+  await alice.get("/api/orders/" + orderId + "/download/0").expect(404);
+});
+test("public previews are resized PNGs and cannot expose original files", async () => {
+  const sharp = (await import("sharp")).default;
+  const image = await sharp({
+    create: { width: 1000, height: 1000, channels: 3, background: "#ffffff" },
+  })
+    .png()
+    .toBuffer();
+  const response = await admin
+    .post("/api/admin/products/" + productId + "/preview")
+    .set("Origin", origin)
+    .set("X-CSRF-Token", csrfAdmin)
+    .set("Content-Type", "application/octet-stream")
+    .send(image)
+    .expect(200);
+  const preview = await request(app).get(response.body.data.image).expect(200);
+  assert.match(preview.headers["content-type"], /^image\/png/);
+  const metadata = await sharp(preview.body).metadata();
+  assert.equal(metadata.width, 800);
+  assert.equal(metadata.height, 800);
+  const pixels = await sharp(preview.body).removeAlpha().raw().toBuffer();
+  assert.ok(
+    pixels.some((channel) => channel < 240),
+    "Server-generated watermark must alter a plain white preview.",
+  );
+  await request(app).get("/api/previews/../../phulo_originals").expect(404);
+  const bad = await admin
+    .post("/api/admin/products/" + productId + "/preview")
+    .set("Origin", origin)
+    .set("X-CSRF-Token", csrfAdmin)
+    .set("Content-Type", "application/octet-stream")
+    .send(Buffer.from('<svg onload="alert(1)"/>'))
+    .expect(400);
+  assert.equal(bad.body.error.code, "INVALID_IMAGE");
+});
+test("upload quota fails closed without publishing a dangling file", async () => {
+  const limited = await createApp({ ...config, UPLOAD_STORAGE_LIMIT_MB: 1 });
+  const logged = await login(admin, "admin@example.test", csrfAdmin);
+  const access = (logged.headers["set-cookie"] as unknown as string[])
+    .find((v) => v.startsWith("phulo_access="))!
+    .split(";")[0]!;
+  const response = await request(limited)
+    .post("/api/admin/products/" + productId + "/file?filename=large.zip")
+    .set("Origin", origin)
+    .set("X-CSRF-Token", csrfAdmin)
+    .set("Cookie", [access, "phulo_csrf=" + csrfAdmin.split(".")[0]])
+    .set("Content-Type", "application/octet-stream")
+    .send(Buffer.alloc(2 * 1024 * 1024))
+    .expect(413);
+  assert.equal(response.body.error.code, "STORAGE_LIMIT");
+  assert.equal(
+    (
+      await request(app)
+        .get("/api/products/" + productId)
+        .expect(200)
+    ).body.data.hasFile,
+    false,
+  );
+});
+test("bootstrap seeds and creates an admin once without overwriting passwords or promoting customers", async () => {
+  const { bootstrapApplication } =
+    await import("../src/services/bootstrap.service.js");
+  const env = {
+    AUTO_SEED: "true",
+    BOOTSTRAP_ADMIN: "true",
+    ADMIN_NAME: "Bootstrap Admin",
+    ADMIN_EMAIL: "bootstrap@example.test",
+    ADMIN_PASSWORD: "A bootstrap-only test passphrase",
+  };
+  await bootstrapApplication(env);
+  const before = await User.findOne({ email: env.ADMIN_EMAIL }).select(
+    "+passwordHash",
+  );
+  assert.equal(before?.role, "admin");
+  await bootstrapApplication({
+    ...env,
+    ADMIN_PASSWORD: "A different secure test passphrase",
+  });
+  const after = await User.findOne({ email: env.ADMIN_EMAIL }).select(
+    "+passwordHash",
+  );
+  assert.equal(after?.passwordHash, before?.passwordHash);
+  await assert.rejects(() =>
+    bootstrapApplication({ ...env, ADMIN_EMAIL: "alice@example.test" }),
+  );
+  assert.equal((await User.findById(aliceId))?.role, "user");
+  const derived = parseConfig({
+    ...config,
+    NODE_ENV: "production",
+    FRONTEND_ORIGIN: "",
+    RENDER_EXTERNAL_URL: "https://phulo-test.onrender.com",
+  });
+  assert.equal(derived.FRONTEND_ORIGIN, "https://phulo-test.onrender.com");
 });
