@@ -129,7 +129,7 @@ export function Account({ onSignIn }: { onSignIn: () => void }) {
                           disabled={!!busy}
                           onClick={() => download(o, index)}
                         >
-                          <Download size={14} />
+                          <Download size={18} />
                           {busy === o.id + "-" + index
                             ? "Downloading…"
                             : "Download HD"}
@@ -199,7 +199,7 @@ export function Account({ onSignIn }: { onSignIn: () => void }) {
                     }}
                   >
                     <p className="font-semibold">{d.title}</p>
-                    <p className="mt-2 text-[9px] tracking-widest opacity-60">
+                    <p className="mt-2 text-xs tracking-widest opacity-60">
                       PHULO DESIGN PROOF
                     </p>
                   </div>
@@ -209,7 +209,7 @@ export function Account({ onSignIn }: { onSignIn: () => void }) {
                       variant="outline"
                       onClick={() => setEditing(d)}
                     >
-                      <PenLine size={14} />
+                      <PenLine size={18} />
                       Edit
                     </Button>
                     <Button
@@ -219,7 +219,7 @@ export function Account({ onSignIn }: { onSignIn: () => void }) {
                       aria-label={"Delete " + d.title}
                       onClick={() => mutate(d.id, "/designs/" + d.id, "DELETE")}
                     >
-                      <Trash2 size={16} />
+                      <Trash2 size={20} />
                     </Button>
                   </div>
                 </Card>

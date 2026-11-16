@@ -1,3 +1,88 @@
 @import "tailwindcss";
-@theme {--color-primary:#0c3459;--color-accent:#df3489;--font-sans:Inter,Arial,sans-serif;}
-@layer base{body{@apply m-0 bg-white font-sans text-slate-800 antialiased;}button,a,input,select,textarea{-webkit-tap-highlight-color:transparent;}button,a{@apply cursor-pointer;}button:disabled{@apply cursor-not-allowed;}h1,h2,h3{@apply tracking-tight;}button:focus-visible,a:focus-visible,select:focus-visible{@apply outline-2 outline-offset-4 outline-cyan-600;}select{@apply rounded-md border border-slate-200 bg-white p-2 text-sm;}input[type=color]{@apply h-10 w-full rounded border border-slate-200 p-1;}}
+@theme {
+  --color-primary: #103759;
+  --color-accent: #b91c70;
+  --font-sans: Inter, Arial, sans-serif;
+}
+@layer base {
+  body {
+    @apply m-0 bg-[#fcfcff] font-sans text-base text-slate-800 antialiased;
+  }
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button,
+  a {
+    @apply cursor-pointer;
+  }
+  button:disabled {
+    @apply cursor-not-allowed;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight;
+  }
+  button:focus-visible,
+  a:focus-visible,
+  select:focus-visible {
+    @apply outline-2 outline-offset-4 outline-cyan-600;
+  }
+  select {
+    @apply min-h-12 rounded-xl border border-slate-200 bg-white p-2 text-base;
+  }
+  input[type="color"] {
+    @apply h-12 w-full rounded border border-slate-200 p-1;
+  }
+  .lucide {
+    flex-shrink: 0;
+  }
+}
+.print-hero {
+  background:
+    radial-gradient(ellipse at top right, #ffe3a1, transparent 55%),
+    linear-gradient(120deg, #e0f7ff, #fff0f8 65%);
+}
+.category-tile:nth-child(3n + 1) {
+  background: #e5f6ff;
+}
+.category-tile:nth-child(3n + 2) {
+  background: #ffedf6;
+}
+.category-tile:nth-child(3n) {
+  background: #fff3cf;
+}
+.benefit-card {
+  border-top: 5px solid #1fb9da;
+}
+.benefit-card:nth-child(2) {
+  border-color: #f36ba8;
+}
+.benefit-card:nth-child(3) {
+  border-color: #ffd34c;
+}
+.benefit-card:nth-child(4) {
+  border-color: #71d5b3;
+}
+.contact-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: white;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}

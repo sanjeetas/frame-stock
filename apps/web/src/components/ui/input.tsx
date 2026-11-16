@@ -7,7 +7,7 @@ export const Input = React.forwardRef<
   <input
     ref={ref}
     className={cn(
-      "flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-xs outline-none focus-visible:ring-2 focus-visible:ring-cyan-600 disabled:opacity-50",
+      "flex h-12 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-base shadow-xs outline-none focus-visible:ring-2 focus-visible:ring-cyan-600 disabled:opacity-50",
       className,
     )}
     {...props}
@@ -21,7 +21,7 @@ export function Textarea({
   return (
     <textarea
       className={cn(
-        "min-h-24 w-full rounded-md border border-slate-200 bg-white p-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-cyan-600",
+        "min-h-24 w-full rounded-md border border-slate-200 bg-white p-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-cyan-600",
         className,
       )}
       {...props}

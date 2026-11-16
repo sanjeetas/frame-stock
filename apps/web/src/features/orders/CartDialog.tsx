@@ -127,7 +127,7 @@ export function CartDialog({
               aria-label={"Remove " + i.title}
               onClick={() => onRemove(i.key)}
             >
-              <Trash2 size={16} />
+              <Trash2 size={20} />
             </Button>
           </div>
         ))}

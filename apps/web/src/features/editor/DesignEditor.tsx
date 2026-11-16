@@ -332,11 +332,11 @@ export function DesignEditor({
             )}
             <div className="flex flex-col gap-2">
               <Button onClick={exportPng}>
-                <Download size={16} />
+                <Download size={20} />
                 Download preview PNG
               </Button>
               <Button variant="outline" onClick={save} disabled={busy}>
-                <Save size={16} />
+                <Save size={20} />
                 {busy ? "Saving…" : "Save to my designs"}
               </Button>
               {onApply && (

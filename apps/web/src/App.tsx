@@ -23,6 +23,8 @@ import { Button } from "./components/ui/button";
 import { ErrorState } from "./components/Feedback";
 import type { CartItem, Product } from "./types";
 import { asset } from "./lib/utils";
+import { ContactDetails, Clients } from "./components/CompanySections";
+import { company } from "./lib/company";
 const categories = [
   ["Digital printing", "product-p78.webp", "Printing Products"],
   ["Signage & boards", "product-p6.webp", "Printing Products"],
@@ -88,13 +90,13 @@ export function App() {
         Skip to main content
       </a>
       <div className="bg-primary text-white">
-        <div className="mx-auto flex max-w-7xl justify-between gap-5 px-5 py-2 text-[10px]">
+        <div className="mx-auto flex max-w-7xl justify-between gap-5 px-5 py-2 text-sm">
           <span>All types of printing solutions · Mumbai, India</span>
           <a
             href="tel:+918451010020"
             className="flex shrink-0 items-center gap-2"
           >
-            <Phone size={11} />
+            <Phone size={18} />
             +91 84510 10020
           </a>
         </div>
@@ -104,10 +106,10 @@ export function App() {
           <img
             src={asset("assets/logo.png")}
             alt="PHULO Multi Graphics"
-            className="h-20 w-36 object-contain"
+            className="h-24 w-44 object-contain"
           />
         </a>
-        <p className="hidden text-sm text-slate-500 lg:block">
+        <p className="hidden text-lg font-medium text-slate-600 lg:block">
           Print. Personalise. Inspire.
         </p>
         <div className="flex flex-wrap items-center gap-2">
@@ -115,14 +117,14 @@ export function App() {
             <>
               <Button variant="ghost" size="sm" asChild>
                 <a href="#account">
-                  <UserRound size={16} />
+                  <UserRound size={20} />
                   <span className="hidden sm:inline">{auth.user.name}</span>
                 </a>
               </Button>
               {auth.user.role === "admin" && (
                 <Button variant="ghost" size="sm" asChild>
                   <a href="#admin">
-                    <ShieldCheck size={16} />
+                    <ShieldCheck size={20} />
                     Admin
                   </a>
                 </Button>
@@ -133,7 +135,7 @@ export function App() {
                 onClick={logout}
                 aria-label="Sign out"
               >
-                <LogOut size={16} />
+                <LogOut size={20} />
               </Button>
             </>
           ) : (
@@ -143,26 +145,26 @@ export function App() {
               onClick={() => setAuthOpen(true)}
               disabled={auth.loading}
             >
-              <UserRound size={16} />
+              <UserRound size={20} />
               {auth.loading ? "Checking…" : "Sign in"}
             </Button>
           )}
           <Button variant="outline" size="sm" onClick={() => setCartOpen(true)}>
-            <ShoppingBag size={16} />
+            <ShoppingBag size={20} />
             <span className="hidden sm:inline">My order</span>
-            <span className="rounded bg-slate-100 px-1.5 text-xs text-primary">
+            <span className="rounded bg-slate-100 px-1.5 text-sm text-primary">
               {cart.reduce((s, i) => s + i.quantity, 0)}
             </span>
           </Button>
         </div>
       </header>
-      <nav className="border-y border-slate-200">
-        <div className="mx-auto flex max-w-7xl items-center gap-5 overflow-x-auto px-5 text-xs whitespace-nowrap">
+      <nav className="border-y border-slate-200 bg-white sticky top-0 z-30 shadow-sm">
+        <div className="mx-auto flex max-w-7xl items-center gap-5 overflow-x-auto px-5 text-sm whitespace-nowrap">
           <Button
             className="my-0 h-12 rounded-none"
             onClick={() => browse("All products")}
           >
-            <Menu size={16} />
+            <Menu size={20} />
             All categories
           </Button>
           <a href="#home">Home</a>
@@ -201,8 +203,8 @@ export function App() {
         )}
         {isHome && (
           <>
-            <section className="mx-auto mt-6 grid max-w-7xl gap-5 px-5 md:grid-cols-[210px_1fr]">
-              <aside className="hidden rounded-lg border border-slate-200 md:block">
+            <section className="mx-auto mt-6 grid max-w-7xl gap-5 px-5 lg:grid-cols-[235px_1fr]">
+              <aside className="hidden rounded-lg border border-slate-200 bg-white lg:block">
                 {[
                   "Signage & Boards",
                   "Digital & Graphic Prints",
@@ -217,7 +219,7 @@ export function App() {
                 ].map((c) => (
                   <button
                     key={c}
-                    className="block w-full border-b border-slate-100 px-4 py-3 text-left text-[11px] hover:bg-slate-50"
+                    className="block w-full border-b border-slate-100 px-4 py-3 text-left text-sm hover:bg-slate-50"
                     onClick={() =>
                       browse(
                         c === "Gifting Items" ||
@@ -233,53 +235,85 @@ export function App() {
                   </button>
                 ))}
               </aside>
-              <div className="relative flex min-h-100 items-center overflow-hidden rounded-lg bg-[#edf3f8] p-7 md:p-10">
+              <div className="print-hero relative grid min-h-110 items-center gap-8 overflow-hidden rounded-3xl p-7 md:grid-cols-[1.1fr_1fr] md:p-10">
                 <div className="relative z-10 max-w-md">
-                  <p className="text-[10px] font-bold tracking-[.2em] text-cyan-700">
-                    PHULO MULTI GRAPHICS
+                  <p className="text-sm font-bold tracking-[.2em] text-cyan-700">
+                    BIG IDEAS. BRILLIANT PRINTS.
                   </p>
                   <h1 className="mt-5 text-4xl leading-[1.12] font-bold tracking-tight lg:text-5xl">
                     Your ideas.
                     <br />
-                    Beautifully <span className="text-primary">printed.</span>
+                    Beautifully <span className="text-accent">printed.</span>
                   </h1>
-                  <p className="my-5 max-w-xs text-sm leading-6 text-slate-500">
+                  <p className="my-5 max-w-md text-lg leading-8 text-slate-600">
                     From a bold first impression to a gift they’ll keep.
                     Printing, branding and design, all in one place.
                   </p>
                   <Button onClick={() => browse("Printing Products")}>
                     Explore printing products
-                    <ArrowUpRight size={16} />
+                    <ArrowUpRight size={20} />
                   </Button>
                 </div>
-                <img
-                  src={asset("assets/digital.png")}
-                  alt="Printed products and brand materials"
-                  className="absolute right-[-5%] w-[48%] -rotate-6 mix-blend-multiply opacity-30 lg:opacity-90"
-                />
+                <div
+                  className="hero-products grid grid-cols-2 gap-3"
+                  aria-label="Printing and personalised products"
+                >
+                  {[
+                    ["product-p42.webp", "Personalised mugs"],
+                    ["product-p45.webp", "Custom T-shirts"],
+                    ["product-p78.webp", "Colourful digital prints"],
+                    ["product-p44.webp", "Printed canvas bags"],
+                  ].map(([image, label], index) => (
+                    <button
+                      key={label}
+                      className={
+                        "rounded-2xl bg-white p-3 text-left shadow-lg transition-transform hover:-translate-y-1 " +
+                        (index % 2 ? "translate-y-4" : "")
+                      }
+                      onClick={() =>
+                        browse(
+                          index === 0
+                            ? "Gifting Items"
+                            : index === 1 || index === 3
+                              ? "Customised Products"
+                              : "Printing Products",
+                        )
+                      }
+                    >
+                      <img
+                        src={asset("assets/" + image)}
+                        alt={label}
+                        className="aspect-square w-full rounded-xl object-cover"
+                      />
+                      <span className="mt-2 block text-sm font-semibold">
+                        {label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
             </section>
             <section className="mx-auto max-w-7xl px-5 pt-12">
-              <p className="text-[10px] font-bold tracking-[.2em] text-cyan-700">
+              <p className="text-sm font-bold tracking-[.2em] text-cyan-700">
                 FIND WHAT YOU NEED
               </p>
-              <h2 className="mt-2 mb-6 text-2xl font-bold">
+              <h2 className="mt-2 mb-6 text-3xl font-bold">
                 Explore our categories
               </h2>
               <div className="grid grid-cols-3 gap-5 md:grid-cols-6">
                 {categories.map(([label, image, g]) => (
                   <button
                     key={label}
-                    className="text-center"
+                    className="category-tile rounded-2xl p-3 text-center transition-transform hover:-translate-y-1"
                     onClick={() => browse(g!)}
                   >
                     <img
                       src={asset("assets/" + image)}
                       alt={label}
-                      className="mb-3 aspect-square w-full rounded-full object-cover"
+                      className="mb-3 aspect-square w-full rounded-xl object-cover"
                       loading="lazy"
                     />
-                    <span className="text-xs font-medium">{label}</span>
+                    <span className="text-base font-semibold">{label}</span>
                   </button>
                 ))}
               </div>
@@ -311,35 +345,43 @@ export function App() {
                 rel="noopener noreferrer"
               >
                 Talk to PHULO on WhatsApp
-                <ArrowUpRight size={16} />
+                <ArrowUpRight size={20} />
               </a>
             </Button>
           </section>
         )}
-        <section className="mx-auto grid max-w-7xl grid-cols-2 gap-6 border-t border-slate-200 px-5 py-9 md:grid-cols-4">
+        {isHome && <Clients />}
+        <section className="mx-auto grid max-w-7xl grid-cols-1 gap-4 px-5 py-10 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            [CheckCircle2, "Quality you can see"],
-            [Clock3, "Fast production"],
-            [IndianRupee, "Clear pricing"],
+            [CheckCircle2, "Best Quality Guarantee"],
+            [Clock3, "Fast Production"],
+            [IndianRupee, "Lowest Pricing"],
             [Truck, "Shipping in India"],
           ].map(([Icon, title]) => {
             const Component = Icon as typeof CheckCircle2;
             return (
               <div
                 key={String(title)}
-                className="flex items-center gap-3 text-primary"
+                className="benefit-card flex items-center gap-4 rounded-2xl bg-primary p-6 text-white"
               >
-                <Component size={22} />
-                <span className="text-xs font-semibold">{String(title)}</span>
+                <Component size={44} className="shrink-0" />
+                <span className="text-lg font-semibold">{String(title)}</span>
               </div>
             );
           })}
         </section>
+        <ContactDetails />
       </main>
-      <footer className="bg-slate-50">
-        <div className="mx-auto grid max-w-7xl gap-8 px-5 py-10 text-xs leading-7 md:grid-cols-[2fr_1fr_1fr]">
+      <footer className="bg-[#f1f6fb]">
+        <div className="mx-auto grid max-w-7xl gap-8 px-5 py-10 text-base leading-8 md:grid-cols-[2fr_1fr_1fr]">
           <div>
-            <h2 className="mb-3 text-lg font-bold">Phulo Multi Graphics</h2>
+            <a href="#home">
+              <img
+                src={asset("assets/logo.png")}
+                alt="PHULO Multi Graphics"
+                className="mb-4 h-24 w-44 object-contain"
+              />
+            </a>
             <p className="text-slate-500">All Types Of Printing Solutions</p>
             <a className="block" href="tel:+918451010020">
               +91 8451010020
@@ -347,11 +389,7 @@ export function App() {
             <a href="mailto:phulomultigraphics@gmail.com">
               phulomultigraphics@gmail.com
             </a>
-            <p className="mt-3 text-slate-500">
-              Santosh Nagar, AK Vidya Marg, Near Royal Academy School,
-              <br />
-              Film City Road, Goregaon (E), Mumbai – 400065
-            </p>
+            <p className="mt-3 text-slate-500">{company.address}</p>
           </div>
           <div>
             <h3 className="mb-3 font-semibold">Quick links</h3>
@@ -378,7 +416,7 @@ export function App() {
               Image reuse or resale is not allowed.
             </p>
           </div>
-          <p className="border-t border-slate-200 pt-5 text-[10px] text-slate-500 md:col-span-3">
+          <p className="border-t border-slate-200 pt-5 text-sm text-slate-500 md:col-span-3">
             © {new Date().getFullYear()} Phulo Multi Graphics. All rights
             reserved.
           </p>

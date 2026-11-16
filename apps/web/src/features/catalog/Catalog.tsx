@@ -43,7 +43,7 @@ export function Catalog({ group, onOpen, onGroup }: Props) {
     <section id="catalog" className="mx-auto max-w-7xl px-5 py-10">
       <div className="mb-7 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="mb-2 text-[10px] font-bold tracking-[.2em] text-cyan-700">
+          <p className="mb-2 text-sm font-bold tracking-[.2em] text-cyan-700">
             PHULO COLLECTION
           </p>
           <h2 className="text-3xl font-bold">
@@ -77,7 +77,10 @@ export function Catalog({ group, onOpen, onGroup }: Props) {
           <label htmlFor="catalog-search" className="sr-only">
             Search catalog
           </label>
-          <Search size={16} className="absolute top-3 left-3 text-slate-400" />
+          <Search
+            size={20}
+            className="absolute top-3.5 left-3 text-slate-400"
+          />
           <Input
             id="catalog-search"
             className="pl-9"
@@ -113,7 +116,10 @@ export function Catalog({ group, onOpen, onGroup }: Props) {
         <>
           <div className="grid gap-x-5 gap-y-8 grid-cols-2 lg:grid-cols-4">
             {data.data.map((p) => (
-              <article key={p.id}>
+              <article
+                key={p.id}
+                className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm transition-shadow hover:shadow-lg"
+              >
                 <div className="relative aspect-[1.1] overflow-hidden rounded-lg bg-slate-100">
                   <button
                     className="size-full"
@@ -135,19 +141,19 @@ export function Catalog({ group, onOpen, onGroup }: Props) {
                     }
                   >
                     <Heart
-                      size={16}
+                      size={20}
                       fill={wishes.includes(p.id) ? "currentColor" : "none"}
                     />
                   </button>
                   {p.editable && (
-                    <span className="absolute top-2 left-2 rounded bg-white/90 p-1 text-[8px] tracking-wide">
+                    <span className="absolute top-2 left-2 rounded bg-white/90 p-1 text-xs tracking-wide">
                       CUSTOMISABLE
                     </span>
                   )}
                 </div>
-                <p className="mt-3 text-[10px] text-slate-500">{p.category}</p>
+                <p className="mt-3 text-sm text-slate-500">{p.category}</p>
                 <button
-                  className="mt-1 min-h-10 text-left text-sm font-semibold"
+                  className="mt-1 min-h-10 text-left text-base font-semibold"
                   onClick={() => onOpen(p)}
                 >
                   {p.title}
@@ -155,7 +161,7 @@ export function Catalog({ group, onOpen, onGroup }: Props) {
                 <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
                   <span className="text-sm font-bold text-primary">
                     {money(p.price)}
-                    <span className="ml-1 text-[9px] font-normal text-slate-500">
+                    <span className="ml-1 text-xs font-normal text-slate-500">
                       {p.price !== null ? "/ " + p.unit : ""}
                     </span>
                   </span>
@@ -174,7 +180,7 @@ export function Catalog({ group, onOpen, onGroup }: Props) {
               onClick={() => setPage((p) => p - 1)}
               aria-label="Previous page"
             >
-              <ChevronLeft size={16} />
+              <ChevronLeft size={20} />
             </Button>
             <span className="text-xs">
               Page {page} of {data.meta?.pages || 1}
@@ -186,7 +192,7 @@ export function Catalog({ group, onOpen, onGroup }: Props) {
               onClick={() => setPage((p) => p + 1)}
               aria-label="Next page"
             >
-              <ChevronRight size={16} />
+              <ChevronRight size={20} />
             </Button>
           </div>
         </>

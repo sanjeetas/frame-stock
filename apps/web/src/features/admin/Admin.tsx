@@ -251,7 +251,7 @@ export function Admin() {
                 setOpen(true);
               }}
             >
-              <Plus size={16} />
+              <Plus size={20} />
               Add product / image
             </Button>
           </div>
@@ -381,7 +381,7 @@ export function Admin() {
                         {i.customization.requirements}
                       </p>
                       {i.customization.design && (
-                        <pre className="mt-2 max-w-full overflow-x-auto rounded bg-slate-50 p-2 text-[10px]">
+                        <pre className="mt-2 max-w-full overflow-x-auto rounded bg-slate-50 p-2 text-sm">
                           {JSON.stringify(i.customization.design, null, 2)}
                         </pre>
                       )}
@@ -603,7 +603,7 @@ export function Admin() {
               </p>
             )}
             <Button className="w-full" disabled={busy}>
-              <Upload size={16} />
+              <Upload size={20} />
               {busy ? "Saving…" : "Save product & files"}
             </Button>
           </form>

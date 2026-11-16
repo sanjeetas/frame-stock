@@ -129,3 +129,7 @@ Public 800px product previews from the matching PHULO storefront product. Catalo
 - `assets/product-rate-cards.png` — Original generated product mockup of printed price-list cards, labelled SAMPLE DESIGN; numeric examples are artwork, not PHULO printing prices.
 - HP vinyl + matte lamination uses `assets/product-p62.webp`, a PHULO matte-laminated vinyl print example.
 - `assets/library-samples.svg` — Original category icon showing nature, landscape, floral and abstract sample graphics.
+
+### Client logos supplied in the reference website
+
+- `assets/clients/1.png` through `8.png` — client logos from https://phulo.in/wp-content/uploads/2025/05/1.png through /8.png, matched to the user-provided client screenshot.
