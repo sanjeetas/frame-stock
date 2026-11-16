@@ -299,27 +299,61 @@
   overflow: hidden;
   pointer-events: none;
 }
-.ink-drop-track {
+.paint-lane {
   position: absolute;
+  top: 0;
+  bottom: 0;
   left: var(--left);
-  top: -65px;
-  width: var(--size);
-  height: var(--size);
-  opacity: 0;
-  will-change: transform;
-  animation: ink-fall var(--duration) var(--delay) linear infinite;
+  width: 30%;
+  transform: translateX(-50%);
 }
-.ink-drop {
+.liquid-drop {
+  position: absolute;
+  top: -45px;
+  left: 50%;
+  width: 24px;
+  height: 34px;
+  margin-left: -12px;
+  animation: liquid-fall 4.8s var(--delay) linear infinite;
+}
+.liquid-drop::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  bottom: 23px;
+  width: 4px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(
+    transparent,
+    color-mix(in srgb, var(--ink) 50%, transparent)
+  );
+}
+.liquid-drop span {
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: 5% 65% 65%;
-  transform: rotate(45deg);
+  border-radius: 48% 48% 50% 50% / 70% 70% 35% 35%;
   background:
-    radial-gradient(circle at 35% 35%, #ffffffaa, transparent 45%), var(--ink);
-  box-shadow: 0 5px 12px color-mix(in srgb, var(--ink) 18%, transparent);
+    radial-gradient(ellipse at 35% 65%, #ffffffdc, transparent 45%), var(--ink);
+  box-shadow:
+    inset -3px -3px 5px #10375920,
+    0 0 18px color-mix(in srgb, var(--ink) 25%, transparent);
 }
-.ink-rain[data-paused="true"] .ink-drop-track {
+.paint-pool {
+  position: absolute;
+  bottom: -2px;
+  width: 100%;
+  height: 58px;
+  overflow: visible;
+  opacity: 0.8;
+}
+.paint-impact {
+  transform-origin: 50% 90%;
+  animation: paint-splash 4.8s var(--delay) ease-out infinite;
+}
+.ink-rain[data-paused="true"] .liquid-drop,
+.ink-rain[data-paused="true"] .paint-impact {
   animation-play-state: paused;
 }
 .header-tagline {
@@ -337,7 +371,7 @@
 .header-actions > button,
 .header-actions > a {
   min-height: 48px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   transition:
     transform 0.2s,
     box-shadow 0.2s,
@@ -381,20 +415,45 @@
   color: #334155;
   font-size: 0.7rem;
 }
-@keyframes ink-fall {
+@keyframes liquid-fall {
   0% {
-    transform: translate3d(0, 0, 0);
+    top: -45px;
     opacity: 0;
+    transform: scaleY(1.2);
   }
-  10% {
-    opacity: 0.55;
+  12% {
+    opacity: 0.8;
   }
-  85% {
-    opacity: 0.55;
+  58% {
+    top: calc(100% - 34px);
+    opacity: 0.85;
+    transform: scaleY(1);
   }
+  62%,
   100% {
-    transform: translate3d(18px, 280px, 0);
+    top: calc(100% - 30px);
     opacity: 0;
+    transform: scale(0.3);
+  }
+}
+@keyframes paint-splash {
+  0%,
+  53% {
+    opacity: 0;
+    transform: scale(0.4, 0.15);
+  }
+  63% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+  76% {
+    opacity: 0.6;
+    transform: scale(1.12, 0.7);
+  }
+  91%,
+  100% {
+    opacity: 0;
+    transform: scale(1.3, 0.15);
   }
 }
 @media (max-width: 639px) {
@@ -407,13 +466,18 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ink-drop-track {
+  .liquid-drop {
+    display: none;
+  }
+  .paint-impact {
     animation: none !important;
-    opacity: 0.25;
-    top: calc(var(--size) * 2);
-    transform: rotate(-15deg);
+    opacity: 0.6;
   }
   .ink-motion-control {
     display: none;
   }
+}
+
+.header-tagline {
+  font-size: 1.05rem;
 }
