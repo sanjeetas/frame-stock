@@ -11,7 +11,8 @@ import { Field } from "../../components/Field";
 import { Artwork } from "./Artwork";
 import { DesignEditor, initialDesign } from "../editor/DesignEditor";
 import type { Product, CartItem, DesignSettings } from "../../types";
-import { money, imageUrl } from "../../lib/utils";
+import { imageUrl } from "../../lib/utils";
+import { Price } from "./Price";
 interface Props {
   product: Product | null;
   onClose: () => void;
@@ -117,7 +118,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                   {p.description}
                 </DialogDescription>
                 <p className="mb-5 text-xl font-bold text-primary">
-                  {p.priceDisplay || money(p.price)}{" "}
+                  <Price product={p} />{" "}
                   <span className="text-xs font-normal">
                     {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
                   </span>

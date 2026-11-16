@@ -14,7 +14,7 @@ import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { Loading, ErrorState, Empty } from "../../components/Feedback";
 import type { Product, Category } from "../../types";
-import { money } from "../../lib/utils";
+import { Price } from "./Price";
 import { Artwork } from "./Artwork";
 interface Props {
   group: string;
@@ -215,7 +215,7 @@ export function Catalog({
                 </button>
                 <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
                   <span className="text-sm font-bold text-primary">
-                    {p.priceDisplay || money(p.price)}
+                    <Price product={p} />
                     <span className="ml-1 text-xs font-normal text-slate-500">
                       {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
                     </span>
