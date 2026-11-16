@@ -41,6 +41,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     void reload();
   }, [reload]);
+  useEffect(() => {
+    const expired = () => setUser(null);
+    window.addEventListener("phulo:session-expired", expired);
+    return () => window.removeEventListener("phulo:session-expired", expired);
+  }, []);
   const login = async (email: string, password: string) => {
     const r = await api<{ user: User }>("/auth/login", {
       method: "POST",

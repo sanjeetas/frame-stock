@@ -110,9 +110,21 @@ export async function api<T>(
       retry &&
       (!path.startsWith("/auth/") || path === "/auth/me")
     ) {
-      await refresh();
+      try {
+        await refresh();
+      } catch (refreshError) {
+        if (refreshError instanceof ApiError && refreshError.status === 401)
+          window.dispatchEvent(new Event("phulo:session-expired"));
+        throw refreshError;
+      }
       return api(path, options, false);
     }
+    if (
+      e instanceof ApiError &&
+      e.status === 401 &&
+      (!path.startsWith("/auth/") || path === "/auth/me")
+    )
+      window.dispatchEvent(new Event("phulo:session-expired"));
     if (e instanceof TypeError)
       throw new ApiError(
         "Backend connection failed. Check the API address and server.",
