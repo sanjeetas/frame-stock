@@ -460,7 +460,7 @@ test("search input is literal; unknown user identifiers and oversized JSON are r
     .send({ title: "Spoof", settings, owner: bobId })
     .expect(400);
   const large = await mutation(alice, "post", "/api/designs", csrfAlice)
-    .send({ title: "x".repeat(70000), settings })
+    .send({ title: "x".repeat(300000), settings })
     .expect(413);
   assert.equal(large.body.error.code, "PAYLOAD_TOO_LARGE");
   await request(app).get("/api/admin/login").expect(401);
@@ -932,4 +932,111 @@ test("independent text/image positions and image scale persist in saved designs 
   ).body.data;
   assert.equal(order.items[0].customization.design.textX, 32.5);
   assert.equal(order.items[0].customization.design.imageScale, 135);
+});
+
+test("studio saves both sides, validates object limits and enforces image ownership on either side", async () => {
+  const { createCardTemplate } =
+    await import("../../web/src/features/editor/studioTemplates.ts");
+  const { DesignImage } = await import("../src/models/design-image.model.js");
+  const studio = createCardTemplate("classic");
+  studio.pages.front.elements.find(
+    (element) => element.id === "company",
+  )!.text = "Customer company";
+  studio.pages.back.elements[0]!.text = "Customer reverse side";
+  const settings = {
+    headline: "Customer company",
+    subtitle: "",
+    bg: "#ffffff",
+    fg: "#103759",
+    font: "Arial",
+    size: 40,
+    y: 580,
+    square: false,
+    hasUploadedImage: false,
+    studio,
+  };
+  const token = await csrf(alice);
+  const saved = (
+    await mutation(alice, "post", "/api/designs", token)
+      .send({ title: "Two sided card", settings })
+      .expect(201)
+  ).body.data;
+  const loaded = (await alice.get(`/api/designs/${saved.id}`).expect(200)).body
+    .data;
+  assert.equal(
+    loaded.settings.studio.pages.front.elements.find(
+      (element: any) => element.id === "company",
+    ).text,
+    "Customer company",
+  );
+  assert.equal(
+    loaded.settings.studio.pages.back.elements[0].text,
+    "Customer reverse side",
+  );
+  const tooMany = structuredClone(studio);
+  tooMany.pages.front.elements = Array.from({ length: 41 }, (_, index) => ({
+    ...studio.pages.front.elements[0]!,
+    id: "element-" + index,
+  }));
+  await mutation(alice, "post", "/api/designs", token)
+    .send({
+      title: "Too many elements",
+      settings: { ...settings, studio: tooMany },
+    })
+    .expect(400);
+  const unsafe = structuredClone(studio);
+  (unsafe.pages.front.elements[0] as any).src =
+    "https://example.test/secret.png";
+  await mutation(alice, "post", "/api/designs", token)
+    .send({
+      title: "Unvalidated URL",
+      settings: { ...settings, studio: unsafe },
+    })
+    .expect(400);
+  const photo = await DesignImage.findOne({ owner: aliceId });
+  assert.ok(photo);
+  const withImage = structuredClone(studio);
+  withImage.pages.back.elements.push({
+    ...studio.pages.front.elements[0]!,
+    id: "private-image",
+    type: "image",
+    uploadId: String(photo._id),
+  });
+  await mutation(alice, "post", "/api/designs", token)
+    .send({
+      title: "Owned back photo",
+      settings: { ...settings, studio: withImage },
+    })
+    .expect(201);
+  const bobToken = await csrf(bob);
+  await mutation(bob, "post", "/api/designs", bobToken)
+    .send({
+      title: "Other user's back photo",
+      settings: { ...settings, studio: withImage },
+    })
+    .expect(403);
+  const card = await Product.findOne({ title: /Visiting Card/i });
+  assert.ok(card);
+  const order = (
+    await mutation(alice, "post", "/api/orders", token)
+      .send({
+        name: "Alice",
+        phone: "+918451010020",
+        items: [
+          {
+            productId: String(card._id),
+            quantity: 100,
+            customization: {
+              requirements: "Print both sides",
+              design: settings,
+            },
+          },
+        ],
+      })
+      .expect(201)
+  ).body.data;
+  assert.equal(
+    order.items[0].customization.design.studio.pages.back.elements[0].text,
+    "Customer reverse side",
+  );
 });

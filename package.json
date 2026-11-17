@@ -13,7 +13,7 @@
     "dev": "concurrently -n api,web \"npm run dev -w apps/api\" \"npm run dev -w apps/web\"",
     "build": "npm run build -w apps/api && npm run build -w apps/web",
     "check": "npm run check --workspaces",
-    "test": "npm run test -w apps/api && node --test apps/web/tests/*.test.ts",
+    "test": "npm run test -w apps/api && node --import tsx --test apps/web/tests/*.test.ts",
     "start": "npm run start -w apps/api",
     "seed": "npm run seed -w apps/api",
     "admin:create": "npm run admin:create -w apps/api"

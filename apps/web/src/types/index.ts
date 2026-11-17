@@ -1,3 +1,4 @@
+import type { StudioDocument } from "../features/editor/studioTypes";
 export interface User {
   id: string;
   name: string;
@@ -49,6 +50,7 @@ export interface ApiResponse<T> {
   meta?: PageMeta;
 }
 export interface DesignSettings {
+  studio?: StudioDocument;
   headline: string;
   subtitle: string;
   bg: string;

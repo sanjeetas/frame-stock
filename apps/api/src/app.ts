@@ -40,7 +40,7 @@ export async function createApp(config: Config) {
     }),
   );
   app.use(cookieParser());
-  app.use(express.json({ limit: "64kb" }));
+  app.use(express.json({ limit: "256kb" }));
   app.use("/api", (_req, res, next) => {
     res.set("Cache-Control", "no-store");
     next();

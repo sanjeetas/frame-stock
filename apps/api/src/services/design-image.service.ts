@@ -17,22 +17,49 @@ export async function validateDesignImages(
         imageUploadId?: string;
         imageProductId?: string;
         baseProductId?: string;
+        studio?: {
+          pages: {
+            front: { elements: { uploadId?: string; productId?: string }[] };
+            back: { elements: { uploadId?: string; productId?: string }[] };
+          };
+        };
       }
     | undefined,
   owner: string,
 ) {
   if (!settings) return;
-  if (settings.imageUploadId) await ownedImage(settings.imageUploadId, owner);
-  for (const id of [settings.imageProductId, settings.baseProductId].filter(
-    Boolean,
-  )) {
-    if (!(await Product.exists({ _id: id, published: true })))
-      throw new AppError(
-        400,
-        "INVALID_IMAGE",
-        "Selected image or product is unavailable.",
-      );
-  }
+  const elements = settings.studio
+    ? [
+        ...settings.studio.pages.front.elements,
+        ...settings.studio.pages.back.elements,
+      ]
+    : [];
+  const uploads = new Set(
+    [
+      settings.imageUploadId,
+      ...elements.map((element) => element.uploadId),
+    ].filter((value): value is string => !!value),
+  );
+  for (const upload of uploads) await ownedImage(upload, owner);
+  const productIds = new Set(
+    [
+      settings.imageProductId,
+      settings.baseProductId,
+      ...elements.map((element) => element.productId),
+    ].filter((value): value is string => !!value),
+  );
+  if (
+    productIds.size &&
+    (await Product.countDocuments({
+      _id: { $in: [...productIds] },
+      published: true,
+    })) !== productIds.size
+  )
+    throw new AppError(
+      400,
+      "INVALID_IMAGE",
+      "Selected image or product is unavailable.",
+    );
 }
 export async function uploadDesignImage(
   owner: string,

@@ -197,14 +197,18 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                           : "Download free preview"}
                       </Button>
                     )}
-                    {(p.editable || p.group === "Customised Products") && (
+                    {(p.editable ||
+                      p.group === "Customised Products" ||
+                      /visiting.?card|business.?card/i.test(p.title)) && (
                       <Button
                         type="button"
                         className="w-full"
                         variant="outline"
                         onClick={() => setEditor(true)}
                       >
-                        Customise design ↗
+                        {/visiting.?card|business.?card/i.test(p.title)
+                          ? "Choose template & customise ↗"
+                          : "Customise design ↗"}
                       </Button>
                     )}
                     <Button asChild variant="outline" className="w-full">
@@ -234,6 +238,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
         </DialogContent>
       </Dialog>
       <DesignEditor
+        product={p || undefined}
         open={editor}
         onOpenChange={setEditor}
         initial={design || startingDesign}

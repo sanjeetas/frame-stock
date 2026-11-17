@@ -158,3 +158,11 @@ The dedicated `#library` page uses `/api/library` and `/api/library/categories`,
 ### Direct placement in the product editor
 
 Select a headline, supporting text, or added image on the preview and drag it with mouse/touch. Double-click text (or choose Edit selected text) to focus its editable field. Arrow keys move by one proof pixel; Shift moves by ten. Horizontal/vertical sliders provide an alternative, and image size preserves the image's aspect ratio. Each layer's percentage coordinates and image scale are validated by the API and saved in the design/order settings. Older proofs keep their previous default positions. Selection outlines are HTML overlays, so they are excluded from exported PNGs.
+
+### Fabric.js design studio
+
+The editor uses Fabric.js 7 for direct text editing, transform handles, rotation and object selection. The React shell provides Product/Text/Uploads/Graphics/Background/Templates/Template colour/Layers panels, undo/redo, front/back switching for visiting cards, zoom, preview and PNG proofs. Four original PHULO card layouts are included; third-party VistaPrint templates, branding and source code are not bundled. Visiting-card products open this studio from their View dialog.
+
+`studioTypes.ts` defines the small saved document format, `studioTemplates.ts` owns the layouts, and `studioCanvas.ts` translates documents to/from Fabric. Fabric itself is loaded only when editing or previewing a studio document. Existing saved proofs still open. Both sides are persisted in `settings.studio` and included when a design is applied to an order. The API limits documents to 40 objects per side, validates types/styles/geometry, rejects arbitrary image URLs, and checks ownership for uploads on both sides. JSON request size is capped at 256 KB. Proof downloads are watermarked and exclude selection handles and safety guides.
+
+Run `npm ci`, `npm run check`, `npm test`, and `npm run build` as usual. Fabric's browser editor requires no native server canvas. The optional native `canvas` package enables additional automated Fabric rendering/export tests; those tests report a skip if it is unavailable. MongoDB/authentication environment variables remain as documented above.

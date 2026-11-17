@@ -83,8 +83,55 @@ export const productBody = z
     variant: z.number().int().min(0).max(100).default(0),
   })
   .strict();
+const studioElement = z
+  .object({
+    id: z.string().regex(/^[\w-]{1,80}$/),
+    type: z.enum(["text", "image", "rect", "circle"]),
+    left: z.number().min(-4800).max(4800),
+    top: z.number().min(-4800).max(4800),
+    width: z.number().min(1).max(4800),
+    height: z.number().min(1).max(4800),
+    scaleX: z.number().min(0.01).max(20),
+    scaleY: z.number().min(0.01).max(20),
+    angle: z.number().min(-360).max(360),
+    fill: z.string().regex(/^#[a-f\d]{6}$/i),
+    opacity: z.number().min(0).max(1),
+    locked: z.boolean(),
+    text: z.string().max(500).optional(),
+    fontFamily: z.enum(["Arial", "Georgia", "Verdana", "monospace"]).optional(),
+    fontSize: z.number().min(8).max(200).optional(),
+    fontWeight: z.enum(["normal", "bold"]).optional(),
+    fontStyle: z.enum(["normal", "italic"]).optional(),
+    underline: z.boolean().optional(),
+    textAlign: z.enum(["left", "center", "right"]).optional(),
+    lineHeight: z.number().min(0.5).max(3).optional(),
+    productId: id.optional(),
+    uploadId: id.optional(),
+  })
+  .strict()
+  .refine(
+    (value) => value.type !== "image" || !!value.productId !== !!value.uploadId,
+    "Images require exactly one product or owned upload reference.",
+  );
+const studioPage = z
+  .object({
+    background: z.string().regex(/^#[a-f\d]{6}$/i),
+    elements: z.array(studioElement).max(40),
+  })
+  .strict();
+const studioDocument = z
+  .object({
+    version: z.literal(1),
+    format: z.enum(["card", "product"]),
+    width: z.number().int().min(200).max(2400),
+    height: z.number().int().min(200).max(2400),
+    template: z.string().max(40),
+    pages: z.object({ front: studioPage, back: studioPage }).strict(),
+  })
+  .strict();
 export const settings = z
   .object({
+    studio: studioDocument.optional(),
     headline: z.string().max(90),
     subtitle: z.string().max(140),
     bg: z.string().regex(/^#[a-f\d]{6}$/i),

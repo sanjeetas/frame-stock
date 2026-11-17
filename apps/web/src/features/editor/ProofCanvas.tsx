@@ -14,10 +14,11 @@ import {
   type PercentPoint,
 } from "./editorGeometry";
 import type { DesignSettings, Product } from "../../types";
+import { StudioPreview } from "./StudioPreview";
 import { api } from "../../lib/api";
 import { apiBase, imageUrl } from "../../lib/utils";
 
-export function ProofCanvas({
+function LegacyProofCanvas({
   settings,
   onCanvas,
   selectedLayer,
@@ -350,5 +351,13 @@ export function ProofCanvas({
         </p>
       )}
     </div>
+  );
+}
+
+export function ProofCanvas(props: Parameters<typeof LegacyProofCanvas>[0]) {
+  return props.settings.studio ? (
+    <StudioPreview settings={props.settings} />
+  ) : (
+    <LegacyProofCanvas {...props} />
   );
 }

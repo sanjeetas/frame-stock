@@ -10,8 +10,8 @@ export const money = (n: number | null) =>
         maximumFractionDigits: 0,
       }).format(n);
 export const asset = (path: string) =>
-  `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
-export const apiBase = (import.meta.env.VITE_API_BASE_URL || "/api").replace(
+  `${import.meta.env?.BASE_URL || "/"}${path.replace(/^\//, "")}`;
+export const apiBase = (import.meta.env?.VITE_API_BASE_URL || "/api").replace(
   /\/$/,
   "",
 );
