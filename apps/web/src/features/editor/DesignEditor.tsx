@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Download, Save } from "lucide-react";
+import { Download, Save, Move, AlignCenter } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +10,11 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Field } from "../../components/Field";
 import { useAuth } from "../auth/AuthProvider";
+import {
+  layerPosition,
+  positionPatch,
+  type DesignLayer,
+} from "./editorGeometry";
 import { ProofCanvas } from "./ProofCanvas";
 import { useApiQuery } from "../../hooks/useApiQuery";
 import type { Product } from "../../types";
@@ -44,6 +49,9 @@ export function DesignEditor({
   onSaved,
   onSignIn,
 }: Props) {
+  const [selectedLayer, setSelectedLayer] = useState<DesignLayer>("headline");
+  const headlineInput = useRef<HTMLInputElement>(null),
+    subtitleInput = useRef<HTMLInputElement>(null);
   const { user } = useAuth(),
     canvas = useRef<HTMLCanvasElement>(null);
   const [values, setValues] = useState<DesignSettings>(
@@ -58,6 +66,7 @@ export function DesignEditor({
       canvas.current = null;
       setCanExport(false);
       setValues(initial || initialDesign);
+      setSelectedLayer("headline");
       setError("");
       setSuccess("");
       setSavedId(existingId);
@@ -70,6 +79,23 @@ export function DesignEditor({
     canvas.current = value;
     setCanExport(!!value);
   }, []);
+  const changePosition = useCallback((patch: Partial<DesignSettings>) => {
+    setValues((value) => ({ ...value, ...patch }));
+    setSuccess("");
+  }, []);
+  const position = layerPosition(values, selectedLayer);
+  const hasImage = !!(values.imageUploadId || values.imageProductId);
+  function editText(layer: DesignLayer) {
+    setSelectedLayer(layer);
+    const input =
+      layer === "headline"
+        ? headlineInput.current
+        : layer === "subtitle"
+          ? subtitleInput.current
+          : null;
+    input?.focus();
+    input?.select();
+  }
   function update<K extends keyof DesignSettings>(
     key: K,
     value: DesignSettings[K],
@@ -122,18 +148,95 @@ export function DesignEditor({
           Make it your own.
         </DialogTitle>
         <DialogDescription className="my-2 text-sm text-slate-500">
-          Edit your proof, download a watermarked preview, or save it to your
-          account.
+          Select text or an image on the product and drag it into place.
+          Double-click text to edit it.
         </DialogDescription>
         <div className="mt-6 grid gap-6 md:grid-cols-[1.5fr_1fr]">
-          <div className="self-start bg-slate-100 p-4">
-            <ProofCanvas settings={values} onCanvas={acceptCanvas} />
+          <div className="self-start rounded-xl bg-slate-100 p-4 md:sticky md:top-0">
+            <div
+              className="mb-3 flex flex-wrap gap-2"
+              aria-label="Select design element"
+            >
+              {(["headline", "subtitle", "image"] as DesignLayer[]).map(
+                (layer) => (
+                  <Button
+                    key={layer}
+                    size="sm"
+                    variant={selectedLayer === layer ? "default" : "outline"}
+                    aria-pressed={selectedLayer === layer}
+                    disabled={layer === "image" && !hasImage}
+                    onClick={() => setSelectedLayer(layer)}
+                  >
+                    {layer === "headline"
+                      ? "Headline"
+                      : layer === "subtitle"
+                        ? "Supporting text"
+                        : "Image"}
+                  </Button>
+                ),
+              )}
+            </div>
+            <ProofCanvas
+              settings={values}
+              onCanvas={acceptCanvas}
+              selectedLayer={selectedLayer}
+              onSelectLayer={setSelectedLayer}
+              onChange={changePosition}
+              onEditText={editText}
+            />
+            <p className="mt-3 flex items-center gap-2 text-sm text-slate-600">
+              <Move size={18} />
+              Drag the selected element. Arrow keys move it precisely; Shift
+              moves faster.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() =>
+                  changePosition(
+                    positionPatch(selectedLayer, { ...position, x: 50 }),
+                  )
+                }
+              >
+                <AlignCenter size={18} />
+                Center selected
+              </Button>
+              {selectedLayer !== "image" && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => editText(selectedLayer)}
+                >
+                  Edit selected text
+                </Button>
+              )}
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() =>
+                  changePosition({
+                    textX: undefined,
+                    textY: undefined,
+                    subtitleX: undefined,
+                    subtitleY: undefined,
+                    imageX: undefined,
+                    imageY: undefined,
+                    imageScale: 100,
+                  })
+                }
+              >
+                Reset positions
+              </Button>
+            </div>
           </div>
           <div className="space-y-4">
             <Field label="Headline">
               {(id) => (
                 <Input
                   id={id}
+                  ref={headlineInput}
+                  onFocus={() => setSelectedLayer("headline")}
                   value={values.headline}
                   maxLength={90}
                   onChange={(e) => update("headline", e.target.value)}
@@ -144,6 +247,8 @@ export function DesignEditor({
               {(id) => (
                 <Input
                   id={id}
+                  ref={subtitleInput}
+                  onFocus={() => setSelectedLayer("subtitle")}
                   value={values.subtitle}
                   maxLength={140}
                   onChange={(e) => update("subtitle", e.target.value)}
@@ -187,45 +292,102 @@ export function DesignEditor({
                 </select>
               )}
             </Field>
-            <Field label="Text size">
-              {(id) => (
-                <input
-                  id={id}
-                  className="w-full accent-primary"
-                  type="range"
-                  min={24}
-                  max={100}
-                  value={values.size}
-                  onChange={(e) => update("size", Number(e.target.value))}
-                />
-              )}
-            </Field>
-            <Field label="Text position">
-              {(id) => (
-                <input
-                  id={id}
-                  className="w-full accent-primary"
-                  type="range"
-                  min={130}
-                  max={650}
-                  value={values.y}
-                  onChange={(e) => update("y", Number(e.target.value))}
-                />
-              )}
-            </Field>
+            {selectedLayer === "image" ? (
+              <Field label={`Image size: ${values.imageScale ?? 100}%`}>
+                {(id) => (
+                  <input
+                    id={id}
+                    type="range"
+                    className="w-full accent-primary"
+                    min={10}
+                    max={250}
+                    value={values.imageScale ?? 100}
+                    onChange={(event) =>
+                      update("imageScale", Number(event.target.value))
+                    }
+                  />
+                )}
+              </Field>
+            ) : (
+              <Field
+                label={
+                  selectedLayer === "headline"
+                    ? "Headline size"
+                    : "Supporting text size"
+                }
+              >
+                {(id) => (
+                  <input
+                    id={id}
+                    type="range"
+                    className="w-full accent-primary"
+                    min={12}
+                    max={selectedLayer === "headline" ? 160 : 100}
+                    value={
+                      selectedLayer === "headline"
+                        ? values.size
+                        : (values.subtitleSize ?? 24)
+                    }
+                    onChange={(event) =>
+                      update(
+                        selectedLayer === "headline" ? "size" : "subtitleSize",
+                        Number(event.target.value),
+                      )
+                    }
+                  />
+                )}
+              </Field>
+            )}
+            <div className="rounded-xl border border-cyan-100 bg-cyan-50 p-4 space-y-3">
+              <h3 className="font-semibold">
+                {selectedLayer === "image"
+                  ? "Image"
+                  : selectedLayer === "headline"
+                    ? "Headline"
+                    : "Supporting text"}{" "}
+                position
+              </h3>
+              {(["x", "y"] as const).map((axis) => (
+                <Field
+                  key={axis}
+                  label={`${axis === "x" ? "Horizontal" : "Vertical"}: ${position[axis].toFixed(1)}%`}
+                >
+                  {(id) => (
+                    <input
+                      id={id}
+                      type="range"
+                      min={0}
+                      max={100}
+                      step={0.1}
+                      value={position[axis]}
+                      className="w-full accent-primary"
+                      onChange={(event) =>
+                        changePosition(
+                          positionPatch(selectedLayer, {
+                            ...position,
+                            [axis]: Number(event.target.value),
+                          }),
+                        )
+                      }
+                    />
+                  )}
+                </Field>
+              ))}
+            </div>
             <Field label="Choose an Image Library design">
               {(id) => (
                 <select
                   id={id}
                   value={values.imageProductId || ""}
-                  onChange={(event) =>
+                  onChange={(event) => {
+                    setSelectedLayer(event.target.value ? "image" : "headline");
                     setValues((value) => ({
                       ...value,
                       imageProductId: event.target.value || undefined,
                       imageUploadId: undefined,
                       hasUploadedImage: false,
-                    }))
-                  }
+                    }));
+                  }}
                 >
                   <option value="">Keep selected product preview</option>
                   {library.data?.data.map((image) => (
@@ -278,6 +440,7 @@ export function DesignEditor({
                         imageUploadId: uploaded.data.id,
                         hasUploadedImage: true,
                       }));
+                      setSelectedLayer("image");
                       setError("");
                     } catch (error) {
                       setError(

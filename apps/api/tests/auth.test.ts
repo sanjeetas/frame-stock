@@ -861,3 +861,75 @@ test("uploaded design photos persist and cannot be read or reused by another use
     .send({ title: "Forged photo reference", settings })
     .expect(403);
 });
+
+test("independent text/image positions and image scale persist in saved designs and order proofs", async () => {
+  const token = await csrf(alice);
+  const settings = {
+    headline: "My shirt",
+    subtitle: "Made for me",
+    bg: "#ffffff",
+    fg: "#000000",
+    font: "Arial",
+    size: 44,
+    y: 580,
+    square: false,
+    hasUploadedImage: false,
+    textX: 32.5,
+    textY: 36,
+    subtitleX: 58,
+    subtitleY: 48,
+    subtitleSize: 18,
+    imageX: 50,
+    imageY: 42,
+    imageScale: 135,
+  };
+  const saved = (
+    await mutation(alice, "post", "/api/designs", token)
+      .send({ title: "Drag placement", settings })
+      .expect(201)
+  ).body.data;
+  const loaded = (await alice.get(`/api/designs/${saved.id}`).expect(200)).body
+    .data;
+  for (const key of [
+    "textX",
+    "textY",
+    "subtitleX",
+    "subtitleY",
+    "subtitleSize",
+    "imageX",
+    "imageY",
+    "imageScale",
+  ] as const)
+    assert.equal(loaded.settings[key], settings[key]);
+  await mutation(alice, "post", "/api/designs", token)
+    .send({ title: "Bad placement", settings: { ...settings, textX: 101 } })
+    .expect(400);
+  await mutation(alice, "post", "/api/designs", token)
+    .send({
+      title: "Bad image scale",
+      settings: { ...settings, imageScale: 251 },
+    })
+    .expect(400);
+  const product = await Product.findOne({ slug: "p1" });
+  assert.ok(product);
+  const order = (
+    await mutation(alice, "post", "/api/orders", token)
+      .send({
+        name: "Alice",
+        phone: "+918451010020",
+        items: [
+          {
+            productId: String(product._id),
+            quantity: 1,
+            customization: {
+              requirements: "Use this exact placement",
+              design: settings,
+            },
+          },
+        ],
+      })
+      .expect(201)
+  ).body.data;
+  assert.equal(order.items[0].customization.design.textX, 32.5);
+  assert.equal(order.items[0].customization.design.imageScale, 135);
+});

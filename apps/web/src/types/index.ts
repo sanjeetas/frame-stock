@@ -58,6 +58,14 @@ export interface DesignSettings {
   y: number;
   square: boolean;
   hasUploadedImage: boolean;
+  textX?: number;
+  textY?: number;
+  subtitleX?: number;
+  subtitleY?: number;
+  subtitleSize?: number;
+  imageX?: number;
+  imageY?: number;
+  imageScale?: number;
   imageUploadId?: string;
   imageProductId?: string;
   baseProductId?: string;
