@@ -23,6 +23,12 @@ export async function listProducts(
   admin = false,
 ) {
   const filter: Record<string, unknown> = admin ? {} : { published: true };
+  if (!admin)
+    filter.libraryCategory =
+      query.group === "Image Library" || query.libraryCategory
+        ? { $exists: true }
+        : { $exists: false };
+  if (query.libraryCategory) filter.libraryCategory = query.libraryCategory;
   if (query.group) filter.group = query.group;
   if (query.category) filter.category = query.category;
   if (query.categoryId) {
@@ -103,7 +109,12 @@ export async function saveProduct(
   const p = id
     ? await Product.findByIdAndUpdate(
         id,
-        { $set: data },
+        {
+          $set: data,
+          ...(body.group !== "Image Library"
+            ? { $unset: { libraryCategory: 1 } }
+            : {}),
+        },
         { returnDocument: "after", runValidators: true },
       )
     : await Product.create({ ...data, slug: randomBytes(10).toString("hex") });

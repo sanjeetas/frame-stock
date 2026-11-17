@@ -19,6 +19,7 @@ import { Loading, ErrorState, Empty } from "../../components/Feedback";
 import { Card } from "../../components/ui/card";
 import type { Product, Order } from "../../types";
 const productSchema = z.object({
+  libraryCategory: z.string().max(60).optional(),
   title: z.string().trim().min(1).max(150),
   category: z.string().trim().min(1).max(100),
   group: z.enum([
@@ -124,6 +125,10 @@ export function Admin() {
     const form = new FormData(e.currentTarget),
       raw = Object.fromEntries(form);
     const parsed = productSchema.safeParse({
+      libraryCategory:
+        raw.group === "Image Library"
+          ? String(raw.libraryCategory || raw.category)
+          : undefined,
       title: raw.title,
       category: raw.category,
       group: raw.group,
@@ -499,6 +504,19 @@ export function Admin() {
                 )}
               </Field>
             </div>
+            <Field
+              label="Image Library category (for Image Library products)"
+              hint="Examples: Nature, Landscapes, Flowers, Business, Abstract."
+            >
+              {(id) => (
+                <Input
+                  id={id}
+                  name="libraryCategory"
+                  maxLength={60}
+                  defaultValue={editing?.libraryCategory || ""}
+                />
+              )}
+            </Field>
             <div className="grid grid-cols-2 gap-4">
               <Field label="INR price (blank = quote)">
                 {(id) => (

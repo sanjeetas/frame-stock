@@ -12,6 +12,7 @@ export interface Category {
   count: number;
 }
 export interface Product {
+  libraryCategory?: string;
   sourceProductId?: number;
   categoryIds?: number[];
   priceDisplay?: string;
@@ -57,6 +58,9 @@ export interface DesignSettings {
   y: number;
   square: boolean;
   hasUploadedImage: boolean;
+  imageUploadId?: string;
+  imageProductId?: string;
+  baseProductId?: string;
 }
 export interface Design {
   id: string;

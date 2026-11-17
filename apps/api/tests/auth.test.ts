@@ -748,3 +748,116 @@ test("source catalog preserves WooCommerce prices and parent/subcategory members
   await seedCatalog();
   assert.equal((await Product.findById(product._id))?.price, 499);
 });
+
+test("image library filters, priced HD licenses and original downloads are separate and owner protected", async () => {
+  const { seedImageLibrary } =
+    await import("../src/services/library-seed.service.js");
+  await seedImageLibrary(config);
+  await seedImageLibrary(config);
+  const categories = (
+    await request(app).get("/api/library/categories").expect(200)
+  ).body.data;
+  assert.equal(categories.length, 12);
+  assert.ok(categories.includes("Nature"));
+  const listing = (
+    await request(app).get("/api/library?libraryCategory=Nature").expect(200)
+  ).body;
+  assert.equal(listing.meta.total, 1);
+  const image = listing.data[0];
+  assert.equal(image.price, 99);
+  assert.equal(image.hasFile, true);
+  assert.equal(image.originalFile, undefined);
+  assert.equal(
+    (
+      await request(app).get("/api/products?limit=100").expect(200)
+    ).body.data.some((p: any) => p.libraryCategory),
+    false,
+  );
+  const token = await csrf(alice);
+  await login(alice, "alice@example.test", token);
+  const body = { name: "Alice", phone: "+918451010020" };
+  await request(app)
+    .post(`/api/library/${image.id}/license`)
+    .send(body)
+    .expect(401);
+  await alice.post(`/api/library/${image.id}/license`).send(body).expect(403);
+  await mutation(alice, "post", `/api/library/${image.id}/license`, token)
+    .send({ ...body, price: 1 })
+    .expect(400);
+  const license = (
+    await mutation(alice, "post", `/api/library/${image.id}/license`, token)
+      .send(body)
+      .expect(201)
+  ).body.data;
+  assert.equal(license.total, 99);
+  assert.equal(license.items[0].kind, "image");
+  await alice.get(`/api/orders/${license.id}/download/0`).expect(403);
+  const { Order } = await import("../src/models/order.model.js");
+  await Order.updateOne({ _id: license.id }, { $set: { status: "completed" } });
+  const download = await alice
+    .get(`/api/orders/${license.id}/download/0`)
+    .expect(200);
+  assert.match(download.headers["content-disposition"], /2400x1600\.png/);
+  assert.equal(download.body[0], 137);
+  const bobToken = await csrf(bob);
+  await login(bob, "bob@example.test", bobToken);
+  await bob.get(`/api/orders/${license.id}/download/0`).expect(403);
+  const digital = (await alice.get("/api/orders?kind=image").expect(200)).body
+    .data;
+  assert.ok(digital.some((order: any) => order.id === license.id));
+  const physical = (await alice.get("/api/orders?kind=product").expect(200))
+    .body.data;
+  assert.ok(!physical.some((order: any) => order.id === license.id));
+});
+
+test("uploaded design photos persist and cannot be read or reused by another user", async () => {
+  const sharp = (await import("sharp")).default;
+  const png = await sharp({
+    create: { width: 40, height: 40, channels: 3, background: "#ff00aa" },
+  })
+    .png()
+    .toBuffer();
+  const token = await csrf(alice);
+  const response = await alice
+    .post("/api/design-images")
+    .set("Origin", origin)
+    .set("X-CSRF-Token", token)
+    .set("Content-Type", "application/octet-stream")
+    .send(png)
+    .expect(201);
+  const id = response.body.data.id;
+  await alice
+    .get(`/api/design-images/${id}`)
+    .expect(200)
+    .expect("Content-Type", /image\/png/);
+  await bob.get(`/api/design-images/${id}`).expect(403);
+  await request(app).get(`/api/design-images/${id}`).expect(401);
+  await request(app).get(`/api/previews/private-${id}.png`).expect(404);
+  const settings = {
+    headline: "My photo",
+    subtitle: "",
+    bg: "#ffffff",
+    fg: "#000000",
+    font: "Arial",
+    size: 40,
+    y: 580,
+    square: false,
+    hasUploadedImage: true,
+    imageUploadId: id,
+  };
+  const design = (
+    await mutation(alice, "post", "/api/designs", token)
+      .send({ title: "Persisted photo", settings })
+      .expect(201)
+  ).body.data;
+  assert.equal(design.settings.imageUploadId, id);
+  assert.equal(
+    (await alice.get(`/api/designs/${design.id}`).expect(200)).body.data
+      .settings.imageUploadId,
+    id,
+  );
+  const bobToken = await csrf(bob);
+  await mutation(bob, "post", "/api/designs", bobToken)
+    .send({ title: "Forged photo reference", settings })
+    .expect(403);
+});

@@ -1,4 +1,4 @@
-import { useState, useRef, type FormEvent } from "react";
+import { useState, useRef, useMemo, type FormEvent } from "react";
 import {
   Dialog,
   DialogContent,
@@ -12,6 +12,8 @@ import { Artwork } from "./Artwork";
 import { DesignEditor, initialDesign } from "../editor/DesignEditor";
 import type { Product, CartItem, DesignSettings } from "../../types";
 import { imageUrl } from "../../lib/utils";
+import { LicenseRequest } from "../library/LicenseRequest";
+import { ProofCanvas } from "../editor/ProofCanvas";
 import { Price } from "./Price";
 interface Props {
   product: Product | null;
@@ -25,6 +27,19 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
   const [editor, setEditor] = useState(false),
     [design, setDesign] = useState<DesignSettings | undefined>(),
     [error, setError] = useState("");
+  const startingDesign = useMemo(
+    () => ({
+      ...initialDesign,
+      headline: "",
+      subtitle: "",
+      ...(p?.kind === "image"
+        ? { imageProductId: p.id }
+        : p
+          ? { baseProductId: p.id }
+          : {}),
+    }),
+    [p?.id],
+  );
   async function downloadPreview() {
     if (!p) return;
     setDownloading(true);
@@ -105,7 +120,11 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                 ref={artworkRef}
                 className="aspect-square overflow-hidden rounded-lg bg-slate-100"
               >
-                <Artwork product={p} />
+                {design ? (
+                  <ProofCanvas settings={design} />
+                ) : (
+                  <Artwork product={p} />
+                )}
               </div>
               <div>
                 <p className="mb-2 text-xs tracking-widest text-cyan-700">
@@ -123,80 +142,90 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                     {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
                   </span>
                 </p>
-                <form onSubmit={add} className="space-y-4">
-                  <Field label="Quantity / area units" error={error}>
-                    {(id) => (
-                      <Input
-                        id={id}
-                        name="quantity"
-                        type="number"
-                        defaultValue={1}
-                        min={1}
-                        max={10000}
-                      />
+                {p.libraryCategory ? (
+                  <LicenseRequest
+                    product={p}
+                    onSignIn={onSignIn}
+                    onPreview={downloadPreview}
+                    downloading={downloading}
+                    onEdit={() => setEditor(true)}
+                  />
+                ) : (
+                  <form onSubmit={add} className="space-y-4">
+                    <Field label="Quantity / area units" error={error}>
+                      {(id) => (
+                        <Input
+                          id={id}
+                          name="quantity"
+                          type="number"
+                          defaultValue={1}
+                          min={1}
+                          max={10000}
+                        />
+                      )}
+                    </Field>
+                    <Field label="Size, material & requirements">
+                      {(id) => (
+                        <Textarea
+                          id={id}
+                          name="requirements"
+                          maxLength={2000}
+                          placeholder="e.g. 3 × 6 ft, outdoor, matte finish"
+                        />
+                      )}
+                    </Field>
+                    {design && (
+                      <p role="status" className="text-sm text-emerald-700">
+                        Custom design applied.
+                      </p>
                     )}
-                  </Field>
-                  <Field label="Size, material & requirements">
-                    {(id) => (
-                      <Textarea
-                        id={id}
-                        name="requirements"
-                        maxLength={2000}
-                        placeholder="e.g. 3 × 6 ft, outdoor, matte finish"
-                      />
+                    <Button className="w-full">
+                      {p.kind === "image"
+                        ? "Add HD license request"
+                        : "Add to order"}
+                    </Button>
+                    {p.kind === "image" && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full"
+                        disabled={downloading}
+                        onClick={downloadPreview}
+                      >
+                        {downloading
+                          ? "Preparing preview…"
+                          : "Download free preview"}
+                      </Button>
                     )}
-                  </Field>
-                  {design && (
-                    <p role="status" className="text-sm text-emerald-700">
-                      Custom design applied.
-                    </p>
-                  )}
-                  <Button className="w-full">
-                    {p.kind === "image"
-                      ? "Add HD license request"
-                      : "Add to order"}
-                  </Button>
-                  {p.kind === "image" && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      className="w-full"
-                      disabled={downloading}
-                      onClick={downloadPreview}
-                    >
-                      {downloading
-                        ? "Preparing preview…"
-                        : "Download free preview"}
+                    {(p.editable || p.group === "Customised Products") && (
+                      <Button
+                        type="button"
+                        className="w-full"
+                        variant="outline"
+                        onClick={() => setEditor(true)}
+                      >
+                        Customise design ↗
+                      </Button>
+                    )}
+                    <Button asChild variant="outline" className="w-full">
+                      <a
+                        href={
+                          "https://wa.me/918451010020?text=" +
+                          encodeURIComponent(
+                            "Hi PHULO, I need a quote for " + p.title,
+                          )
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Discuss on WhatsApp ↗
+                      </a>
                     </Button>
-                  )}
-                  {p.editable && (
-                    <Button
-                      type="button"
-                      className="w-full"
-                      variant="outline"
-                      onClick={() => setEditor(true)}
-                    >
-                      Customise design ↗
-                    </Button>
-                  )}
-                  <Button asChild variant="outline" className="w-full">
-                    <a
-                      href={
-                        "https://wa.me/918451010020?text=" +
-                        encodeURIComponent(
-                          "Hi PHULO, I need a quote for " + p.title,
-                        )
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Discuss on WhatsApp ↗
-                    </a>
-                  </Button>
-                </form>
+                  </form>
+                )}
                 <p className="mt-4 text-xs leading-5 text-slate-500">
                   {p.kind === "image"
-                    ? "Free watermarked preview. HD files require a confirmed quote, uploaded original, and admin payment verification."
+                    ? "Free watermarked preview. HD originals unlock in My image downloads after PHULO verifies payment."
                     : "Product images show representative print examples. Final size, material, availability and pricing are confirmed before production."}
                 </p>
               </div>
@@ -207,7 +236,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
       <DesignEditor
         open={editor}
         onOpenChange={setEditor}
-        initial={design || initialDesign}
+        initial={design || startingDesign}
         onApply={setDesign}
         onSignIn={onSignIn}
       />

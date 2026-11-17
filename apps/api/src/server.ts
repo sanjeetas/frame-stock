@@ -1,3 +1,4 @@
+import { seedImageLibrary } from "./services/library-seed.service.js";
 import { bootstrapApplication } from "./services/bootstrap.service.js";
 import { User } from "./models/user.model.js";
 import { Session, RefreshToken } from "./models/session.model.js";
@@ -20,6 +21,7 @@ async function start() {
     Design.init(),
   ]);
   await bootstrapApplication(process.env);
+  if (process.env.AUTO_SEED === "true") await seedImageLibrary(config);
   const app = await createApp(config);
   const server = app.listen(config.PORT, () =>
     console.log(`PHULO API listening on port ${config.PORT}`),

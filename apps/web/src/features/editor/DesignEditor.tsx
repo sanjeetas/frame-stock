@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Download, Save } from "lucide-react";
 import {
   Dialog,
@@ -10,6 +10,9 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Field } from "../../components/Field";
 import { useAuth } from "../auth/AuthProvider";
+import { ProofCanvas } from "./ProofCanvas";
+import { useApiQuery } from "../../hooks/useApiQuery";
+import type { Product } from "../../types";
 import { api } from "../../lib/api";
 import type { Design, DesignSettings } from "../../types";
 export const initialDesign: DesignSettings = {
@@ -46,81 +49,27 @@ export function DesignEditor({
   const [values, setValues] = useState<DesignSettings>(
       initial || initialDesign,
     ),
-    [photo, setPhoto] = useState<ImageBitmap | null>(null),
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [success, setSuccess] = useState(""),
     [savedId, setSavedId] = useState(existingId);
   useEffect(() => {
     if (open) {
+      canvas.current = null;
+      setCanExport(false);
       setValues(initial || initialDesign);
-      setPhoto(null);
       setError("");
       setSuccess("");
       setSavedId(existingId);
     }
   }, [open, initial, existingId]);
-  useEffect(() => {
-    const c = canvas.current;
-    if (!c || !open) return;
-    c.width = 1200;
-    c.height = values.square ? 1200 : 900;
-    const ctx = c.getContext("2d");
-    if (!ctx) return;
-    ctx.fillStyle = values.bg;
-    ctx.fillRect(0, 0, c.width, c.height);
-    ctx.fillStyle = values.fg;
-    ctx.globalAlpha = 0.18;
-    for (let i = 0; i < 7; i++) {
-      ctx.beginPath();
-      ctx.ellipse(700 + i * 35, 200 + i * 22, 140, 95, i * 0.4, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    ctx.globalAlpha = 1;
-    if (photo) {
-      const ratio = Math.min(950 / photo.width, 380 / photo.height);
-      ctx.drawImage(
-        photo,
-        600 - (photo.width * ratio) / 2,
-        60,
-        photo.width * ratio,
-        photo.height * ratio,
-      );
-    }
-    ctx.fillStyle = values.fg;
-    ctx.textAlign = "center";
-    ctx.font = `${values.size}px ${values.font}`;
-    const words = values.headline.split(" ");
-    let row = "",
-      line = 0;
-    for (const word of words) {
-      if (ctx.measureText(row + word).width > 1050 && row) {
-        ctx.fillText(row, 600, values.y + line * values.size * 1.2);
-        row = "";
-        line++;
-      }
-      if (line > 2) break;
-      row += word + " ";
-    }
-    if (line <= 2) ctx.fillText(row, 600, values.y + line * values.size * 1.2);
-    ctx.font = "24px " + values.font;
-    ctx.fillText(
-      values.subtitle,
-      600,
-      Math.min(c.height - 70, values.y + values.size * 2.5),
-      1050,
-    );
-    ctx.font = "13px Arial";
-    ctx.fillText("PHULO CUSTOM DESIGN PREVIEW", 600, c.height - 30);
-    ctx.save();
-    ctx.globalAlpha = 0.14;
-    ctx.rotate(-0.4);
-    ctx.font = "23px Arial";
-    for (let y = -400; y < 1800; y += 160)
-      for (let x = -600; x < 1800; x += 340)
-        ctx.fillText("PHULO PREVIEW", x, y);
-    ctx.restore();
-  }, [values, photo, open]);
+  const library = useApiQuery<Product[]>(open ? "/library?limit=100" : null);
+  const [uploading, setUploading] = useState(false);
+  const [canExport, setCanExport] = useState(false);
+  const acceptCanvas = useCallback((value: HTMLCanvasElement | null) => {
+    canvas.current = value;
+    setCanExport(!!value);
+  }, []);
   function update<K extends keyof DesignSettings>(
     key: K,
     value: DesignSettings[K],
@@ -178,11 +127,7 @@ export function DesignEditor({
         </DialogDescription>
         <div className="mt-6 grid gap-6 md:grid-cols-[1.5fr_1fr]">
           <div className="self-start bg-slate-100 p-4">
-            <canvas
-              ref={canvas}
-              className="w-full shadow-sm"
-              aria-label="Custom design preview"
-            />
+            <ProofCanvas settings={values} onCanvas={acceptCanvas} />
           </div>
           <div className="space-y-4">
             <Field label="Headline">
@@ -268,14 +213,43 @@ export function DesignEditor({
                 />
               )}
             </Field>
+            <Field label="Choose an Image Library design">
+              {(id) => (
+                <select
+                  id={id}
+                  value={values.imageProductId || ""}
+                  onChange={(event) =>
+                    setValues((value) => ({
+                      ...value,
+                      imageProductId: event.target.value || undefined,
+                      imageUploadId: undefined,
+                      hasUploadedImage: false,
+                    }))
+                  }
+                >
+                  <option value="">Keep selected product preview</option>
+                  {library.data?.data.map((image) => (
+                    <option key={image.id} value={image.id}>
+                      {image.libraryCategory} — {image.title}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </Field>
+            {library.error && (
+              <p role="alert" className="text-sm text-red-700">
+                {library.error}
+              </p>
+            )}
             <Field
               label="Upload your photo / logo"
-              hint="Photo pixels remain in this browser. Send the original separately when confirming your order."
+              hint="Sign in to securely save your photo with this design. PNG, JPEG or WebP, up to 8 MB."
             >
               {(id) => (
                 <Input
                   id={id}
                   type="file"
+                  disabled={uploading}
                   accept="image/png,image/jpeg,image/webp"
                   onChange={async (e) => {
                     const file = e.target.files?.[0];
@@ -290,23 +264,44 @@ export function DesignEditor({
                       return;
                     }
                     try {
-                      setPhoto(await createImageBitmap(file));
-                      update("hasUploadedImage", true);
+                      if (!user) {
+                        onSignIn();
+                        return;
+                      }
+                      setUploading(true);
+                      const uploaded = await api<{ id: string }>(
+                        "/design-images",
+                        { method: "POST", raw: file },
+                      );
+                      setValues((value) => ({
+                        ...value,
+                        imageUploadId: uploaded.data.id,
+                        hasUploadedImage: true,
+                      }));
                       setError("");
-                    } catch {
-                      setError("Could not load this image.");
+                    } catch (error) {
+                      setError(
+                        (error as Error).message ||
+                          "Could not load this image.",
+                      );
+                    } finally {
+                      setUploading(false);
                     }
                   }}
                 />
               )}
             </Field>
-            {photo && (
+            {uploading && <p role="status">Uploading your image…</p>}
+            {values.imageUploadId && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => {
-                  setPhoto(null);
-                  update("hasUploadedImage", false);
+                  setValues((value) => ({
+                    ...value,
+                    imageUploadId: undefined,
+                    hasUploadedImage: false,
+                  }));
                 }}
               >
                 Remove photo
@@ -331,17 +326,22 @@ export function DesignEditor({
               </p>
             )}
             <div className="flex flex-col gap-2">
-              <Button onClick={exportPng}>
+              <Button onClick={exportPng} disabled={uploading || !canExport}>
                 <Download size={20} />
                 Download preview PNG
               </Button>
-              <Button variant="outline" onClick={save} disabled={busy}>
+              <Button
+                variant="outline"
+                onClick={save}
+                disabled={busy || uploading || !canExport}
+              >
                 <Save size={20} />
                 {busy ? "Saving…" : "Save to my designs"}
               </Button>
               {onApply && (
                 <Button
                   variant="outline"
+                  disabled={uploading || !canExport}
                   onClick={() => {
                     onApply(values);
                     onOpenChange(false);

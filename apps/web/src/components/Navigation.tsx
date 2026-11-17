@@ -78,12 +78,11 @@ export function Navigation({ categories, route, group, onBrowse }: Props) {
           Signage & Boards <ChevronDown size={16} />
         </button>
         <button
-          className="nav-item gap-2"
-          aria-expanded={panel === "images"}
-          aria-controls="category-dropdown"
-          onClick={() => setPanel(panel === "images" ? null : "images")}
+          className="nav-item"
+          aria-current={route === "library" ? "page" : undefined}
+          onClick={() => choose("Image Library")}
         >
-          Image Library <ChevronDown size={16} />
+          Image Library
         </button>
         {["Gifting Items", "Customised Products"].map((item) => (
           <button

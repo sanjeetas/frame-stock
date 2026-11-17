@@ -1,3 +1,4 @@
+import { validateDesignImages } from "./design-image.service.js";
 import type { z } from "zod";
 import type { orderBody, orderQuery } from "../schemas/index.js";
 import { Order, orderDto } from "../models/order.model.js";
@@ -8,6 +9,8 @@ export async function createOrder(
   owner: string,
   body: z.infer<typeof orderBody>,
 ) {
+  for (const item of body.items)
+    await validateDesignImages(item.customization?.design, owner);
   const products = await Product.find({
     _id: { $in: body.items.map((i) => i.productId) },
     published: true,
@@ -50,6 +53,7 @@ export async function listOrders(
   const filter: any = {
     ...(owner ? { owner } : {}),
     ...(query.status ? { status: query.status } : {}),
+    ...(query.kind ? { "items.kind": query.kind } : {}),
   };
   const [rows, total] = await Promise.all([
     Order.find(filter)

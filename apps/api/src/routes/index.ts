@@ -12,6 +12,13 @@ import * as s from "../schemas/index.js";
 import * as catalog from "../controllers/catalog.controller.js";
 import * as orders from "../controllers/order.controller.js";
 import * as designs from "../controllers/design.controller.js";
+import {
+  ownedImage,
+  uploadDesignImage,
+} from "../services/design-image.service.js";
+import { Product } from "../models/product.model.js";
+import { AppError } from "../lib.js";
+import { createOrder } from "../services/order.service.js";
 import * as files from "../services/file.service.js";
 import { ok } from "../lib.js";
 export function resourceRoutes(auth: AuthService, config: Config) {
@@ -32,6 +39,95 @@ export function resourceRoutes(auth: AuthService, config: Config) {
       },
     },
   });
+  r.get("/library", validate({ query: s.productQuery }), async (req, res) => {
+    req.validated.query.group = "Image Library";
+    await catalog.list(req, res, () => {});
+  });
+  r.get("/library/categories", async (_req, res) =>
+    ok(
+      res,
+      await Product.distinct("libraryCategory", {
+        published: true,
+        libraryCategory: { $exists: true },
+      }),
+    ),
+  );
+  r.post(
+    "/library/:id/license",
+    identity,
+    protect,
+    writeLimit,
+    validate({
+      params: s.idParams,
+      body: z
+        .object({
+          name: z.string().trim().min(2).max(100),
+          phone: z.string().regex(/^\+?[\d ()-]{8,20}$/),
+        })
+        .strict(),
+    }),
+    async (req, res) => {
+      const product = await Product.findOne({
+        _id: req.validated.params.id,
+        published: true,
+        libraryCategory: { $exists: true },
+      });
+      if (!product || !product.hasFile)
+        throw new AppError(
+          409,
+          "UNAVAILABLE",
+          "This original is not available for licensing yet.",
+        );
+      ok(
+        res,
+        await createOrder(req.identity!.userId, {
+          ...req.validated.body,
+          address: "",
+          notes: "Image Library HD license request",
+          items: [
+            {
+              productId: String(product._id),
+              quantity: 1,
+              customization: {
+                requirements: "HD digital illustration license",
+              },
+            },
+          ],
+        }),
+        201,
+      );
+    },
+  );
+  r.post(
+    "/design-images",
+    identity,
+    protect,
+    writeLimit,
+    express.raw({ type: "application/octet-stream", limit: "8mb" }),
+    async (req, res) =>
+      ok(
+        res,
+        await uploadDesignImage(req.identity!.userId, req.body, config),
+        201,
+      ),
+  );
+  r.get(
+    "/design-images/:id",
+    identity,
+    validate({ params: s.idParams }),
+    async (req, res) => {
+      const image = await ownedImage(
+        req.validated.params.id,
+        req.identity!.userId,
+      );
+      res.type("image/png");
+      res.set("Cache-Control", "private, no-store");
+      await pipeline(
+        bucket("previews").openDownloadStream(image.gridfsId),
+        res,
+      );
+    },
+  );
   r.get("/categories", catalog.categories);
   r.get("/products", validate({ query: s.productQuery }), catalog.list);
   r.get("/products/:id", validate({ params: s.idParams }), catalog.get);

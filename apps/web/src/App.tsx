@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "./features/auth/AuthProvider";
 import { AuthDialog } from "./features/auth/AuthDialog";
+import { Library } from "./features/library/Library";
 import { Catalog } from "./features/catalog/Catalog";
 import { ProductDialog } from "./features/catalog/ProductDialog";
 import { CartDialog } from "./features/orders/CartDialog";
@@ -33,7 +34,7 @@ const categories = [
   ["Signage & boards", "product-p6.webp", "All products", "219"],
   ["Customised products", "product-p45.webp", "All products", "228"],
   ["Gifting items", "product-p42.webp", "All products", "227"],
-  ["Image library", "library-samples.svg", "All products", "203"],
+  ["Image library", "library-samples.svg", "Image Library", ""],
   ["Rollups & standees", "product-p24.webp", "All products", "223"],
 ];
 export function App() {
@@ -52,6 +53,7 @@ export function App() {
   useEffect(() => {
     const change = () => {
       setRoute(location.hash.slice(1) || "home");
+      setSelected(null);
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
     window.addEventListener("hashchange", change);
@@ -66,8 +68,8 @@ export function App() {
   function browse(g: string, category?: string) {
     setGroup(g);
     setCategoryId(category || "");
-    location.hash = "catalog";
-    if (route === "catalog")
+    location.hash = g === "Image Library" ? "library" : "catalog";
+    if (route === "catalog" && g !== "Image Library")
       document
         .getElementById("catalog")
         ?.scrollIntoView({ behavior: "smooth" });
@@ -323,6 +325,10 @@ export function App() {
             onOpen={(p) => setSelected(p)}
           />
         )}{" "}
+        {route === "library" && <Library onOpen={setSelected} />}
+        {route === "downloads" && (
+          <Account downloadsOnly onSignIn={() => setAuthOpen(true)} />
+        )}
         {route === "account" && <Account onSignIn={() => setAuthOpen(true)} />}{" "}
         {route === "admin" && <Admin />}
         {route === "contact" && (

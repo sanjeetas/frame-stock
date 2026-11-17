@@ -1,3 +1,4 @@
+import { validateDesignImages } from "./design-image.service.js";
 import type { z } from "zod";
 import type { designBody, pagination } from "../schemas/index.js";
 import { Design, designDto } from "../models/design.model.js";
@@ -13,6 +14,7 @@ export async function createDesign(
   owner: string,
   body: z.infer<typeof designBody>,
 ) {
+  await validateDesignImages(body.settings, owner);
   return designDto(await Design.create({ owner, ...body }));
 }
 export async function listDesigns(
@@ -43,6 +45,7 @@ export async function updateDesign(
   body: z.infer<typeof designBody>,
 ) {
   const d = await ownedDesign(id, owner);
+  await validateDesignImages(body.settings, owner);
   d.title = body.title;
   d.settings = body.settings;
   await d.save();

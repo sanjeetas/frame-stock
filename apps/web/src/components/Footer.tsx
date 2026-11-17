@@ -93,6 +93,7 @@ export function Footer({ onBrowse }: { onBrowse: (group: string) => void }) {
             >
               <a href="#home">Home</a>
               <a href="#account">My account & orders</a>
+              <a href="#downloads">My image downloads</a>
               <button onClick={() => onBrowse("Image Library")}>
                 Image library
               </button>
@@ -116,7 +117,7 @@ export function Footer({ onBrowse }: { onBrowse: (group: string) => void }) {
             © {new Date().getFullYear()} PHULO Multi Graphics. All rights
             reserved.
           </p>
-          <p>Image reuse or resale is not allowed.</p>
+          <p>Standalone image resale or redistribution is not allowed.</p>
         </div>
       </div>
     </footer>

@@ -27,6 +27,7 @@ export const productQuery = pagination
   .extend({
     search: z.string().trim().max(100).optional(),
     category: z.string().max(100).optional(),
+    libraryCategory: z.string().trim().max(60).optional(),
     categoryId: z.coerce.number().int().positive().optional(),
     group: z
       .enum([
@@ -60,6 +61,7 @@ export const productBody = z
       "Customised Products",
       "Image Library",
     ]),
+    libraryCategory: z.string().trim().min(1).max(60).optional(),
     sourceOrder: z.number().int().min(0).optional(),
     sourceProductId: z.number().int().positive().optional(),
     categoryIds: z.array(z.number().int().positive()).max(16).optional(),
@@ -92,6 +94,9 @@ export const settings = z
     y: z.number().int().min(130).max(650),
     square: z.boolean(),
     hasUploadedImage: z.boolean().default(false),
+    imageUploadId: id.optional(),
+    imageProductId: id.optional(),
+    baseProductId: id.optional(),
   })
   .strict();
 export const designBody = z
@@ -135,7 +140,10 @@ export const orderStatus = z
   })
   .strict();
 export const orderQuery = pagination
-  .extend({ status: orderStatus.shape.status.optional() })
+  .extend({
+    status: orderStatus.shape.status.optional(),
+    kind: z.enum(["image", "product"]).optional(),
+  })
   .strict();
 export const filenameQuery = z
   .object({

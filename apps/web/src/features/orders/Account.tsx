@@ -7,17 +7,31 @@ import { apiBase, money } from "../../lib/utils";
 import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
 import { Loading, ErrorState, Empty } from "../../components/Feedback";
+import { ProofCanvas } from "../editor/ProofCanvas";
 import { DesignEditor } from "../editor/DesignEditor";
 import type { Order, Design } from "../../types";
-export function Account({ onSignIn }: { onSignIn: () => void }) {
+export function Account({
+  onSignIn,
+  downloadsOnly = false,
+}: {
+  onSignIn: () => void;
+  downloadsOnly?: boolean;
+}) {
   const { user } = useAuth();
   const [page, setPage] = useState(1),
     [designPage, setDesignPage] = useState(1);
   const orders = useApiQuery<Order[]>(
-      user ? "/orders?page=" + page + "&limit=10" : null,
+      user
+        ? "/orders?page=" +
+            page +
+            "&limit=10&kind=" +
+            (downloadsOnly ? "image" : "product")
+        : null,
     ),
     designs = useApiQuery<Design[]>(
-      user ? "/designs?page=" + designPage + "&limit=10" : null,
+      user && !downloadsOnly
+        ? "/designs?page=" + designPage + "&limit=10"
+        : null,
     );
   const [editing, setEditing] = useState<Design | null>(null),
     [error, setError] = useState(""),
@@ -84,14 +98,20 @@ export function Account({ onSignIn }: { onSignIn: () => void }) {
         <p className="text-xs tracking-widest text-cyan-700">
           YOUR CREATIVE SPACE
         </p>
-        <h1 className="mt-2 text-3xl font-bold">Hello, {user.name}.</h1>
+        <h1 className="mt-2 text-3xl font-bold">
+          {downloadsOnly ? "My image downloads" : "Hello, " + user.name + "."}
+        </h1>
         <p className="mt-2 text-sm text-slate-500">
           Your orders, purchased files and saved design proofs.
         </p>
       </div>
       {error && <ErrorState message={error} />}
       <div>
-        <h2 className="mb-5 text-xl font-bold">My orders</h2>
+        <h2 className="mb-5 text-xl font-bold">
+          {downloadsOnly
+            ? "HD license requests & downloads"
+            : "My printing orders"}
+        </h2>
         {orders.loading ? (
           <Loading />
         ) : orders.error ? (
@@ -122,6 +142,13 @@ export function Account({ onSignIn }: { onSignIn: () => void }) {
                       <span>
                         {i.title} × {i.quantity}
                       </span>
+                      {i.kind === "image" && o.status !== "completed" && (
+                        <span className="text-sm text-amber-800">
+                          {o.status === "cancelled"
+                            ? "Request cancelled"
+                            : "HD download unlocks after payment verification"}
+                        </span>
+                      )}
                       {i.kind === "image" && o.status === "completed" && (
                         <Button
                           variant="outline"
@@ -179,79 +206,73 @@ export function Account({ onSignIn }: { onSignIn: () => void }) {
           />
         )}
       </div>
-      <div>
-        <h2 className="mb-5 text-xl font-bold">My designs</h2>
-        {designs.loading ? (
-          <Loading />
-        ) : designs.error ? (
-          <ErrorState message={designs.error} retry={designs.reload} />
-        ) : designs.data?.data.length ? (
-          <>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {designs.data.data.map((d) => (
-                <Card key={d.id}>
-                  <div
-                    className="mb-4 rounded-lg p-7 text-center"
-                    style={{
-                      background: d.settings.bg,
-                      color: d.settings.fg,
-                      fontFamily: d.settings.font,
-                    }}
-                  >
-                    <p className="font-semibold">{d.title}</p>
-                    <p className="mt-2 text-xs tracking-widest opacity-60">
-                      PHULO DESIGN PROOF
-                    </p>
-                  </div>
-                  <div className="flex justify-between">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => setEditing(d)}
-                    >
-                      <PenLine size={18} />
-                      Edit
-                    </Button>
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      disabled={!!busy}
-                      aria-label={"Delete " + d.title}
-                      onClick={() => mutate(d.id, "/designs/" + d.id, "DELETE")}
-                    >
-                      <Trash2 size={20} />
-                    </Button>
-                  </div>
-                </Card>
-              ))}
-            </div>
-            <div className="mt-4 flex items-center gap-4">
-              <Button
-                size="sm"
-                variant="outline"
-                disabled={designPage <= 1}
-                onClick={() => setDesignPage((p) => p - 1)}
-              >
-                Previous
-              </Button>
-              <span className="text-xs">Page {designPage}</span>
-              <Button
-                size="sm"
-                variant="outline"
-                disabled={designPage >= (designs.data.meta?.pages || 1)}
-                onClick={() => setDesignPage((p) => p + 1)}
-              >
-                Next
-              </Button>
-            </div>
-          </>
-        ) : (
-          <Empty
-            title="No saved designs"
-            description="Customise an editable product and save its design to your account."
-          />
-        )}
-      </div>
+      {!downloadsOnly && (
+        <div>
+          <h2 className="mb-5 text-xl font-bold">My designs</h2>
+          {designs.loading ? (
+            <Loading />
+          ) : designs.error ? (
+            <ErrorState message={designs.error} retry={designs.reload} />
+          ) : designs.data?.data.length ? (
+            <>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {designs.data.data.map((d) => (
+                  <Card key={d.id}>
+                    <div className="mb-4">
+                      <ProofCanvas settings={d.settings} />
+                    </div>
+                    <div className="flex justify-between">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => setEditing(d)}
+                      >
+                        <PenLine size={18} />
+                        Edit
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        disabled={!!busy}
+                        aria-label={"Delete " + d.title}
+                        onClick={() =>
+                          mutate(d.id, "/designs/" + d.id, "DELETE")
+                        }
+                      >
+                        <Trash2 size={20} />
+                      </Button>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+              <div className="mt-4 flex items-center gap-4">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={designPage <= 1}
+                  onClick={() => setDesignPage((p) => p - 1)}
+                >
+                  Previous
+                </Button>
+                <span className="text-xs">Page {designPage}</span>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={designPage >= (designs.data.meta?.pages || 1)}
+                  onClick={() => setDesignPage((p) => p + 1)}
+                >
+                  Next
+                </Button>
+              </div>
+            </>
+          ) : (
+            <Empty
+              title="No saved designs"
+              description="Customise an editable product and save its design to your account."
+            />
+          )}
+        </div>
+      )}
       <DesignEditor
         open={!!editing}
         onOpenChange={(v) => {
