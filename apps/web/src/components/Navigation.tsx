@@ -34,7 +34,10 @@ export function Navigation({ categories, route, group, onBrowse }: Props) {
   }, []);
   const choose = (selectedGroup: string, categoryId?: string) => {
     setPanel(null);
-    onBrowse(selectedGroup, categoryId);
+    onBrowse(
+      categoryId === "203" ? "Image Library" : selectedGroup,
+      categoryId === "203" ? undefined : categoryId,
+    );
   };
   const shown =
     panel === "signage"

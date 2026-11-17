@@ -319,6 +319,10 @@ export function App() {
             categoryId={categoryId}
             categories={taxonomy.data?.data || []}
             onCategory={(id) => {
+              if (id === "203") {
+                browse("Image Library");
+                return;
+              }
               setCategoryId(id);
               setGroup("All products");
             }}
