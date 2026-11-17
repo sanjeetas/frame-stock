@@ -16,6 +16,7 @@ import {
   ownedImage,
   uploadDesignImage,
 } from "../services/design-image.service.js";
+import { DesignImage } from "../models/design-image.model.js";
 import { Product } from "../models/product.model.js";
 import { AppError } from "../lib.js";
 import { createOrder } from "../services/order.service.js";
@@ -95,6 +96,24 @@ export function resourceRoutes(auth: AuthService, config: Config) {
           ],
         }),
         201,
+      );
+    },
+  );
+  r.get(
+    "/design-images",
+    identity,
+    validate({ query: z.object({}).strict() }),
+    async (req, res) => {
+      const images = await DesignImage.find({ owner: req.identity!.userId })
+        .sort({ createdAt: -1 })
+        .limit(30)
+        .select("_id createdAt");
+      ok(
+        res,
+        images.map((image) => ({
+          id: String(image._id),
+          createdAt: image.createdAt,
+        })),
       );
     },
   );

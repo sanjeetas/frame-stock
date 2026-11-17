@@ -872,3 +872,120 @@
     padding: 28px 15px;
   }
 }
+
+.studio-shell {
+  position: relative;
+}
+.studio-text-field {
+  display: block;
+  padding: 8px 2px;
+  border-bottom: 1px solid #c8ccd0;
+}
+.studio-text-field input {
+  font-size: 15px;
+  color: #27323c;
+  padding-block: 12px;
+}
+.studio-text-field.selected {
+  border-bottom: 2px solid #00a8d5;
+}
+.studio-floating {
+  position: absolute;
+  z-index: 6;
+  display: flex;
+  padding: 4px;
+  border: 1px solid #e9edf0;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 4px 18px #17233315;
+}
+.studio-floating > button {
+  width: 34px;
+  height: 34px;
+}
+.studio-artwork[data-bleed="false"] {
+  border-color: #d1d7dd;
+}
+.studio-ruler-x {
+  position: absolute;
+  height: 1px;
+  bottom: -36px;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #8c969e;
+  pointer-events: none;
+}
+.studio-ruler-x::before,
+.studio-ruler-x::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  height: 11px;
+  border-left: 1px solid #8c969e;
+}
+.studio-ruler-x::before {
+  left: 0;
+}
+.studio-ruler-x::after {
+  right: 0;
+}
+.studio-ruler-x span {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  padding: 0 8px;
+  transform: translate(-50%, -50%);
+  background: #f3f4f5;
+  color: #727c85;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.studio-ruler-y {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -34px;
+  width: 1px;
+  border-left: 1px solid #8c969e;
+  pointer-events: none;
+}
+.studio-ruler-y::before,
+.studio-ruler-y::after {
+  content: "";
+  position: absolute;
+  left: -6px;
+  width: 11px;
+  border-top: 1px solid #8c969e;
+}
+.studio-ruler-y::before {
+  top: 0;
+}
+.studio-ruler-y::after {
+  bottom: 0;
+}
+.studio-ruler-y span {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  padding: 8px 2px;
+  transform: translate(-50%, -50%);
+  background: #f3f4f5;
+  color: #727c85;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.studio-review {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  overflow-y: auto;
+  background: #f6f8fa;
+}
+@media (max-width: 900px) {
+  .studio-ruler-y {
+    display: none;
+  }
+  .studio-ruler-x {
+    bottom: -24px;
+  }
+}

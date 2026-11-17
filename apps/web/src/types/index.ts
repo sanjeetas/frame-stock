@@ -51,6 +51,7 @@ export interface ApiResponse<T> {
 }
 export interface DesignSettings {
   studio?: StudioDocument;
+  artworkApproved?: boolean;
   headline: string;
   subtitle: string;
   bg: string;

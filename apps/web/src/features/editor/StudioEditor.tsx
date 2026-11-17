@@ -6,7 +6,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { Canvas, Textbox } from "fabric";
+import { Canvas, Textbox, Shadow } from "fabric";
 import {
   Save,
   Undo2,
@@ -35,12 +35,20 @@ import {
   ArrowDown,
   Image as ImageIcon,
   X,
+  MoreHorizontal,
+  Settings,
+  Folder,
+  ChevronDown,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Price } from "../catalog/Price";
 import { useAuth } from "../auth/AuthProvider";
 import { useApiQuery } from "../../hooks/useApiQuery";
 import { api } from "../../lib/api";
+import { StudioReview } from "./StudioReview";
+import { StudioMorePanel } from "./StudioMorePanel";
+import { safeMargin, resizeStudio } from "./studioActions";
+import { apiBase } from "../../lib/utils";
 import { asset } from "../../lib/utils";
 import type { Design, DesignSettings, Product } from "../../types";
 import { StudioPreview } from "./StudioPreview";
@@ -82,7 +90,8 @@ type Tab =
   | "background"
   | "templates"
   | "colours"
-  | "layers";
+  | "layers"
+  | "more";
 const tools: { tab: Tab; label: string; icon: typeof Type }[] = [
   { tab: "product", label: "Product", icon: Layers },
   { tab: "text", label: "Text", icon: Type },
@@ -92,6 +101,7 @@ const tools: { tab: Tab; label: string; icon: typeof Type }[] = [
   { tab: "templates", label: "Templates", icon: LayoutTemplate },
   { tab: "colours", label: "Template colour", icon: Palette },
   { tab: "layers", label: "Layers", icon: Layers },
+  { tab: "more", label: "More", icon: MoreHorizontal },
 ];
 function ToolButton({
   label,
@@ -193,6 +203,15 @@ export default function StudioEditor({
     [error, setError] = useState(""),
     [success, setSuccess] = useState("");
   const [loadFailed, setLoadFailed] = useState(false);
+  const [review, setReview] = useState(false),
+    [bleed, setBleed] = useState(card),
+    [rulers, setRulers] = useState(card);
+  const [context, setContext] = useState<{ left: number; top: number } | null>(
+      null,
+    ),
+    [clipboard, setClipboard] = useState<StudioElement | null>(null);
+  const fileInput = useRef<HTMLInputElement>(null),
+    uploadTarget = useRef<string | undefined>(undefined);
   const [savedId, setSavedId] = useState(existingId),
     [revision, setRevision] = useState(0),
     [zoom, setZoom] = useState(100),
@@ -211,6 +230,9 @@ export default function StudioEditor({
   const library = useApiQuery<Product[]>(
     tab === "uploads" ? "/library?limit=100" : null,
   );
+  const ownUploads = useApiQuery<{ id: string; createdAt: string }[]>(
+    tab === "uploads" && user ? "/design-images" : null,
+  );
   const templatePreviews = useMemo(
     () =>
       Object.fromEntries(
@@ -222,17 +244,38 @@ export default function StudioEditor({
     [],
   );
   const textElements = document.pages[side].elements.filter(
-    (item) => item.type === "text",
+    (item) => item.type === "text" && item.id !== "logo-label",
   );
   const active = () => canvas?.getActiveObject() as StudioObject | undefined;
+  const positionContext = useCallback((c: Canvas) => {
+    const object = c.getActiveObject();
+    if (!object) {
+      setContext(null);
+      return;
+    }
+    const bounds = object.getBoundingRect(),
+      zoom = c.getZoom();
+    setContext({
+      left: Math.max(
+        4,
+        Math.min(
+          c.getWidth() - 208,
+          (bounds.left + bounds.width / 2) * zoom - 104,
+        ),
+      ),
+      top: Math.max(4, bounds.top * zoom - 46),
+    });
+  }, []);
   const syncSelection = useCallback(
-    (c: Canvas) =>
+    (c: Canvas) => {
       setSelected(
         c.getActiveObject()
           ? readStudioObject(c.getActiveObject() as StudioObject)
           : null,
-      ),
-    [],
+      );
+      positionContext(c);
+    },
+    [positionContext],
   );
   function publish(next: StudioDocument, record = true) {
     documentRef.current = next;
@@ -289,11 +332,22 @@ export default function StudioEditor({
     c.on("selection:cleared", select);
     c.on("object:modified", changed);
     c.on("text:changed", changed);
+    c.on("object:moving", () => positionContext(c));
+    c.on("object:scaling", () => positionContext(c));
+    c.on("object:rotating", () => positionContext(c));
+    c.on("mouse:dblclick", (event) => {
+      const id = (event.target as StudioObject | undefined)?.studioElement?.id;
+      if (id === "logo-placeholder" || id === "logo-label") {
+        uploadTarget.current = id;
+        setTab("uploads");
+        fileInput.current?.click();
+      }
+    });
     return () => {
       setCanvas(null);
       void c.dispose();
     };
-  }, [node, syncSelection]);
+  }, [node, syncSelection, positionContext]);
   useEffect(() => {
     if (!canvas) return;
     let mounted = true;
@@ -353,6 +407,7 @@ export default function StudioEditor({
       });
       canvas.setZoom(scale);
       canvas.requestRenderAll();
+      positionContext(canvas);
     };
     const observer = new ResizeObserver(fit);
     observer.observe(viewport.current);
@@ -510,6 +565,7 @@ export default function StudioEditor({
         (item) => item.uploadId,
       ),
       studio: scene,
+      artworkApproved: false,
     };
   }
   async function save() {
@@ -563,6 +619,153 @@ export default function StudioEditor({
       setBusy(false);
     }
   }
+  function askUpload(replace = false) {
+    uploadTarget.current = replace ? selected?.id : undefined;
+    setTab("uploads");
+    fileInput.current?.click();
+  }
+  async function placeAsset(
+    source: { uploadId?: string; productId?: string },
+    targetId?: string,
+  ) {
+    if (!canvas || loadingRef.current) return;
+    setBusy(true);
+    setError("");
+    try {
+      let target = targetId
+        ? (canvas
+            .getObjects()
+            .find(
+              (item) => (item as StudioObject).studioElement?.id === targetId,
+            ) as StudioObject | undefined)
+        : undefined;
+      const logo =
+        target?.studioElement?.id === "logo-placeholder" ||
+        target?.studioElement?.id === "logo-label";
+      if (logo)
+        target = canvas
+          .getObjects()
+          .find(
+            (item) =>
+              (item as StudioObject).studioElement?.id === "logo-placeholder",
+          ) as StudioObject | undefined;
+      if (!target) {
+        await add(
+          element("image", {
+            left: document.width / 2,
+            top: document.height / 2,
+            width: document.width * 0.35,
+            height: document.height * 0.5,
+            ...source,
+          }),
+        );
+        return;
+      }
+      const previous = readStudioObject(target)!;
+      const item = element("image", {
+        id: logo ? "customer-logo" : previous.id,
+        left: previous.left,
+        top: previous.top,
+        width: target.getScaledWidth(),
+        height: target.getScaledHeight(),
+        angle: previous.angle,
+        opacity: previous.opacity,
+        ...source,
+      });
+      const replacement = await buildStudioObject(item, canvas),
+        index = canvas.getObjects().indexOf(target);
+      const obsolete = logo
+        ? canvas
+            .getObjects()
+            .filter((item) =>
+              ["logo-placeholder", "logo-label"].includes(
+                (item as StudioObject).studioElement?.id || "",
+              ),
+            )
+        : [target];
+      canvas.remove(...obsolete);
+      canvas.insertAt(index, replacement);
+      canvas.setActiveObject(replacement);
+      canvas.requestRenderAll();
+      commit();
+    } catch (error) {
+      setError((error as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  async function applyCrop(crop: NonNullable<StudioElement["crop"]>) {
+    const target = active();
+    if (!canvas || !target || target.studioElement?.type !== "image") return;
+    setBusy(true);
+    try {
+      const previous = readStudioObject(target)!;
+      const replacement = await buildStudioObject(
+        {
+          ...previous,
+          width: target.getScaledWidth(),
+          height: target.getScaledHeight(),
+          scaleX: 1,
+          scaleY: 1,
+          crop,
+        },
+        canvas,
+      );
+      const index = canvas.getObjects().indexOf(target);
+      canvas.remove(target);
+      canvas.insertAt(index, replacement);
+      canvas.setActiveObject(replacement);
+      canvas.requestRenderAll();
+      commit();
+    } catch (error) {
+      setError((error as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  function alignElement(value: "left" | "right" | "top" | "bottom" | "center") {
+    const target = active();
+    if (!target || target.lockMovementX) return;
+    const margin = safeMargin(document),
+      bounds = target.getBoundingRect(),
+      patch: Record<string, number> = {};
+    if (value === "left") patch.left = target.left + margin - bounds.left;
+    if (value === "right")
+      patch.left =
+        target.left + document.width - margin - bounds.left - bounds.width;
+    if (value === "top") patch.top = target.top + margin - bounds.top;
+    if (value === "bottom")
+      patch.top =
+        target.top + document.height - margin - bounds.top - bounds.height;
+    if (value === "center") {
+      patch.left = document.width / 2;
+      patch.top = document.height / 2;
+    }
+    updateObject(patch);
+  }
+  function copyLayer() {
+    const target = active();
+    if (target) setClipboard(readStudioObject(target));
+  }
+  function pasteLayer() {
+    if (clipboard)
+      void add({
+        ...clipboard,
+        id: crypto.randomUUID(),
+        left: clipboard.left + 20,
+        top: clipboard.top + 20,
+      });
+  }
+  function clearSide() {
+    publish({
+      ...document,
+      pages: {
+        ...document.pages,
+        [side]: { ...document.pages[side], elements: [] },
+      },
+    });
+    setRevision((value) => value + 1);
+  }
   async function upload(file: File | undefined) {
     if (!file) return;
     if (!user) {
@@ -583,15 +786,9 @@ export default function StudioEditor({
         method: "POST",
         raw: file,
       });
-      await add(
-        element("image", {
-          left: document.width / 2,
-          top: document.height / 2,
-          width: document.width * 0.35,
-          height: document.height * 0.5,
-          uploadId: response.data.id,
-        }),
-      );
+      await placeAsset({ uploadId: response.data.id }, uploadTarget.current);
+      uploadTarget.current = undefined;
+      ownUploads.reload();
     } catch (error) {
       setError((error as Error).message);
     } finally {
@@ -606,12 +803,59 @@ export default function StudioEditor({
       data-studio
       onKeyDown={(event) => {
         const target = event.target as HTMLElement;
+        if (review) {
+          if (event.key === "Escape") {
+            event.preventDefault();
+            event.stopPropagation();
+            setReview(false);
+          }
+          return;
+        }
+        const command = event.ctrlKey || event.metaKey;
+        if (command && event.key.toLowerCase() === "s") {
+          event.preventDefault();
+          void save();
+          return;
+        }
         if (
           ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName) ||
           target.isContentEditable ||
           preview
         )
           return;
+        if (command && event.key.toLowerCase() === "d") {
+          event.preventDefault();
+          duplicate();
+          return;
+        }
+        if (command && event.key.toLowerCase() === "c") {
+          event.preventDefault();
+          copyLayer();
+          return;
+        }
+        if (command && event.key.toLowerCase() === "v" && clipboard) {
+          event.preventDefault();
+          pasteLayer();
+          return;
+        }
+        const direction = (
+          {
+            ArrowLeft: [-1, 0],
+            ArrowRight: [1, 0],
+            ArrowUp: [0, -1],
+            ArrowDown: [0, 1],
+          } as Record<string, number[]>
+        )[event.key];
+        const object = active();
+        if (direction && object && !object.lockMovementX) {
+          event.preventDefault();
+          const step = event.shiftKey ? 10 : 1;
+          updateObject({
+            left: object.left + direction[0] * step,
+            top: object.top + direction[1] * step,
+          });
+          return;
+        }
         if (
           (event.ctrlKey || event.metaKey) &&
           event.key.toLowerCase() === "z"
@@ -630,23 +874,46 @@ export default function StudioEditor({
         }
       }}
     >
-      <header className="studio-header">
+      <input
+        ref={fileInput}
+        type="file"
+        className="hidden"
+        accept="image/png,image/jpeg,image/webp"
+        aria-label="Choose photo or logo"
+        onChange={(event) => {
+          void upload(event.target.files?.[0]);
+          event.target.value = "";
+        }}
+      />
+      <header className="studio-header" inert={review}>
         <img
           src={asset("assets/logo.png")}
           alt="PHULO Multi Graphics"
           className="h-12 w-24 object-contain"
         />
         <div className="min-w-0 flex-1">
-          <p className="truncate font-semibold">
-            {product?.title ||
-              (document.format === "card"
-                ? "Classic Visiting Cards"
-                : "Design Studio")}
-          </p>
+          <button
+            type="button"
+            className="flex max-w-full items-center gap-2 font-semibold"
+            aria-label="Product settings"
+            onClick={() => {
+              setTab("product");
+              setPreview(false);
+            }}
+          >
+            <Folder size={20} />
+            <span className="truncate">
+              {product?.title ||
+                (document.format === "card"
+                  ? "Classic Visiting Cards"
+                  : "Design Studio")}
+            </span>
+            <ChevronDown size={16} />
+          </button>
           <p className="text-xs text-slate-500">
             {side === "front" ? "Front" : "Back"} artwork ·{" "}
             {document.format === "card"
-              ? "94 × 58 mm including bleed"
+              ? `${document.width / 10} × ${document.height / 10} mm including bleed`
               : "Custom product proof"}
           </p>
         </div>
@@ -700,10 +967,8 @@ export default function StudioEditor({
           size="sm"
           disabled={loading || busy || loadFailed}
           onClick={() => {
-            if (onApply) {
-              onApply(savedSettings());
-              onClose();
-            } else void save();
+            if (onApply) setReview(true);
+            else void save();
           }}
         >
           {onApply ? "Next" : "Save"}
@@ -712,7 +977,7 @@ export default function StudioEditor({
           <X size={22} />
         </ToolButton>
       </header>
-      <div className="studio-body">
+      <div className="studio-body" inert={review}>
         {!preview && (
           <>
             <nav className="studio-rail" aria-label="Design tools">
@@ -738,6 +1003,52 @@ export default function StudioEditor({
                   <p className="font-semibold">
                     {product?.title || "Your design"}
                   </p>
+                  {document.format === "card" && (
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant={
+                          document.width > document.height
+                            ? "default"
+                            : "outline"
+                        }
+                        disabled={loading || busy}
+                        onClick={() => {
+                          if (document.width < document.height)
+                            replace(
+                              resizeStudio(
+                                document,
+                                document.height,
+                                document.width,
+                              ),
+                            );
+                        }}
+                      >
+                        Landscape
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant={
+                          document.height > document.width
+                            ? "default"
+                            : "outline"
+                        }
+                        disabled={loading || busy}
+                        onClick={() => {
+                          if (document.height < document.width)
+                            replace(
+                              resizeStudio(
+                                document,
+                                document.height,
+                                document.width,
+                              ),
+                            );
+                        }}
+                      >
+                        Portrait
+                      </Button>
+                    </div>
+                  )}
                   <p className="text-sm leading-6 text-slate-600">
                     {document.format === "card"
                       ? "Two-sided visiting card artwork. Keep important text and logos inside the green safety guide. Confirm the final quantity, material and print quote before production."
@@ -750,8 +1061,24 @@ export default function StudioEditor({
                     variant="outline"
                     onClick={() => setGuides((value) => !value)}
                   >
-                    {guides ? "Hide" : "Show"} safety & bleed guides
+                    {guides ? "Hide" : "Show"} safety area
                   </Button>
+                  <label className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={bleed}
+                      onChange={(event) => setBleed(event.target.checked)}
+                    />
+                    Show bleed outline
+                  </label>
+                  <label className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={rulers}
+                      onChange={(event) => setRulers(event.target.checked)}
+                    />
+                    Show artwork dimensions
+                  </label>
                   <Button
                     variant="outline"
                     className="w-full"
@@ -781,10 +1108,8 @@ export default function StudioEditor({
                     <label
                       key={item.id}
                       className={
-                        "block rounded-lg border p-2 " +
-                        (selected?.id === item.id
-                          ? "border-cyan-500 bg-cyan-50"
-                          : "border-slate-200")
+                        "studio-text-field " +
+                        (selected?.id === item.id ? "selected" : "")
                       }
                     >
                       <span className="sr-only">
@@ -794,7 +1119,8 @@ export default function StudioEditor({
                         className="w-full bg-transparent p-2 text-sm outline-none"
                         value={item.text || ""}
                         maxLength={500}
-                        onFocus={() => {
+                        onFocus={(event) => {
+                          event.target.select();
                           const object = canvas
                             ?.getObjects()
                             .find(
@@ -822,20 +1148,84 @@ export default function StudioEditor({
               )}
               {tab === "uploads" && (
                 <div className="space-y-4">
-                  <label className="block rounded-xl border-2 border-dashed border-cyan-300 bg-cyan-50 p-4 text-sm font-semibold">
+                  <Button
+                    className="w-full bg-cyan-400 text-slate-950"
+                    onClick={() => askUpload(false)}
+                    disabled={busy || loading}
+                  >
+                    <Upload size={20} />
                     Upload photo / logo
-                    <input
-                      className="mt-3 w-full text-xs"
-                      type="file"
-                      accept="image/png,image/jpeg,image/webp"
-                      disabled={busy || loading || loadFailed}
-                      onChange={(event) => void upload(event.target.files?.[0])}
-                    />
-                  </label>
+                  </Button>
+                  {(selected?.type === "image" ||
+                    selected?.id === "logo-placeholder" ||
+                    selected?.id === "logo-label") && (
+                    <Button
+                      className="w-full"
+                      variant="outline"
+                      onClick={() => askUpload(true)}
+                      disabled={busy || loading}
+                    >
+                      Replace selected image / logo
+                    </Button>
+                  )}
                   <p className="text-xs leading-5 text-slate-500">
                     PNG, JPEG or WebP up to 8 MB. Your uploaded photo is saved
                     securely with your design.
                   </p>
+                  {ownUploads.error && (
+                    <p role="alert" className="text-sm text-red-700">
+                      {ownUploads.error}
+                    </p>
+                  )}
+                  {ownUploads.loading && (
+                    <p role="status">Loading your uploads…</p>
+                  )}
+                  {!!ownUploads.data?.data.length && (
+                    <>
+                      <h3 className="font-semibold">Your uploads</h3>
+                      <div className="grid grid-cols-2 gap-2">
+                        {ownUploads.data.data.map((image, index) => (
+                          <div
+                            className="rounded-lg border border-slate-200 p-2"
+                            key={image.id}
+                          >
+                            <img
+                              className="aspect-square w-full object-contain"
+                              src={`${apiBase}/design-images/${image.id}`}
+                              alt={`Your uploaded image ${index + 1}`}
+                            />
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="mt-1 w-full"
+                              disabled={busy || loading}
+                              onClick={() =>
+                                void placeAsset({ uploadId: image.id })
+                              }
+                            >
+                              Add image
+                            </Button>
+                            {(selected?.type === "image" ||
+                              selected?.id === "logo-placeholder" ||
+                              selected?.id === "logo-label") && (
+                              <button
+                                className="block w-full text-xs font-semibold text-primary underline"
+                                disabled={busy || loading}
+                                onClick={() =>
+                                  void placeAsset(
+                                    { uploadId: image.id },
+                                    selected.id,
+                                  )
+                                }
+                              >
+                                Replace selected
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
                   <h3 className="font-semibold">Image Library</h3>
                   {library.loading && (
                     <p role="status" className="text-sm">
@@ -1054,6 +1444,38 @@ export default function StudioEditor({
                     </button>
                   ))}
                 </div>
+              )}
+              {tab === "more" && (
+                <StudioMorePanel
+                  selected={selected}
+                  onCrop={(crop) => void applyCrop(crop)}
+                  onFlip={(axis) =>
+                    updateObject(
+                      axis === "x"
+                        ? { flipX: !active()?.flipX }
+                        : { flipY: !active()?.flipY },
+                    )
+                  }
+                  onAlign={alignElement}
+                  onShadow={(enabled, blur) =>
+                    updateObject({
+                      shadow: enabled
+                        ? new Shadow({
+                            color: "#000000",
+                            blur: blur ?? selected?.shadow?.blur ?? 8,
+                            offsetX: 3,
+                            offsetY: 3,
+                          })
+                        : null,
+                    })
+                  }
+                  onSpacing={(charSpacing) => updateObject({ charSpacing })}
+                  onCopy={copyLayer}
+                  onPaste={pasteLayer}
+                  canPaste={!!clipboard}
+                  onZoomFit={() => setZoom(100)}
+                  onClear={clearSide}
+                />
               )}
               {tab === "layers" && (
                 <div className="space-y-2">
@@ -1312,20 +1734,88 @@ export default function StudioEditor({
             </div>
           )}
           <div className="studio-stage" ref={viewport}>
-            <div className="studio-artwork">
+            <div className="studio-artwork" data-bleed={bleed}>
               <canvas
                 ref={setNode}
                 aria-label="Editable design canvas. Double-click text to edit, drag to move and use corner handles to resize."
               />
-              {guides && !preview && (
-                <div className="studio-safety" aria-hidden="true">
-                  <span>Safety area</span>
+              {!preview && !loading && !loadFailed && selected && context && (
+                <div
+                  className="studio-floating"
+                  style={context}
+                  aria-label="Selected object actions"
+                >
+                  <ToolButton
+                    label={selected.locked ? "Unlock" : "Lock"}
+                    onClick={toggleLock}
+                  >
+                    {selected.locked ? (
+                      <Unlock size={18} />
+                    ) : (
+                      <Lock size={18} />
+                    )}
+                  </ToolButton>
+                  <ToolButton
+                    label="Duplicate"
+                    onClick={duplicate}
+                    disabled={busy}
+                  >
+                    <Copy size={18} />
+                  </ToolButton>
+                  <ToolButton label="Delete" onClick={remove}>
+                    <Trash2 size={18} />
+                  </ToolButton>
+                  {(selected.type === "image" ||
+                    selected.id === "logo-placeholder" ||
+                    selected.id === "logo-label") && (
+                    <ToolButton
+                      label="Replace image or logo"
+                      onClick={() => askUpload(true)}
+                    >
+                      <Upload size={18} />
+                    </ToolButton>
+                  )}
+                  <ToolButton
+                    label="More object options"
+                    onClick={() => setTab("more")}
+                  >
+                    <MoreHorizontal size={18} />
+                  </ToolButton>
                 </div>
               )}
               {guides && !preview && (
+                <div
+                  className="studio-safety"
+                  style={{
+                    inset: `${(safeMargin(document) / document.height) * 100}% ${(safeMargin(document) / document.width) * 100}%`,
+                  }}
+                  aria-hidden="true"
+                >
+                  <span>Safety area</span>
+                </div>
+              )}
+              {bleed && !preview && (
                 <span className="studio-bleed" aria-hidden="true">
                   Bleed
                 </span>
+              )}
+              {rulers && !preview && (
+                <>
+                  <div className="studio-ruler-x" aria-label="Artwork width">
+                    <span>
+                      {document.format === "card"
+                        ? `${(document.width / 100).toFixed(1)} cm`
+                        : `${document.width} px`}
+                    </span>
+                  </div>
+                  <div className="studio-ruler-y" aria-label="Artwork height">
+                    <span>
+                      {document.format === "card"
+                        ? `${(document.height / 100).toFixed(1)} cm`
+                        : `${document.height} px`}
+                    </span>
+                  </div>
+                </>
               )}
             </div>
             {loading && (
@@ -1351,6 +1841,15 @@ export default function StudioEditor({
               >
                 <Plus size={18} />
               </ToolButton>
+              <ToolButton
+                label="Canvas settings"
+                onClick={() => {
+                  setTab("more");
+                  setPreview(false);
+                }}
+              >
+                <Settings size={20} />
+              </ToolButton>
             </div>
             <Button
               variant="outline"
@@ -1368,6 +1867,22 @@ export default function StudioEditor({
                 onChange={(event) => setGuides(event.target.checked)}
               />
               Safety guides
+            </label>
+            <label className="flex items-center gap-2 text-xs">
+              <input
+                type="checkbox"
+                checked={bleed}
+                onChange={(event) => setBleed(event.target.checked)}
+              />
+              Bleed
+            </label>
+            <label className="flex items-center gap-2 text-xs">
+              <input
+                type="checkbox"
+                checked={rulers}
+                onChange={(event) => setRulers(event.target.checked)}
+              />
+              Dimensions
             </label>
           </div>
         </main>
@@ -1399,8 +1914,19 @@ export default function StudioEditor({
           </aside>
         )}
       </div>
+      {review && (
+        <StudioReview
+          settings={savedSettings()}
+          onBack={() => setReview(false)}
+          onConfirm={() => {
+            onApply?.({ ...savedSettings(), artworkApproved: true });
+            onClose();
+          }}
+        />
+      )}
       {(error || success || busy) && (
         <div
+          inert={review}
           className={
             "studio-status " +
             (error ? "bg-red-50 text-red-800" : "bg-cyan-50 text-primary")

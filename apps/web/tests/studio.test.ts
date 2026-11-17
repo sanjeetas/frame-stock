@@ -147,3 +147,104 @@ test("Fabric edits, transforms, front/back reloads and PNG exports preserve the 
     await canvas.dispose();
   }
 });
+
+test("orientation changes preserve both pages and review flags placeholders and unsafe text", async () => {
+  const { resizeStudio, artworkWarnings } =
+    await import("../src/features/editor/studioActions.ts");
+  const card = createCardTemplate("classic");
+  const portrait = resizeStudio(card, 580, 940);
+  assert.equal(portrait.width, 580);
+  assert.equal(portrait.height, 940);
+  assert.equal(
+    portrait.pages.front.elements.length,
+    card.pages.front.elements.length,
+  );
+  assert.equal(
+    portrait.pages.back.elements.length,
+    card.pages.back.elements.length,
+  );
+  const company = card.pages.front.elements.find(
+    (element) => element.id === "company",
+  )!;
+  const portraitCompany = portrait.pages.front.elements.find(
+    (element) => element.id === "company",
+  )!;
+  assert.equal(portraitCompany.left, (company.left * 580) / 940);
+  assert.ok(
+    artworkWarnings(card).some((message) => message.includes("placeholder")),
+  );
+  const unsafe = structuredClone(card);
+  unsafe.pages.front.elements = [
+    { ...company, text: "Real company", left: 0, top: 0 },
+  ];
+  unsafe.pages.back.elements = [];
+  assert.ok(
+    artworkWarnings(unsafe).some((message) => message.includes("safety area")),
+  );
+});
+
+test("image crop renders the chosen region and crop/flip/effects survive serialization", async (t) => {
+  let nodeFabric: typeof import("fabric/node");
+  try {
+    nodeFabric = await import("fabric/node");
+  } catch {
+    t.skip("Optional native canvas is unavailable");
+    return;
+  }
+  const fabric = await import("fabric");
+  fabric.setEnv(nodeFabric.getEnv());
+  const { createStudioImage, readStudioObject, buildStudioObject } =
+    await import("../src/features/editor/studioCanvas.ts");
+  const { element } = await import("../src/features/editor/studioTypes.ts");
+  const source = fabric.getEnv().document.createElement("canvas");
+  source.width = 200;
+  source.height = 100;
+  const ctx = source.getContext("2d")!;
+  ctx.fillStyle = "#ff0000";
+  ctx.fillRect(0, 0, 100, 100);
+  ctx.fillStyle = "#0000ff";
+  ctx.fillRect(100, 0, 100, 100);
+  const scene = element("image", {
+    left: 50,
+    top: 50,
+    width: 100,
+    height: 100,
+    uploadId: "000000000000000000000000",
+    crop: { x: 0.5, y: 0, width: 0.5, height: 1 },
+    flipX: true,
+  });
+  const canvas = new fabric.StaticCanvas(undefined, {
+    width: 100,
+    height: 100,
+  });
+  try {
+    const image = createStudioImage(source, scene);
+    canvas.add(image);
+    const sharp = (await import("sharp")).default;
+    const png = canvas.toDataURL({ format: "png" });
+    const stats = await sharp(
+      Buffer.from(png.split(",")[1]!, "base64"),
+    ).stats();
+    assert.ok(stats.channels[2]!.mean > 250);
+    assert.ok(stats.channels[0]!.mean < 1);
+    const stored = readStudioObject(image)!;
+    assert.equal(stored.crop!.x, 0.5);
+    assert.equal(stored.flipX, true);
+    const reloaded = createStudioImage(source, stored);
+    assert.equal(reloaded.cropX, 100);
+    assert.equal(reloaded.scaleX, image.scaleX);
+    const text = await buildStudioObject(
+      element("text", {
+        text: "Shadow",
+        charSpacing: 120,
+        shadow: { color: "#000000", blur: 12, offsetX: 2, offsetY: 3 },
+      }),
+      canvas,
+    );
+    const effect = readStudioObject(text)!;
+    assert.equal(effect.charSpacing, 120);
+    assert.equal(effect.shadow!.blur, 12);
+  } finally {
+    await canvas.dispose();
+  }
+});

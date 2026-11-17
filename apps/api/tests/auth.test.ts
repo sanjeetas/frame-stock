@@ -1028,15 +1028,84 @@ test("studio saves both sides, validates object limits and enforces image owners
             quantity: 100,
             customization: {
               requirements: "Print both sides",
-              design: settings,
+              design: { ...settings, artworkApproved: true },
             },
           },
         ],
       })
       .expect(201)
   ).body.data;
+  assert.equal(order.items[0].customization.design.artworkApproved, true);
   assert.equal(
     order.items[0].customization.design.studio.pages.back.elements[0].text,
     "Customer reverse side",
   );
+});
+
+test("own upload listing and cropped/flipped studio images remain owner protected", async () => {
+  const { DesignImage } = await import("../src/models/design-image.model.js");
+  const { createCardTemplate } =
+    await import("../../web/src/features/editor/studioTemplates.ts");
+  // A fresh application isolates this flow from earlier tests' mutation rate-limit window.
+  const isolated = await createApp(config);
+  const a = request.agent(isolated),
+    b = request.agent(isolated);
+  await login(a, "alice@example.test", await csrf(a));
+  await login(b, "bob@example.test", await csrf(b));
+  const owned = await DesignImage.findOne({ owner: aliceId });
+  assert.ok(owned);
+  await request(isolated).get("/api/design-images").expect(401);
+  const aliceImages = (await a.get("/api/design-images").expect(200)).body.data;
+  assert.ok(aliceImages.some((image: any) => image.id === String(owned._id)));
+  assert.ok(aliceImages.every((image: any) => !image.owner && !image.gridfsId));
+  const bobImages = (await b.get("/api/design-images").expect(200)).body.data;
+  assert.ok(!bobImages.some((image: any) => image.id === String(owned._id)));
+  const studio = createCardTemplate();
+  studio.pages.front.elements.push({
+    id: "cropped-logo",
+    type: "image",
+    left: 130,
+    top: 160,
+    width: 120,
+    height: 120,
+    scaleX: 1,
+    scaleY: 1,
+    angle: 0,
+    fill: "#ffffff",
+    opacity: 1,
+    locked: false,
+    uploadId: String(owned._id),
+    crop: { x: 0.25, y: 0.2, width: 0.5, height: 0.5 },
+    flipX: true,
+  });
+  const settings = {
+    headline: "Cropped logo",
+    subtitle: "",
+    bg: "#ffffff",
+    fg: "#103759",
+    font: "Arial",
+    size: 40,
+    y: 580,
+    square: false,
+    hasUploadedImage: true,
+    studio,
+  };
+  const token = await csrf(a);
+  const saved = (
+    await mutation(a, "post", "/api/designs", token)
+      .send({ title: "Cropped logo", settings })
+      .expect(201)
+  ).body.data;
+  assert.equal(saved.settings.studio.pages.front.elements.at(-1).crop.x, 0.25);
+  assert.equal(saved.settings.studio.pages.front.elements.at(-1).flipX, true);
+  const invalid = structuredClone(settings);
+  invalid.studio.pages.front.elements.at(-1)!.crop = {
+    x: 0.8,
+    y: 0,
+    width: 0.5,
+    height: 1,
+  };
+  await mutation(a, "post", "/api/designs", token)
+    .send({ title: "Outside crop", settings: invalid })
+    .expect(400);
 });

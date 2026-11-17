@@ -22,7 +22,7 @@ export function DesignEditor({ open, onOpenChange, ...props }: Props) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="h-[97dvh] max-h-[98dvh] w-[98vw] max-w-none overflow-hidden rounded-xl p-0 [&>button:last-child]:hidden"
+        className="h-dvh max-h-dvh w-screen max-w-none overflow-hidden rounded-none p-0 [&>button:last-child]:hidden"
         onEscapeKeyDown={(event) => {
           if (globalThis.document.activeElement?.tagName === "TEXTAREA")
             event.preventDefault();

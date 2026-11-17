@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import type { DesignSettings } from "../../types";
-export function StudioPreview({ settings }: { settings: DesignSettings }) {
+export function StudioPreview({
+  settings,
+  side = "front",
+}: {
+  settings: DesignSettings;
+  side?: "front" | "back";
+}) {
   const [url, setUrl] = useState(""),
     [error, setError] = useState("");
   useEffect(() => {
@@ -11,7 +17,7 @@ export function StudioPreview({ settings }: { settings: DesignSettings }) {
       const { studioPreview } = await import("./studioCanvas");
       const url = await studioPreview(
         settings.studio!,
-        "front",
+        side,
         settings.baseProductId,
       );
       if (active) setUrl(url);
@@ -21,7 +27,7 @@ export function StudioPreview({ settings }: { settings: DesignSettings }) {
     return () => {
       active = false;
     };
-  }, [settings.studio, settings.baseProductId]);
+  }, [settings.studio, settings.baseProductId, side]);
   return error ? (
     <p role="alert" className="p-6 text-red-700">
       {error}
@@ -30,7 +36,7 @@ export function StudioPreview({ settings }: { settings: DesignSettings }) {
     <img
       src={url}
       className="block w-full rounded-lg"
-      alt="Saved front artwork preview"
+      alt={`Saved ${side} artwork preview`}
     />
   ) : (
     <p role="status" className="p-6 text-slate-500">

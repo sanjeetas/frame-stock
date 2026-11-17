@@ -6,8 +6,10 @@ import {
   Rect,
   Circle,
   FabricImage,
+  Shadow,
   type FabricObject,
 } from "fabric";
+import { cropPixels } from "./studioActions";
 import type {
   StudioDocument,
   StudioElement,
@@ -61,6 +63,33 @@ async function imageElement(productId?: string, uploadId?: string) {
     );
   return imageCache.get(key)!;
 }
+export function createStudioImage(
+  image: HTMLImageElement | HTMLCanvasElement,
+  element: StudioElement,
+  options: Record<string, unknown> = {},
+) {
+  const naturalWidth = (image as HTMLImageElement).naturalWidth || image.width,
+    naturalHeight = (image as HTMLImageElement).naturalHeight || image.height;
+  const region = cropPixels(naturalWidth, naturalHeight, element.crop);
+  const object = new FabricImage(image, {
+    ...options,
+    left: element.left,
+    top: element.top,
+    originX: "center",
+    originY: "center",
+    ...region,
+    flipX: element.flipX || false,
+    flipY: element.flipY || false,
+  });
+  const fit = Math.min(
+    element.width / region.width,
+    element.height / region.height,
+  );
+  object.scaleX = element.scaleX * fit;
+  object.scaleY = element.scaleY * fit;
+  (object as StudioObject).studioElement = element;
+  return object as StudioObject;
+}
 export async function buildStudioObject(
   element: StudioElement,
   canvas: StaticCanvas,
@@ -77,6 +106,9 @@ export async function buildStudioObject(
     angle: element.angle,
     fill: element.fill,
     opacity: element.opacity,
+    flipX: element.flipX || false,
+    flipY: element.flipY || false,
+    shadow: element.shadow ? new Shadow(element.shadow) : undefined,
     lockMovementX: element.locked,
     lockMovementY: element.locked,
     lockScalingX: element.locked,
@@ -103,30 +135,14 @@ export async function buildStudioObject(
       underline: element.underline || false,
       textAlign: element.textAlign || "left",
       lineHeight: element.lineHeight || 1.16,
+      charSpacing: element.charSpacing || 0,
       editable: !element.locked,
       splitByGrapheme: true,
       hiddenTextareaContainer: canvas.getElement().parentElement,
     });
   else if (element.type === "image") {
     const image = await imageElement(element.productId, element.uploadId);
-    // Saved width/height describe the image's native dimensions after the first load.
-    object = new FabricImage(image, {
-      ...options,
-      width: image.naturalWidth,
-      height: image.naturalHeight,
-    });
-    object.scaleX =
-      element.scaleX *
-      Math.min(
-        element.width / image.naturalWidth,
-        element.height / image.naturalHeight,
-      );
-    object.scaleY =
-      element.scaleY *
-      Math.min(
-        element.width / image.naturalWidth,
-        element.height / image.naturalHeight,
-      );
+    object = createStudioImage(image, element, options);
   } else if (element.type === "circle")
     object = new Circle({ ...options, radius: element.width / 2 });
   else object = new Rect(options);
@@ -151,6 +167,16 @@ export function readStudioObject(object: StudioObject): StudioElement | null {
         : data.fill,
     opacity: object.opacity,
     locked: object.lockMovementX,
+    flipX: object.flipX,
+    flipY: object.flipY,
+    shadow: object.shadow
+      ? {
+          color: object.shadow.color,
+          blur: object.shadow.blur,
+          offsetX: object.shadow.offsetX,
+          offsetY: object.shadow.offsetY,
+        }
+      : undefined,
   };
   if (object instanceof Textbox)
     Object.assign(item, {
@@ -162,6 +188,7 @@ export function readStudioObject(object: StudioObject): StudioElement | null {
       underline: object.underline,
       textAlign: object.textAlign,
       lineHeight: object.lineHeight,
+      charSpacing: object.charSpacing,
     });
   return item;
 }

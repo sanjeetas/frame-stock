@@ -107,6 +107,32 @@ const studioElement = z
     lineHeight: z.number().min(0.5).max(3).optional(),
     productId: id.optional(),
     uploadId: id.optional(),
+    flipX: z.boolean().optional(),
+    flipY: z.boolean().optional(),
+    charSpacing: z.number().min(-100).max(1000).optional(),
+    crop: z
+      .object({
+        x: z.number().min(0).max(0.9),
+        y: z.number().min(0).max(0.9),
+        width: z.number().min(0.1).max(1),
+        height: z.number().min(0.1).max(1),
+      })
+      .strict()
+      .refine(
+        (crop) =>
+          crop.x + crop.width <= 1.000001 && crop.y + crop.height <= 1.000001,
+        "Crop must stay inside the source image.",
+      )
+      .optional(),
+    shadow: z
+      .object({
+        color: z.string().regex(/^#[a-f\d]{6}$/i),
+        blur: z.number().min(0).max(50),
+        offsetX: z.number().min(-50).max(50),
+        offsetY: z.number().min(-50).max(50),
+      })
+      .strict()
+      .optional(),
   })
   .strict()
   .refine(
@@ -132,6 +158,7 @@ const studioDocument = z
 export const settings = z
   .object({
     studio: studioDocument.optional(),
+    artworkApproved: z.boolean().optional(),
     headline: z.string().max(90),
     subtitle: z.string().max(140),
     bg: z.string().regex(/^#[a-f\d]{6}$/i),

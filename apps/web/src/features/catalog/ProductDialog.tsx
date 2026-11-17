@@ -47,7 +47,15 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
     try {
       let blob: Blob;
       const svg = artworkRef.current?.querySelector("svg");
-      if (svg)
+      if (design?.studio) {
+        const { studioPreview } = await import("../editor/studioCanvas");
+        const rendered = await studioPreview(
+          design.studio,
+          "front",
+          design.baseProductId,
+        );
+        blob = await (await fetch(rendered)).blob();
+      } else if (svg)
         blob = new Blob([new XMLSerializer().serializeToString(svg)], {
           type: "image/svg+xml",
         });

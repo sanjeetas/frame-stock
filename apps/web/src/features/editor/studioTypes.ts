@@ -22,6 +22,11 @@ export interface StudioElement {
   lineHeight?: number;
   productId?: string;
   uploadId?: string;
+  flipX?: boolean;
+  flipY?: boolean;
+  charSpacing?: number;
+  crop?: { x: number; y: number; width: number; height: number };
+  shadow?: { color: string; blur: number; offsetX: number; offsetY: number };
 }
 export interface StudioPage {
   background: string;
