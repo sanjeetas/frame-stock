@@ -466,3 +466,84 @@ test("single magnet renders without a fridge or a scene request; editing and exp
     await canvas.dispose();
   }
 });
+
+test("magnet gallery filters and photo-slot layouts preserve customer image ownership and captions", async () => {
+  const {
+    magnetTemplates,
+    filterMagnetTemplates,
+    magnetTemplate,
+    applyMagnetLayout,
+    isMagnetPhotoSlot,
+    magnetPhotoTarget,
+  } = await import("../src/features/editor/magnetTemplate.ts");
+  assert.equal(filterMagnetTemplates("2").length, 1);
+  assert.equal(filterMagnetTemplates("2", "Blue").length, 0);
+  assert.equal(
+    filterMagnetTemplates("all", "Blue", "Bold & Colourful").length,
+    2,
+  );
+  for (const template of magnetTemplates) {
+    const page = magnetTemplate(1000, 1000, template.id);
+    assert.equal(
+      page.elements.filter((e) => isMagnetPhotoSlot(e.id)).length,
+      template.photos,
+    );
+    assert.equal(
+      new Set(page.elements.map((e) => e.id)).size,
+      page.elements.length,
+    );
+    for (const slot of page.elements.filter((e) => isMagnetPhotoSlot(e.id))) {
+      assert.ok(slot.left - slot.width / 2 >= 80);
+      assert.ok(slot.left + slot.width / 2 <= 920);
+      assert.ok(slot.top - slot.height / 2 >= 80);
+      assert.ok(slot.top + slot.height / 2 <= 920);
+    }
+  }
+  assert.equal(
+    magnetPhotoTarget("magnet-photo-label-2"),
+    "magnet-photo-placeholder-2",
+  );
+  assert.equal(magnetPhotoTarget("untrusted-photo"), undefined);
+  const { element } = await import("../src/features/editor/studioTypes.ts");
+  const original = {
+    version: 1 as const,
+    format: "product" as const,
+    surface: "magnet" as const,
+    width: 1000,
+    height: 1000,
+    template: "photo-caption",
+    pages: {
+      front: magnetTemplate(1000, 1000),
+      back: { background: "#ffffff", elements: [] },
+    },
+  };
+  original.pages.front.elements = [
+    element("image", {
+      uploadId: "012345678901234567890123",
+      width: 600,
+      height: 500,
+      crop: { x: 0.1, y: 0, width: 0.8, height: 1 },
+    }),
+    element("text", { id: "magnet-caption", text: "My family" }),
+  ];
+  const next = applyMagnetLayout(original, "two-moments");
+  const photo = next.pages.front.elements.find((e) => e.type === "image")!;
+  assert.equal(photo.uploadId, "012345678901234567890123");
+  assert.deepEqual(photo.crop, original.pages.front.elements[0]!.crop);
+  assert.equal(photo.id, "magnet-photo-placeholder");
+  assert.equal(
+    next.pages.front.elements.filter(
+      (e) => e.type === "rect" && isMagnetPhotoSlot(e.id),
+    ).length,
+    1,
+  );
+  assert.equal(
+    next.pages.front.elements.some((e) => e.id === "magnet-photo-label"),
+    false,
+  );
+  assert.equal(
+    next.pages.front.elements.find((e) => e.id === "magnet-caption")!.text,
+    "My family",
+  );
+  assert.equal(original.pages.front.elements[0]!.id === photo.id, false);
+});

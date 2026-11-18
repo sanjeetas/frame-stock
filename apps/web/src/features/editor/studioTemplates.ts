@@ -355,8 +355,10 @@ export function createProductSettings(
     doc.shape =
       options.shape === "Rectangle" ? undefined : doc.shape || "rounded";
     doc.printArea = { x: 0.08, y: 0.08, width: 0.84, height: 0.84 };
-    if (!previous?.studio)
+    if (!previous?.studio) {
+      doc.template = "photo-caption";
       doc.pages.front = magnetTemplate(doc.width, doc.height);
+    }
   }
   settings.studio = doc;
   return settings;

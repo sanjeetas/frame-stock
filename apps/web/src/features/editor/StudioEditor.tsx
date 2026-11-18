@@ -1,4 +1,9 @@
-import { magnetTemplate } from "./magnetTemplate";
+import {
+  applyMagnetLayout,
+  isMagnetPhotoSlot,
+  magnetPhotoTarget,
+} from "./magnetTemplate";
+import { MagnetTemplates } from "./MagnetTemplates";
 import {
   useCallback,
   useEffect,
@@ -197,7 +202,9 @@ export default function StudioEditor({
   const [side, setSide] = useState<StudioSide>("front");
   const sideRef = useRef(side);
   sideRef.current = side;
-  const [tab, setTab] = useState<Tab>(card ? "templates" : "text"),
+  const [tab, setTab] = useState<Tab>(
+      card || document.surface === "magnet" ? "templates" : "text",
+    ),
     [selected, setSelected] = useState<StudioElement | null>(null);
   const [node, setNode] = useState<HTMLCanvasElement | null>(null),
     [canvas, setCanvas] = useState<Canvas | null>(null);
@@ -561,24 +568,7 @@ export default function StudioEditor({
   function applyTemplate(id: string) {
     setTab("text");
     if (document.surface === "magnet") {
-      const theme = studioTemplates.find((item) => item.id === id)!;
-      const page = magnetTemplate(document.width, document.height);
-      page.background = theme.background;
-      const photos = document.pages.front.elements.filter(
-        (item) => item.type === "image",
-      );
-      if (photos.length)
-        page.elements = [
-          ...photos,
-          ...page.elements.filter((item) => item.id === "magnet-caption"),
-        ];
-      page.elements.find((item) => item.id === "magnet-caption")!.fill =
-        theme.color;
-      replace({
-        ...document,
-        template: id,
-        pages: { ...document.pages, front: page },
-      });
+      replace(applyMagnetLayout(documentRef.current, id));
     } else if (document.format === "card") {
       const next = resizeStudio(
         createCardTemplate(id),
@@ -691,7 +681,13 @@ export default function StudioEditor({
     }
   }
   function askUpload(replace = false) {
-    uploadTarget.current = replace ? selected?.id : undefined;
+    uploadTarget.current =
+      documentRef.current.surface === "magnet" &&
+      magnetPhotoTarget(selected?.id)
+        ? magnetPhotoTarget(selected?.id)
+        : replace
+          ? selected?.id
+          : undefined;
     setTab("uploads");
     fileInput.current?.click();
   }
@@ -703,18 +699,15 @@ export default function StudioEditor({
     setBusy(true);
     setError("");
     try {
-      if (
-        !targetId &&
-        documentRef.current.surface === "magnet" &&
-        canvas
-          .getObjects()
-          .some(
-            (item) =>
-              (item as StudioObject).studioElement?.id ===
-              "magnet-photo-placeholder",
-          )
-      )
-        targetId = "magnet-photo-placeholder";
+      if (documentRef.current.surface === "magnet")
+        targetId = magnetPhotoTarget(targetId) || targetId;
+      if (!targetId && documentRef.current.surface === "magnet")
+        targetId = (
+          canvas.getObjects().find((item) => {
+            const e = (item as StudioObject).studioElement;
+            return e?.type === "rect" && isMagnetPhotoSlot(e.id);
+          }) as StudioObject | undefined
+        )?.studioElement?.id;
       let target = targetId
         ? (canvas
             .getObjects()
@@ -757,14 +750,15 @@ export default function StudioEditor({
       });
       const replacement = await buildStudioObject(item, canvas),
         index = canvas.getObjects().indexOf(target);
-      const magnetPhoto = previous.id === "magnet-photo-placeholder";
+      const magnetPhoto = isMagnetPhotoSlot(previous.id);
       const obsolete = magnetPhoto
         ? canvas
             .getObjects()
             .filter((item) =>
-              ["magnet-photo-placeholder", "magnet-photo-label"].includes(
-                (item as StudioObject).studioElement?.id || "",
-              ),
+              [
+                previous.id,
+                previous.id.replace("-placeholder", "-label"),
+              ].includes((item as StudioObject).studioElement?.id || ""),
             )
         : logo
           ? canvas
@@ -1314,7 +1308,7 @@ export default function StudioEditor({
                     Upload photo / logo
                   </Button>
                   {(selected?.type === "image" ||
-                    selected?.id === "magnet-photo-placeholder" ||
+                    !!magnetPhotoTarget(selected?.id) ||
                     selected?.id === "logo-placeholder" ||
                     selected?.id === "logo-label") && (
                     <Button
@@ -1364,7 +1358,7 @@ export default function StudioEditor({
                               Add image
                             </Button>
                             {(selected?.type === "image" ||
-                              selected?.id === "magnet-photo-placeholder" ||
+                              !!magnetPhotoTarget(selected?.id) ||
                               selected?.id === "logo-placeholder" ||
                               selected?.id === "logo-label") && (
                               <button
@@ -1373,7 +1367,7 @@ export default function StudioEditor({
                                 onClick={() =>
                                   void placeAsset(
                                     { uploadId: image.id },
-                                    selected.id,
+                                    selected?.id,
                                   )
                                 }
                               >
@@ -1566,7 +1560,25 @@ export default function StudioEditor({
                   ))}
                 </div>
               )}
-              {tab === "templates" && (
+              {tab === "templates" && document.surface === "magnet" && (
+                <MagnetTemplates
+                  selected={document.template}
+                  disabled={loading || busy || loadFailed}
+                  onSelect={(id) => {
+                    commit();
+                    replace(applyMagnetLayout(documentRef.current, id));
+                    setTab("uploads");
+                  }}
+                  onUpload={() => {
+                    commit();
+                    replace(
+                      applyMagnetLayout(documentRef.current, "full-photo"),
+                    );
+                    setTab("uploads");
+                  }}
+                />
+              )}
+              {tab === "templates" && document.surface !== "magnet" && (
                 <div className="space-y-4">
                   <p className="text-xs leading-5 text-slate-500">
                     Applying a template replaces the artwork layout. Undo
