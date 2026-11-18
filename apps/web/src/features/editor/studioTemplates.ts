@@ -281,7 +281,7 @@ export function createProductSettings(
     }),
     productOptions: { ...options },
     artworkApproved: false,
-    baseProductId: config && !config.profile.mockup ? undefined : product.id,
+    baseProductId: product.id,
   };
   if (!config) return settings;
   const p = config.profile;

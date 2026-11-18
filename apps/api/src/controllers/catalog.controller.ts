@@ -1,5 +1,6 @@
 import type { RequestHandler } from "express";
 import { ok } from "../lib.js";
+import { productPreview } from "../services/product-preview.service.js";
 import * as products from "../services/product.service.js";
 export const list: RequestHandler = async (req, res) => {
   const { items, pagination } = await products.listProducts(
@@ -28,3 +29,8 @@ export const hide: RequestHandler = async (req, res) =>
 
 export const categories: RequestHandler = async (_req, res) =>
   ok(res, await products.listCategories());
+
+export const preview: RequestHandler = async (req, res) => {
+  const bytes = await productPreview(req.validated.params.id);
+  res.type("image/png").send(bytes);
+};

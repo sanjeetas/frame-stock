@@ -267,7 +267,7 @@ test("product specifications drive card shapes, product colours, print areas and
     { sides: "Front and back" },
   );
   assert.equal(configured.studio!.width, configured.studio!.height);
-  assert.equal(configured.baseProductId, undefined);
+  assert.equal(configured.baseProductId, "test-card");
   assert.equal(configured.studio!.twoSided, true);
   const shirt = catalog.products.find(
     (p: any) => p.title === "Men's Cotton T-Shirts",
@@ -354,4 +354,19 @@ test("print-area clipping trims exported product artwork while preserving editab
   );
   assert.equal(rect.left, 0);
   await canvas.dispose();
+});
+
+test("magnet and other product editors retain the selected product identity", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { createProductSettings } = await import("../src/features/editor/studioTemplates.ts");
+  const catalogue = JSON.parse(await readFile(new URL("../../../public/custom-products.json", import.meta.url), "utf8"));
+  for (const title of ["Photo Magnets", "Men's Cotton T-Shirts", "Square Visiting Cards"]) {
+    const product = catalogue.products.find((p: any) => p.title === title);
+    assert.ok(product, title);
+    const settings = createProductSettings({ ...product, id: "selected-product" }, {});
+    assert.equal(settings.baseProductId, "selected-product", title);
+    const reopened = createProductSettings({ ...product, id: "selected-product" }, {}, settings);
+    assert.equal(reopened.baseProductId, "selected-product");
+    assert.deepEqual(reopened.studio!.pages, settings.studio!.pages);
+  }
 });

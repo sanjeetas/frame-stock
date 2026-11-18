@@ -8,7 +8,6 @@ import {
   FabricImage,
   Shadow,
   Ellipse,
-  filters,
   type FabricObject,
 } from "fabric";
 import { cropPixels } from "./studioActions";
@@ -18,62 +17,28 @@ import type {
   StudioPage,
   StudioSide,
 } from "./studioTypes";
-import type { Product } from "../../types";
 import { api } from "../../lib/api";
-import { apiBase, imageUrl } from "../../lib/utils";
+import { apiBase } from "../../lib/utils";
 export type StudioObject = FabricObject & { studioElement?: StudioElement };
 const imageCache = new Map<string, Promise<HTMLImageElement>>();
-async function imageElement(
-  productId?: string,
-  uploadId?: string,
-  mockup = false,
-) {
-  const key = productId
-    ? `product:${productId}:${mockup}`
-    : `upload:${uploadId}`;
+async function imageElement(productId?: string, uploadId?: string) {
+  const key = productId ? `product:${productId}` : `upload:${uploadId}`;
   const load = async () => {
-    let url: string;
-    if (uploadId) {
-      await api("/auth/me");
-      url = apiBase + "/design-images/" + uploadId;
-    } else {
-      const product = await api<Product>("/products/" + productId);
-      if (!product.data.image)
-        throw Error("This product has no preview image.");
-      url = imageUrl(
-        mockup
-          ? product.data.customisation?.profile.mockupImage ||
-              product.data.image
-          : product.data.image,
-      );
-    }
-    const response = await fetch(url, { credentials: "include" });
-    if (!response.ok)
-      throw Error(
-        "Image could not be loaded. Sign in again or choose another image.",
-      );
+    if (uploadId) await api("/auth/me");
+    const response = await fetch(apiBase + (uploadId ? "/design-images/" + uploadId : "/products/" + productId + "/preview"), { credentials: "include" });
+    if (!response.ok) throw Error("Image could not be loaded. Try again or choose another image.");
     const objectUrl = URL.createObjectURL(await response.blob());
     try {
       const image = new Image();
       image.src = objectUrl;
       await image.decode();
       return image;
-    } finally {
-      URL.revokeObjectURL(objectUrl);
-    }
+    } finally { URL.revokeObjectURL(objectUrl); }
   };
-  // Private uploads are always fetched with the current user's session.
+  // Private uploads always use the current session; only public product previews are cached.
   if (uploadId) return load();
-  if (imageCache.size >= 12 && !imageCache.has(key))
-    imageCache.delete(imageCache.keys().next().value!);
-  if (!imageCache.has(key))
-    imageCache.set(
-      key,
-      load().catch((error) => {
-        imageCache.delete(key);
-        throw error;
-      }),
-    );
+  if (imageCache.size >= 12 && !imageCache.has(key)) imageCache.delete(imageCache.keys().next().value!);
+  if (!imageCache.has(key)) imageCache.set(key, load().catch((error) => { imageCache.delete(key); throw error; }));
   return imageCache.get(key)!;
 }
 export function createStudioImage(
@@ -223,11 +188,12 @@ export async function renderStudioPage(
   side: StudioSide,
   baseProductId?: string,
   watermark = false,
+  view: "product" | "artwork" = "product",
 ) {
   const page = document.pages[side];
   let background: FabricImage | undefined;
-  if (baseProductId && document.format === "product") {
-    const source = await imageElement(baseProductId, undefined, true);
+  if (baseProductId && document.format === "product" && view === "product") {
+    const source = await imageElement(baseProductId);
     const image = new FabricImage(source, {
       selectable: false,
       evented: false,
@@ -241,16 +207,6 @@ export async function renderStudioPage(
       document.height / source.naturalHeight,
     );
     image.scale(ratio);
-    if (document.productColour) {
-      image.filters = [
-        new filters.BlendColor({
-          color: document.productColour,
-          mode: "multiply",
-          alpha: 1,
-        }),
-      ];
-      image.applyFilters();
-    }
     background = image;
   }
   const objects = await Promise.all(
@@ -286,10 +242,11 @@ export async function studioPreview(
   document: StudioDocument,
   side: StudioSide,
   baseProductId?: string,
+  view: "product" | "artwork" = "product",
 ) {
   const canvas = new StaticCanvas(getEnv().document.createElement("canvas"));
   try {
-    await renderStudioPage(canvas, document, side, baseProductId, true);
+    await renderStudioPage(canvas, document, side, baseProductId, true, view);
     return canvas.toDataURL({ format: "png", multiplier: 2 });
   } finally {
     await canvas.dispose();

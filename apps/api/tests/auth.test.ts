@@ -1320,3 +1320,31 @@ test("product photos match the catalogue and migration preserves editor bases, p
   assert.equal(again!.price, 1234);
   assert.equal(again!.published, published);
 });
+
+test("product editor previews use the published catalogue photo and reject private or unsafe sources", async () => {
+  const sharp = (await import("sharp")).default;
+  const { validatePreviewSource } = await import("../src/services/product-preview.service.js");
+  for (const source of ["http://phulo.in/a.png", "https://127.0.0.1/a.png", "https://phulo.in.evil.test/a.png", "https://user:secret@phulo.in/a.png", "https://phulo.in:8080/a.png"])
+    assert.throws(() => validatePreviewSource(source));
+  const image = await sharp({ create: { width: 24, height: 16, channels: 3, background: "#d92180" } }).png().toBuffer();
+  const originalFetch = globalThis.fetch;
+  let calls = 0;
+  globalThis.fetch = async () => { calls++; return new Response(image, { headers: { "Content-Type": "image/png" } }); };
+  try {
+    const p = await Product.create({ slug: "editor-preview-regression", title: "Photo Magnet", category: "Magnets", group: "Customised Products", kind: "product", image: "https://cms.cloudinary.vpsvc.com/magnet.png", editable: true });
+    const result = await request(app).get(`/api/products/${p.id}/preview`).expect(200).expect("Content-Type", /image\/png/);
+    const pixel = await sharp(result.body).raw().toBuffer();
+    assert.deepEqual([...pixel.subarray(0, 3)], [217, 33, 128]);
+    await request(app).get(`/api/products/${p.id}/preview`).expect(200);
+    assert.equal(calls, 1);
+    await request(app).get(`/api/products/${p.id}/preview?url=https://evil.test`).expect(400);
+    await Product.updateOne({ _id: p.id }, { published: false });
+    await request(app).get(`/api/products/${p.id}/preview`).expect(404);
+    await Product.updateOne({ _id: p.id }, { published: true, image: "/api/design-images/012345678901234567890123" });
+    await request(app).get(`/api/products/${p.id}/preview`).expect(400);
+    await Product.updateOne({ _id: p.id }, { image: "https://phulo.in/redirect.png" });
+    globalThis.fetch = async () => new Response(null, { status: 302, headers: { location: "http://127.0.0.1/private" } });
+    await request(app).get(`/api/products/${p.id}/preview`).expect(400);
+    await p.deleteOne();
+  } finally { globalThis.fetch = originalFetch; }
+});

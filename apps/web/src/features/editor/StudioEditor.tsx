@@ -205,6 +205,7 @@ export default function StudioEditor({
     [error, setError] = useState(""),
     [success, setSuccess] = useState("");
   const [loadFailed, setLoadFailed] = useState(false);
+  const [view, setView] = useState<"product" | "artwork">("product");
   const [review, setReview] = useState(false),
     [bleed, setBleed] = useState(card),
     [rulers, setRulers] = useState(card);
@@ -361,7 +362,7 @@ export default function StudioEditor({
     setLoading(true);
     setError("");
     setSelected(null);
-    renderStudioPage(canvas, documentRef.current, side, initial?.baseProductId)
+    renderStudioPage(canvas, documentRef.current, side, initial?.baseProductId, false, view)
       .then(() => {
         if (mounted) {
           loaded = true;
@@ -387,7 +388,7 @@ export default function StudioEditor({
     return () => {
       mounted = false;
     };
-  }, [canvas, side, revision, initial?.baseProductId]);
+  }, [canvas, side, revision, initial?.baseProductId, view]);
   useEffect(() => {
     if (!canvas || !viewport.current) return;
     const fit = () => {
@@ -650,6 +651,7 @@ export default function StudioEditor({
         documentRef.current,
         side,
         initial?.baseProductId,
+        view,
       );
       const link = globalThis.document.createElement("a");
       link.href = url;
@@ -1039,6 +1041,16 @@ export default function StudioEditor({
               ))}
             </nav>
             <aside className="studio-panel">
+              {initial?.baseProductId && (
+                <div className="mb-5 rounded-xl border bg-slate-50 p-3">
+                  <img src={`${apiBase}/products/${initial.baseProductId}/preview`} alt={product?.title || "Selected product reference"} className="mx-auto mb-2 h-24 w-full object-contain" />
+                  <p className="text-sm font-semibold">{product?.title || "Selected product"}</p>
+                  {document.format === "product" && <div className="mt-3 flex gap-2">
+                    {(["product", "artwork"] as const).map((mode) => <Button key={mode} size="sm" variant={view === mode ? "default" : "outline"} aria-pressed={view === mode} disabled={loading || busy} onClick={() => { commit(); setView(mode); }}>{mode === "product" ? "Product view" : "Artwork view"}</Button>)}
+                  </div>}
+                  <p className="mt-2 text-xs text-slate-600">Product reference. Add and move your own text or images above it. Printed text in the photo is part of the reference.</p>
+                </div>
+              )}
               <h2 className="mb-5 text-xl font-bold">
                 {tools.find((tool) => tool.tab === tab)?.label}
               </h2>
