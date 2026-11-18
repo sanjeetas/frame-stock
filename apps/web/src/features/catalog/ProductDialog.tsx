@@ -343,7 +343,16 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
         open={editor}
         onOpenChange={setEditor}
         initial={design || startingDesign}
-        onApply={setDesign}
+        onApply={(settings) => {
+          setDesign(settings);
+          const orientation = settings.productOptions?.orientation;
+          if (
+            settings.studio?.surface === "magnet" &&
+            options.orientation &&
+            orientation
+          )
+            setOptions((current) => ({ ...current, orientation }));
+        }}
         onSignIn={onSignIn}
       />
     </>

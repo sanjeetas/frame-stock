@@ -547,3 +547,48 @@ test("magnet gallery filters and photo-slot layouts preserve customer image owne
   );
   assert.equal(original.pages.front.elements[0]!.id === photo.id, false);
 });
+
+test("magnet search, saved favourites and calendar years use real data", async () => {
+  const { filterMagnetTemplates, calendarMonthText, magnetTemplate } =
+    await import("../src/features/editor/magnetTemplate.ts");
+  const { parseMagnetFavourites } =
+    await import("../src/features/editor/magnetFavourites.ts");
+  assert.equal(
+    filterMagnetTemplates("all", "all", "all", "  CALENDAR ").length,
+    2,
+  );
+  assert.equal(
+    filterMagnetTemplates("1", "Green", "Minimal", "calendar").length,
+    1,
+  );
+  assert.deepEqual(filterMagnetTemplates("0", "all", "all", "calendar"), []);
+  assert.deepEqual(
+    parseMagnetFavourites(
+      '["photo-caption","invalid",null,"photo-caption","calendar-gold"]',
+    ),
+    ["photo-caption", "calendar-gold"],
+  );
+  for (const input of [null, "broken json", "{}", '"photo-caption"'])
+    assert.deepEqual(parseMagnetFavourites(input), []);
+  const feb = calendarMonthText(2028, 1);
+  assert.match(feb, /29/);
+  assert.doesNotMatch(calendarMonthText(2027, 1), /29/);
+  assert.equal(
+    calendarMonthText(2027, 0).split("\n")[2],
+    "             1  2  3",
+  );
+  const page = magnetTemplate(1200, 900, "calendar-gold", 2028);
+  assert.equal(
+    page.elements.find((e) => e.id === "calendar-year")!.text,
+    "2028",
+  );
+  assert.equal(
+    page.elements.filter((e) => e.id.startsWith("calendar-month-")).length,
+    12,
+  );
+  assert.match(
+    page.elements.find((e) => e.id === "calendar-month-1")!.text!,
+    /29/,
+  );
+  assert.ok(page.elements.length <= 40);
+});

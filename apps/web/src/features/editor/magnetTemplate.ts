@@ -61,6 +61,46 @@ export const magnetTemplates = [
     ink: "#4c5948",
     photo: "#e4e7d8",
   },
+  {
+    id: "festive-frame",
+    name: "Celebration Frame",
+    photos: 1,
+    colour: "Red",
+    style: "Elegant",
+    background: "#a92b32",
+    ink: "#fff5de",
+    photo: "#d6d6d6",
+  },
+  {
+    id: "calendar-gold",
+    name: "Golden Photo Calendar",
+    photos: 1,
+    colour: "Yellow",
+    style: "Elegant",
+    background: "#fffdf5",
+    ink: "#664d25",
+    photo: "#d6d6d6",
+  },
+  {
+    id: "calendar-sage",
+    name: "Sage Photo Calendar",
+    photos: 1,
+    colour: "Green",
+    style: "Minimal",
+    background: "#dcebe1",
+    ink: "#355d47",
+    photo: "#d6d6d6",
+  },
+  {
+    id: "business-classic",
+    name: "Classic Company Magnet",
+    photos: 0,
+    colour: "Black",
+    style: "Minimal",
+    background: "#111111",
+    ink: "#ffffff",
+    photo: "#d6d6d6",
+  },
 ] as const;
 export function isMagnetPhotoSlot(id = "") {
   return /^magnet-photo-placeholder(?:-[2-4])?$/.test(id);
@@ -76,12 +116,16 @@ export function filterMagnetTemplates(
   photos = "all",
   colour = "all",
   style = "all",
+  search = "",
 ) {
   return magnetTemplates.filter(
     (t) =>
       (photos === "all" || String(t.photos) === photos) &&
       (colour === "all" || t.colour === colour) &&
-      (style === "all" || t.style === style),
+      (style === "all" || t.style === style) &&
+      `${t.name} ${t.colour} ${t.style} ${t.photos} photos`
+        .toLocaleLowerCase()
+        .includes(search.trim().toLocaleLowerCase()),
   );
 }
 /** Original editable layouts: each slot becomes the customer's image, never a refrigerator scene. */
@@ -89,16 +133,19 @@ export function magnetTemplate(
   width: number,
   height: number,
   id = "photo-caption",
+  year = new Date().getUTCFullYear() + 1,
 ): StudioDocument["pages"]["front"] {
   const t = magnetTemplates.find((t) => t.id === id) || magnetTemplates[0];
   const elements = [];
-  const slots =
-    t.photos === 4
+  const calendar = id.startsWith("calendar-");
+  const slots = calendar
+    ? [[0.3, 0.48, 0.36, 0.65]]
+    : t.photos === 4
       ? [
-          [0.315, 0.315, 0.35, 0.35],
-          [0.685, 0.315, 0.35, 0.35],
-          [0.315, 0.685, 0.35, 0.35],
-          [0.685, 0.685, 0.35, 0.35],
+          [0.315, 0.29, 0.35, 0.29],
+          [0.685, 0.29, 0.35, 0.29],
+          [0.315, 0.6, 0.35, 0.29],
+          [0.685, 0.6, 0.35, 0.29],
         ]
       : t.photos === 3
         ? [
@@ -118,6 +165,18 @@ export function magnetTemplate(
                   : [0.5, 0.42, 0.72, 0.56],
               ]
             : [];
+  if (id === "festive-frame") {
+    elements.push(
+      element("rect", {
+        id: "festive-border",
+        left: width / 2,
+        top: height * 0.42,
+        width: width * 0.77,
+        height: height * 0.62,
+        fill: "#e4b968",
+      }),
+    );
+  }
   for (const [i, slot] of slots.entries()) {
     const [x, y, w, h] = slot as [number, number, number, number];
     const suffix = i ? `-${i + 1}` : "";
@@ -146,7 +205,7 @@ export function magnetTemplate(
       }),
     );
   }
-  if (id !== "full-photo" && t.photos !== 4)
+  if (id !== "full-photo" && !calendar && id !== "business-classic")
     elements.push(
       element("text", {
         id: "magnet-caption",
@@ -166,13 +225,65 @@ export function magnetTemplate(
         fill: t.ink,
       }),
     );
+  if (id === "business-classic") {
+    for (const [i, text] of ["H", "COMPANY NAME", "Phone / Other"].entries())
+      elements.push(
+        element("text", {
+          id: `business-${i}`,
+          left: width / 2,
+          top: height * (0.32 + i * 0.19),
+          width: width * 0.75,
+          height: 70,
+          text,
+          fontFamily: i === 0 ? "Georgia" : "Arial",
+          fontSize: i === 0 ? 90 : 42,
+          textAlign: "center",
+          fill: t.ink,
+        }),
+      );
+  }
+  if (calendar) {
+    const safeYear = Math.max(2020, Math.min(2100, Math.trunc(year) || 2027));
+    elements.push(
+      element("text", {
+        id: "calendar-year",
+        left: width * 0.7,
+        top: height * 0.15,
+        width: width * 0.36,
+        height: 60,
+        text: String(safeYear),
+        fontSize: 42,
+        fontFamily: "Georgia",
+        textAlign: "center",
+        fill: t.ink,
+      }),
+    );
+    for (let month = 0; month < 12; month++) {
+      elements.push(
+        element("text", {
+          id: `calendar-month-${month}`,
+          left: width * (0.565 + (month % 3) * 0.125),
+          top: height * (0.29 + Math.floor(month / 3) * 0.175),
+          width: width * 0.12,
+          height: height * 0.15,
+          text: calendarMonthText(safeYear, month),
+          fontSize: Math.max(8, width * 0.008),
+          fontFamily: "monospace",
+          textAlign: "center",
+          lineHeight: 1.2,
+          fill: t.ink,
+        }),
+      );
+    }
+  }
   return { background: t.background, elements };
 }
 export function applyMagnetLayout(
   document: StudioDocument,
   id: string,
+  year?: number,
 ): StudioDocument {
-  const page = magnetTemplate(document.width, document.height, id);
+  const page = magnetTemplate(document.width, document.height, id, year);
   const photos = document.pages.front.elements.filter(
     (e) => e.type === "image",
   );
@@ -213,4 +324,35 @@ export function applyMagnetLayout(
     template: id,
     pages: { ...document.pages, front: page },
   };
+}
+
+/** Monday-first Gregorian calendar, generated rather than an uneditable stock picture. */
+export function calendarMonthText(year: number, month: number) {
+  const name = [
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
+  ][month];
+  const offset = (new Date(Date.UTC(year, month, 1)).getUTCDay() + 6) % 7;
+  const days = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+  const cells = Array.from(
+    { length: Math.ceil((offset + days) / 7) * 7 },
+    (_, i) =>
+      i < offset || i >= offset + days
+        ? "  "
+        : String(i - offset + 1).padStart(2),
+  );
+  const weeks = [];
+  for (let i = 0; i < cells.length; i += 7)
+    weeks.push(cells.slice(i, i + 7).join(" "));
+  return [name, "Mo Tu We Th Fr Sa Su", ...weeks].join("\n");
 }

@@ -624,6 +624,18 @@ export default function StudioEditor({
       hasUploadedImage: scene.pages.front.elements.some(
         (item) => item.uploadId,
       ),
+      productOptions:
+        scene.surface === "magnet" && initial?.productOptions?.orientation
+          ? {
+              ...initial.productOptions,
+              orientation:
+                scene.width > scene.height
+                  ? "Landscape"
+                  : scene.width < scene.height
+                    ? "Portrait"
+                    : "Square",
+            }
+          : initial?.productOptions,
       studio: scene,
       artworkApproved: false,
     };
@@ -1065,7 +1077,10 @@ export default function StudioEditor({
           <X size={22} />
         </ToolButton>
       </header>
-      <div className="studio-body" inert={review}>
+      <div
+        className={`studio-body ${document.surface === "magnet" && tab === "templates" ? "studio-magnet-gallery" : ""}`}
+        inert={review}
+      >
         {!preview && (
           <>
             <nav className="studio-rail" aria-label="Design tools">
@@ -1083,58 +1098,63 @@ export default function StudioEditor({
               ))}
             </nav>
             <aside className="studio-panel">
-              {initial?.baseProductId && (
-                <div className="mb-5 rounded-xl border bg-slate-50 p-3">
-                  <img
-                    src={`${apiBase}/products/${initial.baseProductId}/preview`}
-                    alt={product?.title || "Selected product reference"}
-                    className="mx-auto mb-2 h-24 w-full object-contain"
-                  />
-                  <p className="text-sm font-semibold">
-                    {product?.title || "Selected product"}
-                  </p>
-                  {document.surface === "magnet" && (
-                    <Button
-                      className="w-full"
-                      onClick={() => {
-                        setTab("uploads");
-                        askUpload(false);
-                      }}
-                      disabled={loading || busy}
-                    >
-                      <Upload size={20} /> Add your photo
-                    </Button>
-                  )}
+              {initial?.baseProductId &&
+                !(document.surface === "magnet" && tab === "templates") && (
+                  <div className="mb-5 rounded-xl border bg-slate-50 p-3">
+                    <img
+                      src={`${apiBase}/products/${initial.baseProductId}/preview`}
+                      alt={product?.title || "Selected product reference"}
+                      className="mx-auto mb-2 h-24 w-full object-contain"
+                    />
+                    <p className="text-sm font-semibold">
+                      {product?.title || "Selected product"}
+                    </p>
+                    {document.surface === "magnet" && (
+                      <Button
+                        className="w-full"
+                        onClick={() => {
+                          setTab("uploads");
+                          askUpload(false);
+                        }}
+                        disabled={loading || busy}
+                      >
+                        <Upload size={20} /> Add your photo
+                      </Button>
+                    )}
 
-                  {document.format === "product" && (
-                    <div className="mt-3 flex gap-2">
-                      {(["product", "artwork"] as const).map((mode) => (
-                        <Button
-                          key={mode}
-                          size="sm"
-                          variant={view === mode ? "default" : "outline"}
-                          aria-pressed={view === mode}
-                          disabled={loading || busy}
-                          onClick={() => {
-                            commit();
-                            setView(mode);
-                          }}
-                        >
-                          {mode === "product" ? "Product view" : "Artwork view"}
-                        </Button>
-                      ))}
-                    </div>
-                  )}
-                  <p className="mt-2 text-xs text-slate-600">
-                    {document.surface === "magnet"
-                      ? "Single magnet, front view. Upload your photo to replace the coloured placeholder. Edit and move the caption directly."
-                      : "Product reference. Add and move your own text or images above it. Printed text in the photo is part of the reference."}
-                  </p>
-                </div>
+                    {document.format === "product" && (
+                      <div className="mt-3 flex gap-2">
+                        {(["product", "artwork"] as const).map((mode) => (
+                          <Button
+                            key={mode}
+                            size="sm"
+                            variant={view === mode ? "default" : "outline"}
+                            aria-pressed={view === mode}
+                            disabled={loading || busy}
+                            onClick={() => {
+                              commit();
+                              setView(mode);
+                            }}
+                          >
+                            {mode === "product"
+                              ? "Product view"
+                              : "Artwork view"}
+                          </Button>
+                        ))}
+                      </div>
+                    )}
+                    <p className="mt-2 text-xs text-slate-600">
+                      {document.surface === "magnet"
+                        ? "Single magnet, front view. Upload your photo to replace the coloured placeholder. Edit and move the caption directly."
+                        : "Product reference. Add and move your own text or images above it. Printed text in the photo is part of the reference."}
+                    </p>
+                  </div>
+                )}
+              {!(document.surface === "magnet" && tab === "templates") && (
+                <h2 className="mb-5 text-xl font-bold">
+                  {tools.find((tool) => tool.tab === tab)?.label}
+                </h2>
               )}
-              <h2 className="mb-5 text-xl font-bold">
-                {tools.find((tool) => tool.tab === tab)?.label}
-              </h2>
               {tab === "product" && (
                 <div className="space-y-5">
                   <p className="font-semibold">
@@ -1199,7 +1219,16 @@ export default function StudioEditor({
                         ([key, value]) => (
                           <div key={key} className="flex justify-between gap-3">
                             <dt className="capitalize text-slate-500">{key}</dt>
-                            <dd>{value}</dd>
+                            <dd>
+                              {key === "orientation" &&
+                              document.surface === "magnet"
+                                ? document.width > document.height
+                                  ? "Landscape"
+                                  : document.width < document.height
+                                    ? "Portrait"
+                                    : "Square"
+                                : value}
+                            </dd>
                           </div>
                         ),
                       )}
@@ -1562,11 +1591,22 @@ export default function StudioEditor({
               )}
               {tab === "templates" && document.surface === "magnet" && (
                 <MagnetTemplates
+                  product={product}
                   selected={document.template}
                   disabled={loading || busy || loadFailed}
-                  onSelect={(id) => {
+                  onSelect={(id, year) => {
                     commit();
-                    replace(applyMagnetLayout(documentRef.current, id));
+                    replace(
+                      applyMagnetLayout(
+                        {
+                          ...resizeStudio(documentRef.current, 1200, 900),
+                          specification:
+                            "Landscape magnet artwork — confirm your finished size",
+                        },
+                        id,
+                        year,
+                      ),
+                    );
                     setTab("uploads");
                   }}
                   onUpload={() => {
