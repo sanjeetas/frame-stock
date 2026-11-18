@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { SampleIllustration } from "./SampleIllustration";
 import type { Product } from "../../types";
 import { imageUrl } from "../../lib/utils";
@@ -8,19 +9,22 @@ export function Artwork({
   product: Product;
   className?: string;
 }) {
-  if (product.image)
+  const [failedImage, setFailedImage] = useState<string | null>(null);
+  if (product.image && failedImage !== product.image)
     return (
       <img
         className={className + " h-full w-full object-contain"}
         src={imageUrl(product.image)}
         alt={`${product.title} — product preview`}
         loading="lazy"
+        referrerPolicy="no-referrer"
+        onError={() => setFailedImage(product.image)}
       />
     );
-  if (product.sourceProductId)
+  if (product.image || product.sourceProductId)
     return (
       <div className="flex h-full w-full items-center justify-center bg-slate-100 p-6 text-center text-sm text-slate-500">
-        Product image not provided
+        {product.image ? "Product preview unavailable" : "Product image not provided"}
       </div>
     );
   return (

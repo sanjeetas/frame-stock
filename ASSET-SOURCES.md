@@ -143,3 +143,8 @@ Public 800px product previews from the matching PHULO storefront product. Catalo
 ### Customised product illustrations (November 2026)
 
 `public/assets/custom-*.svg` are original PHULO product-shape vector drawings created for this implementation. They are illustrative placement mockups, not copied VistaPrint photos or templates. Product-type research: https://www.vistaprint.in/, https://www.vistaprint.in/business-cards/rounded-corner-visiting-cards, https://www.vistaprint.in/photo-gifts/mugs/personalised-mugs, https://www.vistaprint.in/photo-gifts/magnets/fridge-magnets, https://www.vistaprint.in/clothing-bags/t-shirts. No competitor prices, branded supplier inventory, or template artwork were imported.
+
+
+### Product-specific catalogue photo correction
+
+`public/custom-image-corrections.json` records each affected SKU, its previous image, selected photo, source product title and reference page. Most references are from VistaPrint India; party invitations use a VistaPrint NZ reference, wedding programmes/moving announcements use Zazzle examples, and a small set of specialist products use static references found through the user-authorized image search (Etsy, UTM Printing and an Amazon-hosted square tabletop frame). Photos are representative product previews, not PHULO inventory claims or downloadable image-library originals. Separate original local vectors remain the editor's blank mockups.

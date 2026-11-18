@@ -16,7 +16,7 @@ COPY --from=build /app/package.json ./package.json
 COPY --from=build /app/apps/api/package.json ./apps/api/package.json
 COPY --from=build /app/apps/api/dist ./apps/api/dist
 COPY --from=build /app/apps/web/dist ./apps/web/dist
-COPY --from=build /app/public/catalog.json /app/public/categories.json /app/public/catalog-image-corrections.json /app/public/custom-products.json ./public/
+COPY --from=build /app/public/catalog.json /app/public/categories.json /app/public/catalog-image-corrections.json /app/public/custom-products.json /app/public/custom-image-corrections.json ./public/
 RUN chown -R node:node /app
 USER node
 EXPOSE 3000

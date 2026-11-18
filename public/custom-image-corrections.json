@@ -1,0 +1,2594 @@
+[
+  {
+    "slug": "custom-standard-visiting-cards",
+    "title": "Standard Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/Standard%20Visiting%20Cards/IN_Standard-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Standard Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/standard"
+  },
+  {
+    "slug": "custom-classic-visiting-cards",
+    "title": "Classic Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/JBC-classic-visiting-cards/IN_Classic-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Classic Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/classic"
+  },
+  {
+    "slug": "custom-rounded-corner-visiting-cards",
+    "title": "Rounded Corner Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/rounded-visiting-cards/IN_Rounded-Corner-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Rounded Corner Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/rounded-corner-visiting-cards"
+  },
+  {
+    "slug": "custom-square-visiting-cards",
+    "title": "Square Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/square-visiting-cards-product-page/IN_Square-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Square Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/square-visiting-cards"
+  },
+  {
+    "slug": "custom-leaf-visiting-cards",
+    "title": "Leaf Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/Leaf%20Visiting%20Cards/IN_Leaf-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Leaf Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/leaf-visiting-cards"
+  },
+  {
+    "slug": "custom-oval-visiting-cards",
+    "title": "Oval Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/Oval%20Visiting%20Cards/IN_Oval-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Oval Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/oval-visiting-cards"
+  },
+  {
+    "slug": "custom-circle-visiting-cards",
+    "title": "Circle Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/Circle%20Visiting%20Cards/IN_Circle-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Circle Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/circle-visiting-cards"
+  },
+  {
+    "slug": "custom-custom-shape-visiting-cards",
+    "title": "Custom Shape Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Custom%20Shape%20Visiting%20Cards/Custom_Shape_Visiting_Cards_01",
+    "sourceTitle": "Custom Shape Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/custom-shape-visiting-cards"
+  },
+  {
+    "slug": "custom-qr-code-visiting-cards",
+    "title": "QR Code Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/QR%20Code%20Visiting%20Card/IN_IN_QR-Code-Visiting-Card_Hero-image_01",
+    "sourceTitle": "QR Code Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/qr-code-business-cards"
+  },
+  {
+    "slug": "custom-spot-uv-visiting-cards",
+    "title": "Spot UV Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/Spot%20UV%20Visiting%20Cards/IN_Spot-UV-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Spot UV Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/spot-uv"
+  },
+  {
+    "slug": "custom-raised-foil-visiting-cards",
+    "title": "Raised Foil Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/Raised%20Foil%20Visiting%20Cards/IN_Raised-Foil-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Raised Foil Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/raised-foil-visiting-cards"
+  },
+  {
+    "slug": "custom-glossy-visiting-cards",
+    "title": "Glossy Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/glossy-visiting-cards/IN_Glossy-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Glossy Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/glossy-visiting-cards"
+  },
+  {
+    "slug": "custom-matte-visiting-cards",
+    "title": "Matte Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/vc/IN_Matte-Visiting-Cardss_001",
+    "sourceTitle": "Matte Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/matte-visiting-cards"
+  },
+  {
+    "slug": "custom-bulk-visiting-cards",
+    "title": "Bulk Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/Bulk%20Visiting%20Cards/Bulk_Visiting_cards_-image_01",
+    "sourceTitle": "Bulk Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/bulk-visiting-cards"
+  },
+  {
+    "slug": "custom-magnetic-visiting-cards",
+    "title": "Magnetic Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/Magnetic%20Visiting%20Cards/IN_Magnetic-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Magnetic Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/magnetic-business-cards"
+  },
+  {
+    "slug": "custom-transparent-visiting-cards",
+    "title": "Transparent Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/Transparent%20Visiting%20Cards/IN_Transparent-Visiting-Cards_01",
+    "sourceTitle": "Transparent Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/transparent-business-cards"
+  },
+  {
+    "slug": "custom-premium-plus-visiting-cards",
+    "title": "Premium Plus Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/Premium%20Plus%20Visiting%20Cards/IN_Premium-Plus-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Premium Plus Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/premium-plus"
+  },
+  {
+    "slug": "custom-non-tearable-visiting-cards",
+    "title": "Non-Tearable Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/Non-Tearable%20Visiting%20Cards/IN_Non-Tearable-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Non-Tearable Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/non-tearable-visiting-cards"
+  },
+  {
+    "slug": "custom-velvet-touch-visiting-cards",
+    "title": "Velvet Touch Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/Velvet%20Touch%20Visiting%20Cards/IN_Velvet-Touch-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Velvet Touch Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/velvet-touch-visiting-cards"
+  },
+  {
+    "slug": "custom-pearl-visiting-cards",
+    "title": "Pearl Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Business%20Cards/Pearl%20Business%20Cards/Pearl_Business_card_Marquee1",
+    "sourceTitle": "Pearl Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/pearl-visiting-cards"
+  },
+  {
+    "slug": "custom-kraft-visiting-cards",
+    "title": "Kraft Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Business%20Cards/Kraft%20Business%20cards/Kraft_Business_card_MArquee1",
+    "sourceTitle": "Kraft Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/kraft-visiting-cards"
+  },
+  {
+    "slug": "custom-diamond-visiting-cards",
+    "title": "Diamond Visiting Cards",
+    "previousImage": "assets/custom-card.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Business%20Cards/Diamond%20Business%20cards/Diamond_Business_Card_Marquee1",
+    "sourceTitle": "Diamond Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/diamond-visiting-cards"
+  },
+  {
+    "slug": "custom-fridge-magnets",
+    "title": "Fridge Magnets",
+    "previousImage": "assets/custom-magnet.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Fridge%20Magnets/IN_Fridge-Magnet-size_Hero-image_02",
+    "sourceTitle": "Fridge Magnets",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/magnets/fridge-magnets"
+  },
+  {
+    "slug": "custom-photo-magnets",
+    "title": "Photo Magnets",
+    "previousImage": "assets/custom-magnet.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/magnets/photo%20magnets/in_phot_magnets_002",
+    "sourceTitle": "Photo Magnets",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/magnets/extra-large-photo"
+  },
+  {
+    "slug": "custom-acrylic-photo-magnets",
+    "title": "Acrylic Photo Magnets",
+    "previousImage": "assets/custom-magnet.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Gifts/Acrylic%20Magnets/IN_Acrylic-Magnets_Hero-image_01",
+    "sourceTitle": "Acrylic Photo Magnets",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/acrylic-fridge-magnets"
+  },
+  {
+    "slug": "custom-magnet-calendars",
+    "title": "Magnet Calendars",
+    "previousImage": "assets/custom-calendar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Calendars/2026/Magnet%20Calendars/IN_Magnetic-Calendars_Hero-image_01",
+    "sourceTitle": "Magnet Calendars",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/magnets/magnet-calendars"
+  },
+  {
+    "slug": "custom-personalised-mugs",
+    "title": "Personalised Mugs",
+    "previousImage": "assets/custom-mug.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Unity%20PDP/Personalised%20Mugs/IN_Custom-Mug_Hero-image_01",
+    "sourceTitle": "Personalised Mugs",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/mugs/personalised-mugs"
+  },
+  {
+    "slug": "custom-colour-changing-magic-mugs",
+    "title": "Colour Changing Magic Mugs",
+    "previousImage": "assets/custom-mug.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Gifts/Custom%20-%20Magic%20Mugs/IN_Custom-Magic-Mugs_Hero-image_01",
+    "sourceTitle": "Colour Changing Magic Mugs",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/mugs/color-changing-magic-mugs"
+  },
+  {
+    "slug": "custom-black-photo-mugs",
+    "title": "Black Photo Mugs",
+    "previousImage": "assets/custom-mug.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Gifts/Custom%20Mug%20-%20Black/IN_Custom-Mug-Black_Hero-image_01",
+    "sourceTitle": "Custom Mugs Black",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/mugs/custom-mugs-black"
+  },
+  {
+    "slug": "custom-customised-tumblers",
+    "title": "Customised Tumblers",
+    "previousImage": "assets/custom-mug.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Giftgala_Customised%20Tumbler/Giftgala_Customised_Tumblers_singlel_colors",
+    "sourceTitle": "Customised Tumblers",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/drinkware/customised-tumblers"
+  },
+  {
+    "slug": "custom-stainless-steel-sipper-bottles",
+    "title": "Stainless Steel Sipper Bottles",
+    "previousImage": "assets/custom-bottle.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Drinkware/Stainless%20Steel%20Sipper%20Bottles%20750%20ml/IN_Stainless-Steel-Sipper-Bottles-750-ml_Hero-image_01",
+    "sourceTitle": "Stainless Steel Sipper Bottles",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/drinkware/stainless-steel-sipper-bottles"
+  },
+  {
+    "slug": "custom-temperature-display-bottles",
+    "title": "Temperature Display Bottles",
+    "previousImage": "assets/custom-bottle.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Drinkware/Temperature%20Bottle/IN_Temperature-Bottle_01",
+    "sourceTitle": "Temperature Display Bottles",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/drinkware/temperature-display-bottles"
+  },
+  {
+    "slug": "custom-custom-sipper-bottles",
+    "title": "Custom Sipper Bottles",
+    "previousImage": "assets/custom-bottle.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Drinkware/Bottle%20with%20Straw%20-%20600ml%20-%20White/IN_Aluminium-Bottle-with-Straw-600ml_01",
+    "sourceTitle": "Custom Sipper Bottles",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/drinkware/custom-sipper-bottles"
+  },
+  {
+    "slug": "custom-vacuum-bottles",
+    "title": "Vacuum Bottles",
+    "previousImage": "assets/custom-bottle.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Drinkware/Vacuum%20insulated%20bottles/IN_Vacuum-insulated-bottles_Hero-image_01",
+    "sourceTitle": "Vacuum Bottles",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/drinkware/vacuum-bottles"
+  },
+  {
+    "slug": "custom-gym-bottles",
+    "title": "Gym Bottles",
+    "previousImage": "assets/custom-bottle.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Drinkware/800%20ml%20Double%20Wall%20Gym%20Bottle/IN_800-ml-Double-Wall-Gym-Bottle_Hero-image_01",
+    "sourceTitle": "Gym Bottles",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/drinkware/gym-bottles"
+  },
+  {
+    "slug": "custom-aluminium-water-bottles",
+    "title": "Aluminium Water Bottles",
+    "previousImage": "assets/custom-bottle.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Drinkware/Engraved%20Sipper%20Bottles/IN_Engraved-Sipper-Bottles_Hero-image_05",
+    "sourceTitle": "Aluminium Water Bottles",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/drinkware/aluminium-water-bottles"
+  },
+  {
+    "slug": "custom-wine-tumblers",
+    "title": "Wine Tumblers",
+    "previousImage": "assets/custom-mug.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Drinkware/Wine%20Tumbler/IN_Wine-Tumbler_Hero-image_01",
+    "sourceTitle": "Wine Tumbler",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/drinkware/wine-tumbler"
+  },
+  {
+    "slug": "custom-travel-tumblers",
+    "title": "Travel Tumblers",
+    "previousImage": "assets/custom-mug.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/New%20Travel%20Tumbler/New_Travel_Tumbler_01",
+    "sourceTitle": "Personalized Travel Tumbler",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/drinkware/travel-tumbler"
+  },
+  {
+    "slug": "custom-vacuum-coffee-mugs",
+    "title": "Vacuum Coffee Mugs",
+    "previousImage": "assets/custom-mug.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Vacuum%20coffee%20Mug_460ml/Vacuum_Coffee_Mugs_01",
+    "sourceTitle": "Vacuum Coffee Mugs",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/mugs/vacuum-coffee-mugs"
+  },
+  {
+    "slug": "custom-frosted-beer-mugs",
+    "title": "Frosted Beer Mugs",
+    "previousImage": "assets/custom-mug.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Drinkware/Frosted%20Beer%20Mugs/IN_Frosted-Beer-Mugs_Hero-image_01",
+    "sourceTitle": "Frosted Beer Mugs",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/drinkware/frosted-beer-mugs"
+  },
+  {
+    "slug": "custom-personalised-champagne-glasses",
+    "title": "Personalised Champagne Glasses",
+    "previousImage": "assets/custom-glass.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/180ML%20Champagne%20Glass/180_ml_Champagne_Glass_01",
+    "sourceTitle": "Personalised Champagne Glasses",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/drinkware/personalised-champagne-glasses"
+  },
+  {
+    "slug": "custom-personalised-wine-glasses",
+    "title": "Personalised Wine Glasses",
+    "previousImage": "assets/custom-glass.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/360%20ML%20Wine%20Glass/360_ML_Wine_Glass_01",
+    "sourceTitle": "Personalised Wine Glasses",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/drinkware/personalised-wine-glasses"
+  },
+  {
+    "slug": "custom-temperature-display-mugs",
+    "title": "Temperature Display Mugs",
+    "previousImage": "assets/custom-mug.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Temperature%20Sensor%20Vacuum%20Steel%20Mug/Temperature_sensor_vacuum_Steel_Mug_01",
+    "sourceTitle": "Temperature Display Mugs",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/mugs/temperature-display-mugs"
+  },
+  {
+    "slug": "custom-printed-cola-bottles",
+    "title": "Printed Cola Bottles",
+    "previousImage": "assets/custom-bottle.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Drinkware/Cola%20Bottles%20White/IN_Cola-Bottles-White_Hero-image_01",
+    "sourceTitle": "Printed Cola Bottles 600ml",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/mugs/printed-cola-bottles-600ml"
+  },
+  {
+    "slug": "custom-photo-with-frame",
+    "title": "Photo with Frame",
+    "previousImage": "assets/custom-frame.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/photo%20frames/in_photo-with-frame_001",
+    "sourceTitle": "Photo With Frame",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/photo-with-frame"
+  },
+  {
+    "slug": "custom-premium-photo-with-frame",
+    "title": "Premium Photo with Frame",
+    "previousImage": "assets/custom-frame.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Frames/IN_Premium_Photo_frame_004",
+    "sourceTitle": "Premium Photo with Frame",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/premium-photo-frames"
+  },
+  {
+    "slug": "custom-custom-photo-frames",
+    "title": "Custom Photo Frames",
+    "previousImage": "assets/custom-frame.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/photo%20frames/in_photo-with-frame_001",
+    "sourceTitle": "Photo With Frame",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/photo-with-frame"
+  },
+  {
+    "slug": "custom-led-photo-frames",
+    "title": "LED Photo Frames",
+    "previousImage": "assets/custom-frame.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Gifts/LED%20Photo%20Frames/IN_LED-Photo-Frames_Hero-image_01",
+    "sourceTitle": "LED Photo Frames",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/led-photo-frames"
+  },
+  {
+    "slug": "custom-acrylic-photo-frames",
+    "title": "Acrylic Photo Frames",
+    "previousImage": "assets/custom-frame.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Frames/Acrylic%20Photo%20Frame%20With%20Stand/IN_Acrylic-Photo-Frame-With-Stand_Hero-image_01",
+    "sourceTitle": "Acrylic Photo Frame",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/acrylic-photo-frame"
+  },
+  {
+    "slug": "custom-acrylic-photo-blocks",
+    "title": "Acrylic Photo Blocks",
+    "previousImage": "assets/custom-frame.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Gifts/Acrylic%20Photo%20Blocks/IN_Acrylic-Photo-Blocks_Hero-image_02",
+    "sourceTitle": "Acrylic Photo Blocks",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/acrylic-photo-blocks"
+  },
+  {
+    "slug": "custom-acrylic-photo-prints",
+    "title": "Acrylic Photo Prints",
+    "previousImage": "assets/custom-frame.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Gifts/Acrylic%20Photo%20Prints/IN_Acrylic-Photo-Prints_Hero-image_01",
+    "sourceTitle": "Acrylic Photo Prints",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/acrylic-photo-prints"
+  },
+  {
+    "slug": "custom-canvas-prints",
+    "title": "Canvas Prints",
+    "previousImage": "assets/custom-frame.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Gifts/Canvas%20Prints/IN_Canvas-Prints_Hero-image_01",
+    "sourceTitle": "Canvas Prints",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/canvas-prints"
+  },
+  {
+    "slug": "custom-personalised-wall-clocks",
+    "title": "Personalised Wall Clocks",
+    "previousImage": "assets/custom-clock.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Personalized%20Wall%20clock/Personalized_Wall_clock_01",
+    "sourceTitle": "Personalized Wall Clocks",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/customised-wall-clocks"
+  },
+  {
+    "slug": "custom-personalised-led-lamps",
+    "title": "Personalised LED Lamps",
+    "previousImage": "assets/custom-frame.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/To%20Do%20Calendar%20LED%20Lamp/To_Do_Calendar_LED_Lamp_01",
+    "sourceTitle": "Customized Daily Journal LED Lamp",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/customized-daily-journal-led-lamp"
+  },
+  {
+    "slug": "custom-acrylic-display-stands",
+    "title": "Acrylic Display Stands",
+    "previousImage": "assets/custom-frame.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Gifts/Acrylic%20Stands/IN_Acrylic-Stand_Hero-image_01",
+    "sourceTitle": "Acrylic Display Stands",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/acrylic-display-stands"
+  },
+  {
+    "slug": "custom-men-s-cotton-t-shirts",
+    "title": "Men's Cotton T-Shirts",
+    "previousImage": "assets/custom-shirt.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Men%27s%20Basic%20Cotton%20T-Shirts/IN_Men_s-Basic-Cotton-T-Shirts_Hero-image_01",
+    "sourceTitle": "Men’s T-Shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/t-shirts/mens-t-shirts"
+  },
+  {
+    "slug": "custom-women-s-t-shirts",
+    "title": "Women's T-Shirts",
+    "previousImage": "assets/custom-shirt.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Women%27s%20Basic%20Cotton%20T-Shirts/IN_Women_s-Basic-Cotton-T-Shirts_Hero-image_01",
+    "sourceTitle": "Women's T-Shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/t-shirts/women-t-shirts"
+  },
+  {
+    "slug": "custom-kids-t-shirts",
+    "title": "Kids T-Shirts",
+    "previousImage": "assets/custom-shirt.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Kid%27s%20Cotton%20T-Shirts/IN_Kid_s-Cotton-T-Shirts-Grey",
+    "sourceTitle": "Kid's T-shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/t-shirts/kids-t-shirts"
+  },
+  {
+    "slug": "custom-polyester-t-shirts",
+    "title": "Polyester T-Shirts",
+    "previousImage": "assets/custom-shirt.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Unity%20PDP/Polyester%20T-shirts/IN_Premium-Polyester-Round-Neck-T-Shirts_Hero-image_01",
+    "sourceTitle": "Polyester T-shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/t-shirts/polyester-t-shirts"
+  },
+  {
+    "slug": "custom-full-sleeve-t-shirts",
+    "title": "Full Sleeve T-Shirts",
+    "previousImage": "assets/custom-shirt.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Printed%20Tshirts/Long%20Sleeve%20T-Shirts/IN_longsleeve_tshirts_002",
+    "sourceTitle": "Full Sleeves T-Shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/t-shirts/full-sleeves-t-shirts"
+  },
+  {
+    "slug": "custom-premium-cotton-t-shirts",
+    "title": "Premium Cotton T-Shirts",
+    "previousImage": "assets/custom-shirt.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Men%27s%20Cotton%20T-shirts%20-%20Colours/IN_Men_s-Cotton-T-Shirts-colors_Hero-image_01",
+    "sourceTitle": "Premium Men's Cotton T-Shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/t-shirts/premium-mens-cotton-t-shirt"
+  },
+  {
+    "slug": "custom-men-s-polo-t-shirts",
+    "title": "Men's Polo T-Shirts",
+    "previousImage": "assets/custom-shirt-collar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Men%27s%20Embroidered%20Polo%20T-Shirts/IN_Men_s-Embroidered-Polo-T-Shirts_Hero-image_01",
+    "sourceTitle": "Men's Polo T-Shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/polos/mens-polo-shirts"
+  },
+  {
+    "slug": "custom-women-s-polo-t-shirts",
+    "title": "Women's Polo T-Shirts",
+    "previousImage": "assets/custom-shirt-collar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Women%27s%20Embroidered%20Polo%20T-Shirts/IN_Women_s-Embroidered-Polo-T-Shirts_Hero-image_01",
+    "sourceTitle": "Women’s Polo T-shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/polos/womens-polo-shirts"
+  },
+  {
+    "slug": "custom-premium-polo-t-shirts",
+    "title": "Premium Polo T-Shirts",
+    "previousImage": "assets/custom-shirt-collar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/embroidered-clothing/Embroidered%20Do%27s%20and%20Dont%27s%20Marquee/image/IN_Embroidered-Do_s-and-Dont_s",
+    "sourceTitle": "Premium Polo T-Shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/polos/premium-polo-t-shirts"
+  },
+  {
+    "slug": "custom-two-tone-polo-t-shirts",
+    "title": "Two Tone Polo T-Shirts",
+    "previousImage": "assets/custom-shirt-collar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Contrast%20Collar%20Polo%20T-shirt/Contrast_Collar_Polo_T-shirt_01",
+    "sourceTitle": "Two Tone Polo T-Shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/polos/two-tone-polo-t-shirts"
+  },
+  {
+    "slug": "custom-full-custom-polo-t-shirts",
+    "title": "Full Custom Polo T-Shirts",
+    "previousImage": "assets/custom-shirt-collar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Full%20Custom%20Polo%20Jersey/IN_Full-Custom-Polo-Jersey_Hero-image_02",
+    "sourceTitle": "Full Custom Polo T-Shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/polos/full-custom-polo-t-shirts"
+  },
+  {
+    "slug": "custom-printed-polos-multi-location",
+    "title": "Printed Polos - Multi Location",
+    "previousImage": "assets/custom-shirt-collar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Men%27s%20Embroidered%20DTF%20Polo%20T-Shirts/IN_Men_s-Embroidered-DTF-Polo-T-Shirts_Hero-image_02",
+    "sourceTitle": "Printed Polos - Multi Location",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/polos/printed-polos-multi-location"
+  },
+  {
+    "slug": "custom-embroidered-polos-multi-location",
+    "title": "Embroidered Polos - Multi Location",
+    "previousImage": "assets/custom-shirt-collar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Men%27s%20Embroidered%20Multi%20Deco%20Polo%20T-Shirts/IN_Men_s-Embroidered-Multi-deco-Polo-T-Shirts_Hero-image_04",
+    "sourceTitle": "Embroidered Polos - Multi Location",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/polos/embroidered-polos-multi-location"
+  },
+  {
+    "slug": "custom-men-s-dress-shirts",
+    "title": "Men's Dress Shirts",
+    "previousImage": "assets/custom-shirt-collar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Embroidered%20Office%20Shirts%20-Men/IN_Embroidered-Office-Shirts-Men_DTF_Black",
+    "sourceTitle": "Men's Dress Shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/office-shirts/mens-dress-shirts"
+  },
+  {
+    "slug": "custom-women-s-embroidered-dress-shirts",
+    "title": "Women's Embroidered Dress Shirts",
+    "previousImage": "assets/custom-shirt-collar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Office%20Shirts/Women%20Office%20Shirts/IN_women_office_shirts_001",
+    "sourceTitle": "Women's Embroidered Dress Shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/office-shirts/womens-embroidered-dress-shirts"
+  },
+  {
+    "slug": "custom-half-sleeve-dress-shirts",
+    "title": "Half Sleeve Dress Shirts",
+    "previousImage": "assets/custom-shirt-collar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Colter%20Mens%20Short%20Sleeve%20Dress%20Shirt/Colter_Mens_Short_Sleeve_Dress_Shirt_01",
+    "sourceTitle": "Men's Dress Shirts - Half Sleeves",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/office-shirts/mens-dress-shirts-half-sleeves"
+  },
+  {
+    "slug": "custom-cotton-linen-office-shirts",
+    "title": "Cotton Linen Office Shirts",
+    "previousImage": "assets/custom-shirt-collar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Diham%20Cotton%20Linen%20Shirt/IN_Diham-Cotton-Linen-Shirt_Hero-image_01",
+    "sourceTitle": "Cotton Linen Office Shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/office-shirts/cotton-linen-office-shirts"
+  },
+  {
+    "slug": "custom-sports-jerseys",
+    "title": "Sports Jerseys",
+    "previousImage": "assets/custom-shirt.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Sport%20Jerseys%20Round%20Neck/IN_Sport-Jerseys-Round-Neck-T-Shirts_Hero-image_02",
+    "sourceTitle": "Sports Jersey",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/t-shirts/sports-jersey"
+  },
+  {
+    "slug": "custom-polo-jerseys",
+    "title": "Polo Jerseys",
+    "previousImage": "assets/custom-shirt-collar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Sport%20Jerseys%20Polo%20T-Shirts/IN_Sport-Jerseys-Polo-T-Shirts_Overview_Hero-image_02",
+    "sourceTitle": "Custom Polo Jerseys",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/polos/custom-polo-jerseys"
+  },
+  {
+    "slug": "custom-custom-hoodies",
+    "title": "Custom Hoodies",
+    "previousImage": "assets/custom-hoodie.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Winter%20Clothing/Customised%20Hoodies/IN_Customized-Hoodies_Hero-image_02",
+    "sourceTitle": "Customised Hoodies",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/sweatshirts/hoodies"
+  },
+  {
+    "slug": "custom-oversized-hoodies",
+    "title": "Oversized Hoodies",
+    "previousImage": "assets/custom-hoodie.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Oversized%20Hoodie/Oversized_Hoodie_01",
+    "sourceTitle": "Oversized Hoodies",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/sweatshirts/oversized-hoodies"
+  },
+  {
+    "slug": "custom-zipper-hoodies",
+    "title": "Zipper Hoodies",
+    "previousImage": "assets/custom-hoodie.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Cosmo%20Full-Zip%20Hoodie/Cosmo_Full-Zip_Hoodie_green_EMB",
+    "sourceTitle": "Cosmo Full-Zip Hoodies",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/sweatshirts/cosmo-full-zip-hoodies"
+  },
+  {
+    "slug": "custom-crewneck-sweatshirts",
+    "title": "Crewneck Sweatshirts",
+    "previousImage": "assets/custom-hoodie.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Winter%20Clothing/Sweatshirts%20-%20Crewneck/IN_Sweatshirts-Crewneck_Hero-image_01",
+    "sourceTitle": "Crewneck Sweatshirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/sweatshirts/crewneck-sweatshirts"
+  },
+  {
+    "slug": "custom-fleece-jackets",
+    "title": "Fleece Jackets",
+    "previousImage": "assets/custom-hoodie.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/embroidered-clothing/Fleece%20Jackets/IN_Fleece-Jacket_01",
+    "sourceTitle": "Fleece Jackets",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/jackets/fleece-jacket"
+  },
+  {
+    "slug": "custom-puffer-jackets",
+    "title": "Puffer Jackets",
+    "previousImage": "assets/custom-hoodie.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/vistaprint%20India%20media/big%20brands%20your%20logo/Spotligth/InSpotlight_Men-puffer-jacket",
+    "sourceTitle": "Puffer Jackets",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/jackets/mens-puffer-jacket"
+  },
+  {
+    "slug": "custom-sleeveless-jackets",
+    "title": "Sleeveless Jackets",
+    "previousImage": "assets/custom-hoodie.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/embroidered-clothing/Winter%20Jacket%20-%20Sleeveless/IN_winter_jackets_sleeveless_002",
+    "sourceTitle": "Winter Jacket - Sleeveless",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/jackets/winter-jacket-sleeveless"
+  },
+  {
+    "slug": "custom-full-zip-jackets",
+    "title": "Full Zip Jackets",
+    "previousImage": "assets/custom-hoodie.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Full%20Zip%20Ranger%20Jacket/Full_Zip_Ranger_Jacket_yellow_emb",
+    "sourceTitle": "Ranger Full-Zip Jackets",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/sweatshirts/ranger-full-zip-jackets"
+  },
+  {
+    "slug": "custom-reflective-safety-vests",
+    "title": "Reflective Safety Vests",
+    "previousImage": "assets/custom-shirt.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Reflective%20Safety%20Vest/IN_Reflective-Safety-Vest_Hero-image_01",
+    "sourceTitle": "Reflective Safety Vest",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/outer-wear/safety-vest/reflective-safety-vest"
+  },
+  {
+    "slug": "custom-custom-aprons",
+    "title": "Custom Aprons",
+    "previousImage": "assets/custom-apron.svg",
+    "image": "https://utmprinting.com/cdn/shop/files/Design_2d61d5f2-70f9-4d38-9b01-10e3163cb301.webp?v=1722652087",
+    "sourceTitle": "Custom Aprons reference photo",
+    "sourcePage": "https://utmprinting.com/products/custom-printed-port-authority-%C2%AE-market-full-length-bib-apron"
+  },
+  {
+    "slug": "custom-full-sleeve-lab-coats",
+    "title": "Full Sleeve Lab Coats",
+    "previousImage": "assets/custom-apron.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Lab%20coat-%20full%20sleeves/Lab_Coat_Full_Sleeves_02",
+    "sourceTitle": "Lab Coat - Full Sleeves",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/labcoats/lab-coat-full-sleeves"
+  },
+  {
+    "slug": "custom-half-sleeve-lab-coats",
+    "title": "Half Sleeve Lab Coats",
+    "previousImage": "assets/custom-apron.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Lab%20Coat-%20Half%20Sleeve/Lab_Coat_Half_Sleeve_DTF_02",
+    "sourceTitle": "Lab Coats - Half Sleeves",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/labcoats/lab-coats-half-sleeves"
+  },
+  {
+    "slug": "custom-uniform-overcoats",
+    "title": "Uniform Overcoats",
+    "previousImage": "assets/custom-apron.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Blue%20Overcoat/IN_Blue-Overview-Coat_Hero-image_01",
+    "sourceTitle": "Uniform Overcoats",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/uniform-overcoat"
+  },
+  {
+    "slug": "custom-printed-caps",
+    "title": "Printed Caps",
+    "previousImage": "assets/custom-cap.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Caps/Printed%20Caps/IN_Printed-Caps-Front_Back_01",
+    "sourceTitle": "Printed Caps",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/caps/printed-caps"
+  },
+  {
+    "slug": "custom-embroidered-caps",
+    "title": "Embroidered Caps",
+    "previousImage": "assets/custom-cap.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Caps-%20Embroidered%20Caps/IN_Embroidered-Caps_Hero-image_03",
+    "sourceTitle": "Embroidered Caps",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/caps/embroidered-caps"
+  },
+  {
+    "slug": "custom-cotton-caps",
+    "title": "Cotton Caps",
+    "previousImage": "assets/custom-cap.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Caps-%20Embroidered%20Cotton%20Caps/IN_Embroidered-Cotton-Caps_Hero-image_01",
+    "sourceTitle": "Cotton Caps",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/caps/cotton-caps"
+  },
+  {
+    "slug": "custom-embroidered-denim-caps",
+    "title": "Embroidered Denim Caps",
+    "previousImage": "assets/custom-cap.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Caps-%20Embroidered%20Denim%20Caps/IN_Embroidered-Denim-Caps_Hero-image_01",
+    "sourceTitle": "Embroidered Denim Caps",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/caps/embroidered-denim-caps"
+  },
+  {
+    "slug": "custom-premium-cotton-caps",
+    "title": "Premium Cotton Caps",
+    "previousImage": "assets/custom-cap.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Elite%20Caps/Elite_Caps_Black__01",
+    "sourceTitle": "Premium Cotton Caps",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/caps/premium-cotton-caps"
+  },
+  {
+    "slug": "custom-chef-caps",
+    "title": "Chef Caps",
+    "previousImage": "assets/custom-cap.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Diham%20Uniforms_Chef%20Cap/Chef_Cap_01",
+    "sourceTitle": "Chef Caps",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/caps/chef-caps"
+  },
+  {
+    "slug": "custom-beanie-caps",
+    "title": "Beanie Caps",
+    "previousImage": "assets/custom-cap.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/vistaprint%20India%20media/big%20brands%20your%20logo/Spotligth/InSpotlight_BeaniesCaps",
+    "sourceTitle": "Beanies Caps",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/caps/beanies-caps"
+  },
+  {
+    "slug": "custom-single-fold-umbrellas",
+    "title": "Single Fold Umbrellas",
+    "previousImage": "assets/custom-umbrella.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Raincoat/Single%20Fold%20Umbrella/IN_Single-Fold-Umbrella_Hero-image_01",
+    "sourceTitle": "Single Fold Umbrellas",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/umbrellas/single-fold-umbrellas"
+  },
+  {
+    "slug": "custom-two-fold-umbrellas",
+    "title": "Two Fold Umbrellas",
+    "previousImage": "assets/custom-umbrella.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Raincoat/Two%20Fold%20Umbrella/IN_Single-Fold-Umbrella_Hero-image_01",
+    "sourceTitle": "Two-Fold Umbrellas",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/umbrellas/two-fold-umbrellas"
+  },
+  {
+    "slug": "custom-golf-umbrellas",
+    "title": "Golf Umbrellas",
+    "previousImage": "assets/custom-umbrella.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Raincoat/Golf%20Umbrellas/IN_Golf-Umbrellas_Hero-image_01",
+    "sourceTitle": "Golf Umbrellas",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/umbrellas/golf-umbrellas"
+  },
+  {
+    "slug": "custom-cotton-tote-bags",
+    "title": "Cotton Tote Bags",
+    "previousImage": "assets/custom-bag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Tote%20bags/IN_Tote-Bags_001",
+    "sourceTitle": "Cotton Tote Bags",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/bags/cotton-tote-bags"
+  },
+  {
+    "slug": "custom-canvas-tote-bags",
+    "title": "Canvas Tote Bags",
+    "previousImage": "assets/custom-bag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Colored%20Canvas%20Tote%20Bags/IN_Colored-Canvas-Tote-Bags_Hero-image_01",
+    "sourceTitle": "Colored Canvas Tote Bags",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/bags/colored-canvas-tote-bags"
+  },
+  {
+    "slug": "custom-pocket-tote-bags",
+    "title": "Pocket Tote Bags",
+    "previousImage": "assets/custom-bag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Promotional%20Packable%20Tote%20Bag/packable_tote_bags_Marquee_01",
+    "sourceTitle": "Pocket Tote Bags",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/bags/pocket-tote-bags"
+  },
+  {
+    "slug": "custom-jute-bags",
+    "title": "Jute Bags",
+    "previousImage": "assets/custom-bag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Custom%20Jute%20Bags/IN_Custom-Jute-Bags_Hero-image_01",
+    "sourceTitle": "Custom Jute Bags",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/bags/standard-jute-tote-bags"
+  },
+  {
+    "slug": "custom-premium-jute-bags",
+    "title": "Premium Jute Bags",
+    "previousImage": "assets/custom-bag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Premium%20Jute%20Bags/Premium_Jute_bags_01",
+    "sourceTitle": "Premium Jute Bags",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/bags/premium-jute-bags"
+  },
+  {
+    "slug": "custom-embroidered-laptop-bags",
+    "title": "Embroidered Laptop Bags",
+    "previousImage": "assets/custom-backpack.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Laptop%20Bags/Laptop%20Bag%20-%20Classic%20/IN_Laptop_Bags_-_Classic_01",
+    "sourceTitle": "Embroidered Laptop Bags",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/bags/embroidered-laptop-bags"
+  },
+  {
+    "slug": "custom-laptop-backpacks",
+    "title": "Laptop Backpacks",
+    "previousImage": "assets/custom-backpack.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/DES-Executive%20Backpack/DES_Executive_Bag_Backpack_01",
+    "sourceTitle": "Executive Pro Laptop Backpacks",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/bags/backpacks/executive-pro-laptop-backpacks"
+  },
+  {
+    "slug": "custom-office-backpacks",
+    "title": "Office Backpacks",
+    "previousImage": "assets/custom-backpack.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/DES%20Corporate%20Linen%20Backpack/Sheinic_DES_Corporate_Linen_Backpack_1",
+    "sourceTitle": "Corporate-Linen Laptop Backpacks",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/bags/corporate-linen-laptop-backpacks"
+  },
+  {
+    "slug": "custom-duffle-bags",
+    "title": "Duffle Bags",
+    "previousImage": "assets/custom-bag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Lavie%20Bags/Lavie%20-%20Captain%2026%20Travel%20Bag%20Duffle/Lavie_-_Captain_26_Travel_Bag_Duffle_01",
+    "sourceTitle": "Lavie Sport Captain Duffle Bags",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/bags/lavie-sport-captain-duffle-bags"
+  },
+  {
+    "slug": "custom-laptop-sleeves",
+    "title": "Laptop Sleeves",
+    "previousImage": "assets/custom-bag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/FLASH%20Laptop%20Sleeves/Sheinic_FLASH_Laptop_Sleeves_01",
+    "sourceTitle": "FLASH Corporate Laptop Sleeves",
+    "sourcePage": "https://www.vistaprint.in/technology/laptop/flash-corporate-laptop-sleeves"
+  },
+  {
+    "slug": "custom-waterproof-bag-covers",
+    "title": "Waterproof Bag Covers",
+    "previousImage": "assets/custom-bag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Bag%20Rain%20Cover/Bag_Rain_cover_01",
+    "sourceTitle": "Waterproof Bag Covers",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/bags/waterproof-bag-covers"
+  },
+  {
+    "slug": "custom-desk-calendars",
+    "title": "Desk Calendars",
+    "previousImage": "assets/custom-calendar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Calendars/2026/Desk%20Calendars/IN_Desk-calendars_Hero-image_01",
+    "sourceTitle": "Desk Calendars",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/calendars/desk-calendar"
+  },
+  {
+    "slug": "custom-wall-calendars",
+    "title": "Wall Calendars",
+    "previousImage": "assets/custom-calendar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Calendars/2026/Wall%20Calendars/IN_Wall-calendars_Hero-image_01",
+    "sourceTitle": "Wall Calendars",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/calendars/wall-calendar"
+  },
+  {
+    "slug": "custom-flip-desk-calendars",
+    "title": "Flip Desk Calendars",
+    "previousImage": "assets/custom-calendar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Calendars/2026/Flip%20Desk%20Calendars/IN_2026_Flip-Desk-Calendars_01",
+    "sourceTitle": "Flip Desk Calendars",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/calendars/flip-desk-calendars"
+  },
+  {
+    "slug": "custom-perpetual-desk-calendars",
+    "title": "Perpetual Desk Calendars",
+    "previousImage": "assets/custom-calendar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Calendars/2026/Metal%20Universal%20Calendar%20-%20Black/Metal_Universal_Calendar_Black_01",
+    "sourceTitle": "Perpetual Desk Calendar",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/calendars/perpetual-desk-calendar"
+  },
+  {
+    "slug": "custom-poster-calendars",
+    "title": "Poster Calendars",
+    "previousImage": "assets/custom-calendar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Calendars/2026/Poster%20Calendars/IN_Poster-Calendar_Hero-image_01",
+    "sourceTitle": "Poster Calendars",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/calendars/poster-calendars"
+  },
+  {
+    "slug": "custom-pocket-calendars",
+    "title": "Pocket Calendars",
+    "previousImage": "assets/custom-calendar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Calendars/2026/Pocket%20Calendars/IN_Pocket-Calendars_Hero-image_01",
+    "sourceTitle": "Pocket Calendars",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/calendars/pocket-calendars"
+  },
+  {
+    "slug": "custom-desk-calendar-with-photo-frame",
+    "title": "Desk Calendar with Photo Frame",
+    "previousImage": "assets/custom-calendar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Calendars/2026/Desk%20Calendar%20with%20Photo%20Frame/IN_Desk-Calendar-with-Photo-Frame_Hero-image_04",
+    "sourceTitle": "Desk Calendar with Photo Frame",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/desk-calendar-with-photo-frame"
+  },
+  {
+    "slug": "custom-four-sheeter-wall-calendars",
+    "title": "Four Sheeter Wall Calendars",
+    "previousImage": "assets/custom-calendar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Calendars/2026/Four%20Sheeter%20Wall%20Calendars%20-%20New%20Size/IN_4-Sheet-Wall-calendars_Hero-image_01",
+    "sourceTitle": "Four Sheeter Wall Calendars",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/calendars/four-sheeter-wall-calendars"
+  },
+  {
+    "slug": "custom-acrylic-photo-calendars",
+    "title": "Acrylic Photo Calendars",
+    "previousImage": "assets/custom-calendar.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Calendars/2026/Acrylic%20Photo%20Calendars/IN_Acrylic-photo-Calendar_01",
+    "sourceTitle": "Acrylic Photo Calendars",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/calendars/acrylic-photo-calendars"
+  },
+  {
+    "slug": "custom-personalised-a5-diaries",
+    "title": "Personalised A5 Diaries",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Diaries/2026/A5%20Printed%20Diary/IN_A5-Printed-Diary_Hero-image_01",
+    "sourceTitle": "Personalised A5 Diary",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/diary/personalised-a5-diary"
+  },
+  {
+    "slug": "custom-diary-with-pen-holder",
+    "title": "Diary with Pen Holder",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Diaries/2026/Diary%20With%20Pen%20Holder/IN_Diary-With-Pen-Holder_Hero-image_01",
+    "sourceTitle": "Diary with Pen Holder",
+    "sourcePage": "https://www.vistaprint.in/stationery/diary-with-pen-holder"
+  },
+  {
+    "slug": "custom-diary-with-magnetic-lock",
+    "title": "Diary with Magnetic Lock",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Diaries/2026/Personalised%20Diary%20with%20Magnetic%20Lock/IN_Sheinic-A5-Diary-14-15_Hero-image_01",
+    "sourceTitle": "Personalised Diary with Magnetic Lock",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/diary/personalised-diary-with-magnetic-lock"
+  },
+  {
+    "slug": "custom-executive-diaries",
+    "title": "Executive Diaries",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/A5%20-%20One%20Date%20Diary/2025/IN_2025-Executive-diary_Hero-image_01",
+    "sourceTitle": "Executive Diary",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/diary/executive-diary"
+  },
+  {
+    "slug": "custom-diary-with-strap",
+    "title": "Diary with Strap",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Diaries/2026/Diary%20with%20Strap/IN_Shah-Book-Diaries-Diary-V-701_Hero-image_01",
+    "sourceTitle": "Diary with Strap",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/diary/diary-with-strap"
+  },
+  {
+    "slug": "custom-pocket-diaries",
+    "title": "Pocket Diaries",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Diaries/2026/Pocket%20Size%20Diary/IN_Shah-Book-A6-Diary_Hero-image_01",
+    "sourceTitle": "Pocket Size Diary",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/diary/pocket-size-diary"
+  },
+  {
+    "slug": "custom-hard-bound-diaries",
+    "title": "Hard Bound Diaries",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Diaries/2026/A5%20Hard%20Bound%20Diary/IN_Shah-Book-A5-Elastic-Note-Do-Art-Hard-Bound_Hero-image_01",
+    "sourceTitle": "A5 Hard Bound Diary",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/diary/a5-hard-bound-diary"
+  },
+  {
+    "slug": "custom-soft-cover-diaries",
+    "title": "Soft Cover Diaries",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Diaries/2026/Shah%20Book%20A5%20Note%20Diary%20softy%20P002/IN_Shah-Book-A5-Note-Diary-softy-P002_Hero-image_01",
+    "sourceTitle": "A5 Soft Leather Cover Diary",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/diary/a5-soft-leather-cover-diary"
+  },
+  {
+    "slug": "custom-faux-leather-diaries",
+    "title": "Faux Leather Diaries",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Diaries/2026/Submarine%20New%20Flexible%20PU%20Diaries/Submarine_New_Flexible_PU_Diaries__01",
+    "sourceTitle": "Faux Leather Diaries",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/diary/faux-leather-diaries"
+  },
+  {
+    "slug": "custom-daily-planners",
+    "title": "Daily Planners",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Executive%20Daily%20Planner%20with%20Pen%20Holder/Executive_Daily_Planner_with_Pen_Holder_01",
+    "sourceTitle": "Executive Daily Planner with Pen Holder",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/diary/executive-daily-planner-with-pen-holder"
+  },
+  {
+    "slug": "custom-annual-planners",
+    "title": "Annual Planners",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://i.etsystatic.com/40166665/r/il/2804ed/7762265390/il_fullxfull.7762265390_mv31.jpg",
+    "sourceTitle": "Annual Planners reference photo",
+    "sourcePage": "https://www.etsy.com/market/linen_undated_planner"
+  },
+  {
+    "slug": "custom-personalised-notebooks",
+    "title": "Personalised Notebooks",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Notebook_2026/Personalised%20Notebooks/IN_Personalised-notebooks_Hero-image_01",
+    "sourceTitle": "Personalised Notebooks",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/personalised-notebooks"
+  },
+  {
+    "slug": "custom-a4-notebooks",
+    "title": "A4 Notebooks",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Notebook_2026/Notebook%20A4%20Size/IN_Notebook-A4_Hero-image_01",
+    "sourceTitle": "Notebook A4 Size",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/diary/notebook-a4-size"
+  },
+  {
+    "slug": "custom-perfect-bound-notebooks",
+    "title": "Perfect Bound Notebooks",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Notebook_2026/Perfect%20Bound%20Notebooks/IN_Gluebound-Notebooks_Hero-image_01",
+    "sourceTitle": "Perfect Bound Notebooks",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/perfect-bound-notebooks"
+  },
+  {
+    "slug": "custom-long-notebooks",
+    "title": "Long Notebooks",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Notebook_2026/Custom%20Long%20Notebooks/IN_Personalized-School-College-Notebooks_Hero-image_01",
+    "sourceTitle": "Custom Long Notebooks",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/custom-long-notebooks"
+  },
+  {
+    "slug": "custom-writing-pads",
+    "title": "Writing Pads",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Notebook_2026/Writing%20Pads/IN_Notepad-A4-A5_Hero-image_01",
+    "sourceTitle": "Writing Pads",
+    "sourcePage": "https://www.vistaprint.in/stationery/writing-pads"
+  },
+  {
+    "slug": "custom-custom-notepads",
+    "title": "Custom Notepads",
+    "previousImage": "assets/custom-notebook.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Custom%20Bill%20Books/Custom_Bill_Books_01",
+    "sourceTitle": "Custom Notepads",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/notepads/custom-notepads"
+  },
+  {
+    "slug": "custom-letterheads",
+    "title": "Letterheads",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/letterheads/in_letterheads_001",
+    "sourceTitle": "Letterheads",
+    "sourcePage": "https://www.vistaprint.in/stationery/letterheads"
+  },
+  {
+    "slug": "custom-letterhead-pads",
+    "title": "Letterhead Pads",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Letterhead%20Pads/IN_Letterhead-pads_Hero-image_01",
+    "sourceTitle": "Custom Letterhead Pads",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/custom-letterhead-pads"
+  },
+  {
+    "slug": "custom-bill-books",
+    "title": "Bill Books",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Custom%20Bill%20Books/IN_Custom-Bill-Books_Hero-image_01",
+    "sourceTitle": "Bill Books",
+    "sourcePage": "https://www.vistaprint.in/stationery/bill-books"
+  },
+  {
+    "slug": "custom-business-envelopes",
+    "title": "Business Envelopes",
+    "previousImage": "assets/custom-envelope.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Business%20Envelopes/IN_Business-Envelopes_Hero-image_01",
+    "sourceTitle": "Business Envelopes",
+    "sourcePage": "https://www.vistaprint.in/stationery/envelopes/business-envelopes"
+  },
+  {
+    "slug": "custom-envelopes",
+    "title": "Envelopes",
+    "previousImage": "assets/custom-envelope.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/envelopes/in_envelopes_001",
+    "sourceTitle": "Envelopes",
+    "sourcePage": "https://www.vistaprint.in/stationery/envelopes/custom-printed-envelopes"
+  },
+  {
+    "slug": "custom-invoice-books",
+    "title": "Invoice Books",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Bill%20Books%20A4%20and%20A5/IN_Bill-Books-A4-A5_Hero-image_01",
+    "sourceTitle": "Invoice Books",
+    "sourcePage": "https://www.vistaprint.in/stationery/invoice-books"
+  },
+  {
+    "slug": "custom-note-cards",
+    "title": "Note Cards",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Note%20Cards/IN_Note-Cards_002",
+    "sourceTitle": "Note Cards",
+    "sourcePage": "https://www.vistaprint.in/stationery/note-cards"
+  },
+  {
+    "slug": "custom-custom-certificates",
+    "title": "Custom Certificates",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Certificate/IN_Certificate_Hero-image_03",
+    "sourceTitle": "Custom Certificates",
+    "sourcePage": "https://www.vistaprint.in/stationery/certificates"
+  },
+  {
+    "slug": "custom-cash-vouchers",
+    "title": "Cash Vouchers",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Cash%20vouchers/IN_Cash-vouchers_Hero-image_01",
+    "sourceTitle": "Cash Vouchers",
+    "sourcePage": "https://www.vistaprint.in/stationery/notebooks/cashvoucher/cash-vouchers"
+  },
+  {
+    "slug": "custom-presentation-folders",
+    "title": "Presentation Folders",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Presentation%20Folders/IN_presentation_folders_001",
+    "sourceTitle": "Presentation Folders",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/presentation-folders"
+  },
+  {
+    "slug": "custom-ring-binder-files",
+    "title": "Ring Binder Files",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Keny%20File%20Ring%20Binder%20File/IN_Keny-File-Ring-Binder-File_Hero-image_01",
+    "sourceTitle": "Ring Binder File",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/ring-binder-files"
+  },
+  {
+    "slug": "custom-presentation-files-with-pocket",
+    "title": "Presentation Files with Pocket",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Keny%20File%20Straightline%20Presentation%20with%20Pocket/IN_Keny-File-Straightline-Presentation-with-Pocket_Hero-image_01",
+    "sourceTitle": "Presentation File with Pocket",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/presentation-file-with-pocket"
+  },
+  {
+    "slug": "custom-document-files",
+    "title": "Document Files",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Hospital%20and%20corporate%20Files/Medical_file_06",
+    "sourceTitle": "Custom Document File",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/custom-document-files"
+  },
+  {
+    "slug": "custom-office-stationery-kits",
+    "title": "Office Stationery Kits",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Leatherette%20stationary%20kit/IN_Leatherette-stationary-kit_Hero-image_01",
+    "sourceTitle": "Office Stationery Kit",
+    "sourcePage": "https://www.vistaprint.in/stationery/office/office-stationery-kit"
+  },
+  {
+    "slug": "custom-paper-identity-cards",
+    "title": "Paper Identity Cards",
+    "previousImage": "assets/custom-id.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Identity%20Cards%20and%20Holders/Identity_Cards_Holder_1094H_01",
+    "sourceTitle": "Paper Identity Cards",
+    "sourcePage": "https://www.vistaprint.in/stationery/office/paper-identity-cards"
+  },
+  {
+    "slug": "custom-id-cards",
+    "title": "ID Cards",
+    "previousImage": "assets/custom-id.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Unity%20PDP/ID%20Cards/IN_ID-cardsl_Hero-image_01",
+    "sourceTitle": "ID Cards",
+    "sourcePage": "https://www.vistaprint.in/stationery/office/ids-lanyards/identity-cards-with-vertical-holder"
+  },
+  {
+    "slug": "custom-lanyards",
+    "title": "Lanyards",
+    "previousImage": "assets/custom-id.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Lanyards/IN_Lanyards_01",
+    "sourceTitle": "Lanyards",
+    "sourcePage": "https://www.vistaprint.in/stationery/office/lanyards"
+  },
+  {
+    "slug": "custom-photo-albums",
+    "title": "Photo Albums",
+    "previousImage": "assets/custom-album.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Gifts/Photo%20Albums/IN_Photo-album_Hero-image_01",
+    "sourceTitle": "Photo Albums",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/photo-albums"
+  },
+  {
+    "slug": "custom-layflat-photo-albums",
+    "title": "Layflat Photo Albums",
+    "previousImage": "assets/custom-album.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Album/IN_Photo-Album_12",
+    "sourceTitle": "Layflat Photo Albums",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/layflat-photo-albums"
+  },
+  {
+    "slug": "custom-custom-mouse-pads",
+    "title": "Custom Mouse Pads",
+    "previousImage": "assets/custom-mousepad.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/mouse-pads/in_mouse_pads_001",
+    "sourceTitle": "Custom Mouse Pads",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/custom-mouse-pads"
+  },
+  {
+    "slug": "custom-gaming-mousepads",
+    "title": "Gaming Mousepads",
+    "previousImage": "assets/custom-mousepad.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Customized%20Mousepad/Gaming%20mousepads/Customised_Mousepad_Medium_Desk_Mat",
+    "sourceTitle": "Gaming Mousepads",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/gaming-mousepads"
+  },
+  {
+    "slug": "custom-border-stitched-mousepads",
+    "title": "Border Stitched Mousepads",
+    "previousImage": "assets/custom-mousepad.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Customized%20Mousepad/Customised_Mousepad_Border_Stitch_01",
+    "sourceTitle": "Border Stitched Mousepads",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/border-stitched-mousepads"
+  },
+  {
+    "slug": "custom-mousepads-with-wrist-support",
+    "title": "Mousepads with Wrist Support",
+    "previousImage": "assets/custom-mousepad.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Mouse%20Pad%20with%20Wrist%20Support/IN_Mouse-Pad-with-Wrist-Support_Hero-image_01",
+    "sourceTitle": "Mousepad with Wrist Support",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/mousepad-with-wrist-support"
+  },
+  {
+    "slug": "custom-round-photo-mouse-pads",
+    "title": "Round Photo Mouse Pads",
+    "previousImage": "assets/custom-mousepad.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Customized%20Mousepad/Customised_Mousepad_Circle_01",
+    "sourceTitle": "Round Photo Mouse Pads",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/round-photo-mouse-pads"
+  },
+  {
+    "slug": "custom-custom-coasters",
+    "title": "Custom Coasters",
+    "previousImage": "assets/custom-coaster.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Gifts/Customized%20Coasters/IN_Customized-Coasters_Hero-image_01",
+    "sourceTitle": "Customized Coasters",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/coasters/customized-coasters"
+  },
+  {
+    "slug": "custom-acrylic-coasters",
+    "title": "Acrylic Coasters",
+    "previousImage": "assets/custom-coaster.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Gifts/Acrylic%20Coasters/IN_Acrylic-Coasters_Hero-image_01",
+    "sourceTitle": "Custom Printed Acrylic Coasters",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/coasters/custom-printed-acrylic-coasters"
+  },
+  {
+    "slug": "custom-soft-coasters",
+    "title": "Soft Coasters",
+    "previousImage": "assets/custom-coaster.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/coasters/soft%20coasters/in_soft_coasters_001",
+    "sourceTitle": "Soft Coasters",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/coasters/tea-coasters"
+  },
+  {
+    "slug": "custom-acrylic-keychains",
+    "title": "Acrylic Keychains",
+    "previousImage": "assets/custom-keychain.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Marketing%20Materials-%20Acrylic%20Keychains/IN_Acrylic-Keychains_Hero-image_01",
+    "sourceTitle": "Acrylic Keychains",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/acrylic-keychains"
+  },
+  {
+    "slug": "custom-photo-keychains",
+    "title": "Photo Keychains",
+    "previousImage": "assets/custom-keychain.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Photo%20Keychains/IN_Photo-Keychains_Hero-image_01",
+    "sourceTitle": "Photo Keychains",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/photo-keychains"
+  },
+  {
+    "slug": "custom-oval-metal-keychains",
+    "title": "Oval Metal Keychains",
+    "previousImage": "assets/custom-keychain.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Metal%20Keychain-%20Oval%20Metal%20Keychain/IN_Oval-Metal-Keychain_Hero-image_01",
+    "sourceTitle": "Oval Metal Keychains",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/oval-metal-keychains"
+  },
+  {
+    "slug": "custom-keychains-with-light",
+    "title": "Keychains with Light",
+    "previousImage": "assets/custom-keychain.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/keychains/in_keychains_001",
+    "sourceTitle": "Keychain with Light",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/keychain-with-light"
+  },
+  {
+    "slug": "custom-custom-pen-drives",
+    "title": "Custom Pen Drives",
+    "previousImage": "assets/custom-usb.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/usb%20flash%20drive/in_usb-flash-drive_001",
+    "sourceTitle": "Custom Pen Drive",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/custom-pen-drive"
+  },
+  {
+    "slug": "custom-usb-flash-drives",
+    "title": "USB Flash Drives",
+    "previousImage": "assets/custom-usb.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/usb%20flash%20drive/in_usb-flash-drive_001",
+    "sourceTitle": "Custom Pen Drive",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/custom-pen-drive"
+  },
+  {
+    "slug": "custom-customised-mementos",
+    "title": "Customised Mementos",
+    "previousImage": "assets/custom-award.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Benson%20Trophies%20and%20Awards/BNS%20627/BNS_627_01",
+    "sourceTitle": "Customised Mementos",
+    "sourcePage": "https://www.vistaprint.in/stationery/office/awards-and-trophy/gold-shield-black-plaque"
+  },
+  {
+    "slug": "custom-recognition-plaques",
+    "title": "Recognition Plaques",
+    "previousImage": "assets/custom-award.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Benson%20Trophies%20and%20Awards/BNS%20457/BNS_457_01",
+    "sourceTitle": "Recognition Plaques",
+    "sourcePage": "https://www.vistaprint.in/stationery/office/awards-and-trophy/recognition-ribbed-plaque"
+  },
+  {
+    "slug": "custom-star-performer-awards",
+    "title": "Star Performer Awards",
+    "previousImage": "assets/custom-award.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Benson%20Trophies%20and%20Awards/BNS%20133/BNS_133_01",
+    "sourceTitle": "Star Performer Awards",
+    "sourcePage": "https://www.vistaprint.in/stationery/office/awards-and-trophy/star-performer-figurine-trophy"
+  },
+  {
+    "slug": "custom-employee-welcome-kits",
+    "title": "Employee Welcome Kits",
+    "previousImage": "assets/custom-gift.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Photo%20Gifts/Employee%20Welcome%20Kit%2004/IN_Welcome-kit-04_Hero-image_01",
+    "sourceTitle": "Employee Welcome Kit",
+    "sourcePage": "https://www.vistaprint.in/gifts/welcome-kit/employee-welcome-kit-polo-t-shirt-water-bottle-coffee-mug-diary-pen"
+  },
+  {
+    "slug": "custom-gift-hampers",
+    "title": "Gift Hampers",
+    "previousImage": "assets/custom-gift.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Welcome%20Kit/Welcome%20Kit_SIP_06/Welcome_Kit_SIP_06_Marquee",
+    "sourceTitle": "Gift Hampers",
+    "sourcePage": "https://www.vistaprint.in/gifts/welcome-kit/hamper-with-black-diary-metal-pen-black-stainless-steel-mug-more"
+  },
+  {
+    "slug": "custom-personalised-pens",
+    "title": "Personalised Pens",
+    "previousImage": "assets/custom-pen.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Pens/Personalised%20Pens/IN_Personalised-Pens_Hero-image_01",
+    "sourceTitle": "Personalised Pens",
+    "sourcePage": "https://www.vistaprint.in/pens/executive-pens/personalised-pens"
+  },
+  {
+    "slug": "custom-plastic-ball-pens",
+    "title": "Plastic Ball Pens",
+    "previousImage": "assets/custom-pen.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Basic%20Pens/IN_Basic-Pens_Hero-image_01",
+    "sourceTitle": "Plastic Pens",
+    "sourcePage": "https://www.vistaprint.in/pens/value-pens/plastic-pens"
+  },
+  {
+    "slug": "custom-metal-ball-pens",
+    "title": "Metal Ball Pens",
+    "previousImage": "assets/custom-pen.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Pens/Metal%20Ball%20Pen/IN_Metal-Ball-Pens_Hero-image_01",
+    "sourceTitle": "Sleek Metal Ballpoint Pens",
+    "sourcePage": "https://www.vistaprint.in/pens/executive-pens/sleek-metal-ballpoint-pens"
+  },
+  {
+    "slug": "custom-wooden-finish-metal-pens",
+    "title": "Wooden Finish Metal Pens",
+    "previousImage": "assets/custom-pen.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Pens/Wooden%20Plastic%20Ball%20Pens/IN_Wooden-Plastic-Ball-Pen_Hero-image_01",
+    "sourceTitle": "Wooden Finish Metal Ball Pens",
+    "sourcePage": "https://www.vistaprint.in/pens/value-pens/wooden-finish-metal-ball-pens"
+  },
+  {
+    "slug": "custom-matte-metal-pens",
+    "title": "Matte Metal Pens",
+    "previousImage": "assets/custom-pen.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Pens/Premium%20Matte%20Pens/IN_Premium-Matte-Pens_Hero-image_01",
+    "sourceTitle": "Premium Matte Pens",
+    "sourcePage": "https://www.vistaprint.in/pens/premium-pens/premium-matte-pens"
+  },
+  {
+    "slug": "custom-magnetic-roller-pens",
+    "title": "Magnetic Roller Pens",
+    "previousImage": "assets/custom-pen.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Pens/Premium%20Magnetic%20Metal%20Roller%20Pen/IN_Premium-Magnetic-Metal-Roller-Pen_Hero-image_01",
+    "sourceTitle": "Premium Magnetic Metal Roller Pens",
+    "sourcePage": "https://www.vistaprint.in/pens/premium-pens/premium-magnetic-metal-roller-pens"
+  },
+  {
+    "slug": "custom-brass-metal-pens",
+    "title": "Brass Metal Pens",
+    "previousImage": "assets/custom-pen.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/SUBMARIENE%20PENS/Submarine%20Swiss%20S252622%20Ball%20Pen/Submarine_Swiss_S252622_Ball_Pen_03",
+    "sourceTitle": "Brass Metal Pens reference photo",
+    "sourcePage": "https://www.vistaprint.in/pens/luxury-pens/swissbrand-glide-matte-gold-ball-pens"
+  },
+  {
+    "slug": "custom-twist-plastic-pens",
+    "title": "Twist Plastic Pens",
+    "previousImage": "assets/custom-pen.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Pens/Blue%20Body%20SI017%20PLASTIC%20BP/IN_Blue-Body-SI017-PLASTIC-BP_Hero-image_01",
+    "sourceTitle": "Twist Plastic Ball Pens",
+    "sourcePage": "https://www.vistaprint.in/pens/value-pens/twist-plastic-ball-pens"
+  },
+  {
+    "slug": "custom-fountain-pens",
+    "title": "Fountain Pens",
+    "previousImage": "assets/custom-pen.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/SUBMARIENE%20PENS/Submarine%20Swiss%20S251000%20Fountain%20Pen/Submarine_Swiss_S251000_Fountain_Pen_03",
+    "sourceTitle": "SwissBrand Eternia Fountain Pen reference",
+    "sourcePage": "https://www.vistaprint.in/pens/luxury-pens/swissbrand-eternia-fountain-pens"
+  },
+  {
+    "slug": "custom-marble-design-pens",
+    "title": "Marble Design Pens",
+    "previousImage": "assets/custom-pen.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Pens/Metal%20Marble%20Design%20Pens/IN_Metal-Marble-Design-Pens_Hero-image_01",
+    "sourceTitle": "Marble Design Metal Ball Pens",
+    "sourcePage": "https://www.vistaprint.in/pens/premium-pens/marble-design-metal-ball-pens"
+  },
+  {
+    "slug": "custom-multicolour-pens",
+    "title": "Multicolour Pens",
+    "previousImage": "assets/custom-pen.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Fusion%20Exports/Color%20Ball%20Pens/Fusion_Exports_Color_Ball_Pens",
+    "sourceTitle": "Multicolor Ball Pens",
+    "sourcePage": "https://www.vistaprint.in/pens/executive-pens/multicolor-ball-pens"
+  },
+  {
+    "slug": "custom-promotional-pens",
+    "title": "Promotional Pens",
+    "previousImage": "assets/custom-pen.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Ball%20Pen-White%20Cap/Ball_Pen-White_Cap_01",
+    "sourceTitle": "Promotional Pens",
+    "sourcePage": "https://www.vistaprint.in/pens/executive-pens/promotional-pens"
+  },
+  {
+    "slug": "custom-engraved-metal-card-holders",
+    "title": "Engraved Metal Card Holders",
+    "previousImage": "assets/custom-holder.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Visiting%20Cards%20Holders/Engraved%20Metal%20Visiting%20Cards%20Holders/12%20March%202024/IN_NEW_Engraved-Metal-Visiting-Cards-Holders_01",
+    "sourceTitle": "Engraved Metal Visiting Card Holders",
+    "sourcePage": "https://www.vistaprint.in/business-cards/holders/engraved-metal"
+  },
+  {
+    "slug": "custom-metal-visiting-card-holders",
+    "title": "Metal Visiting Card Holders",
+    "previousImage": "assets/custom-holder.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Visiting%20Cards%20Holders/Metal%20Visiting%20Card%20Holder/New/IN_Metal-Visiting-Cards-Holders_01",
+    "sourceTitle": "Metal Visiting Card Holder",
+    "sourcePage": "https://www.vistaprint.in/business-cards/holders/metal"
+  },
+  {
+    "slug": "custom-leatherette-visiting-card-holders",
+    "title": "Leatherette Visiting Card Holders",
+    "previousImage": "assets/custom-holder.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Business%20Card%20Leather%20Holder/IN_Business-Card-Leather-Holder_01",
+    "sourceTitle": "Leatherite Visiting Cards Holder",
+    "sourcePage": "https://www.vistaprint.in/business-cards/holders/leather"
+  },
+  {
+    "slug": "custom-premium-metal-card-holders",
+    "title": "Premium Metal Card Holders",
+    "previousImage": "assets/custom-holder.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Visiting%20Cards%20Holders/Premium%206%20Slot%20Metal%20Card%20Holder/IN_Premium-6-Slot-Metal-Card-Holder_Hero-image_01",
+    "sourceTitle": "Premium Metal Card Holders",
+    "sourcePage": "https://www.vistaprint.in/business-cards/holders/premium-metal-card-holders"
+  },
+  {
+    "slug": "custom-wedding-invitations",
+    "title": "Wedding Invitations",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Wedding%20Invitations/IN_Wedding-Invitations_Hero-image_01",
+    "sourceTitle": "Wedding Invitations",
+    "sourcePage": "https://www.vistaprint.in/stationery/wedding-invitations"
+  },
+  {
+    "slug": "custom-gold-foil-wedding-invitations",
+    "title": "Gold Foil Wedding Invitations",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Raised%20Foil%20Wedding%20Invitations/IN_Raised-foiled-wedding-invitations_Hero-image_01",
+    "sourceTitle": "Gold Foil Wedding Invitations",
+    "sourcePage": "https://www.vistaprint.in/stationery/gold-foil-wedding-invitations"
+  },
+  {
+    "slug": "custom-save-the-date-cards",
+    "title": "Save the Date Cards",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/save%20the%20date%20cards/in_save-the-date-cards_001",
+    "sourceTitle": "Save The Date Cards",
+    "sourcePage": "https://www.vistaprint.in/stationery/wedding/save-the-dates"
+  },
+  {
+    "slug": "custom-wedding-menus",
+    "title": "Wedding Menus",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/menus/in_menus_001",
+    "sourceTitle": "Menu Cards",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/menu-cards"
+  },
+  {
+    "slug": "custom-wedding-programmes",
+    "title": "Wedding Programmes",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://rlv.zcache.com/gold_geometric_greenery_eucalyptus_folded_wedding_program-r_z3anq1_644.webp",
+    "sourceTitle": "Wedding Programmes",
+    "sourcePage": "https://www.zazzle.com/gold_geometric_greenery_eucalyptus_folded_wedding_program-256808608529669301"
+  },
+  {
+    "slug": "custom-thank-you-cards",
+    "title": "Thank You Cards",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/thank%20you%20card/in_thank-you-cards_001",
+    "sourceTitle": "Thank You Cards",
+    "sourcePage": "https://www.vistaprint.in/stationery/wedding/thank-you-cards"
+  },
+  {
+    "slug": "custom-birthday-invitations",
+    "title": "Birthday Invitations",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Birthday%20Invitation%20Cards/IN_Birthday-Invitation-Cards_Hero-image_01",
+    "sourceTitle": "Birthday Invitations",
+    "sourcePage": "https://www.vistaprint.in/stationery/birthday-invitation-cards"
+  },
+  {
+    "slug": "custom-party-invitations",
+    "title": "Party Invitations",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/c_crop%2Cw_1518%2Ch_798%2Cg_south_east%2Cx_185/c_scale%2Cc_scale%2Cdpr_2.0%2Cf_auto%2Ch_630%2Cw_1200/site-merchandising/268dea0f-61fc-4cc0-9bae-a14e6020b02b",
+    "sourceTitle": "Party Invitations",
+    "sourcePage": "https://www.vistaprint.co.nz/stationery/invitations"
+  },
+  {
+    "slug": "custom-moving-announcements",
+    "title": "Moving Announcements",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://rlv.zcache.com/weve_moved_black_white_minimal_bold_typo_photo_announcement-r_wvupbj_630.jpg?view_padding=%5B285%2C0%2C285%2C0%5D",
+    "sourceTitle": "Moving Announcements",
+    "sourcePage": "https://www.zazzle.com/weve_moved_black_white_minimal_bold_typo_photo_announcement-256017918368804609"
+  },
+  {
+    "slug": "custom-gift-tags",
+    "title": "Gift Tags",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Gift%20Card/Gift_Tag_01",
+    "sourceTitle": "Gift Tags",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/gift-tags"
+  },
+  {
+    "slug": "custom-gift-wrapping-paper",
+    "title": "Gift Wrapping Paper",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Custom%20Wrapping%20Paper/Custom_Wrapping_Paper_03",
+    "sourceTitle": "Gift Wrapping Paper",
+    "sourcePage": "https://www.vistaprint.in/stationery/gift-wrapping-papers"
+  },
+  {
+    "slug": "custom-paper-wristbands",
+    "title": "Paper Wristbands",
+    "previousImage": "assets/custom-badge.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Wrist%20Bands/IN_Wrist-Band_Hero-image_01",
+    "sourceTitle": "Custom Paper Wrist Bands",
+    "sourcePage": "https://www.vistaprint.in/stationery/custom-paper-wrist-bands"
+  },
+  {
+    "slug": "custom-standees",
+    "title": "Standees",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Standee/IN_standee_001",
+    "sourceTitle": "Standees",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/standees"
+  },
+  {
+    "slug": "custom-tabletop-standees",
+    "title": "Tabletop Standees",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/tabletop%20standees/in_tabletop-standee_002",
+    "sourceTitle": "Tabletop Standees",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/tabletop-standees"
+  },
+  {
+    "slug": "custom-foam-boards",
+    "title": "Foam Boards",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/sun%20boards/in_sun_boards_001",
+    "sourceTitle": "Foam Boards",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/foam-board-signs"
+  },
+  {
+    "slug": "custom-tabletop-signs",
+    "title": "Tabletop Signs",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Tabletop%20Sign/IN_Tabletop-Sign_01",
+    "sourceTitle": "Tabletop Signs",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/table-top-signs"
+  },
+  {
+    "slug": "custom-tent-cards",
+    "title": "Tent Cards",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/%20Tent%20Cards/IN_Tent-cards_Hero-image_01",
+    "sourceTitle": "Tent Cards",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/tent-cards"
+  },
+  {
+    "slug": "custom-acrylic-sign-holders",
+    "title": "Acrylic Sign Holders",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Double%20Sided%20Acrylic%20Display%20Stand/Double_Sided_Acrylic_Display_Stand_01",
+    "sourceTitle": "Acrylic Sign Holder",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/acrylic-sign-holder"
+  },
+  {
+    "slug": "custom-portable-backdrops",
+    "title": "Portable Backdrops",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Customized%20Portable%20Backdrop%20Stand./Customized_Portable_backdrop_stand_01",
+    "sourceTitle": "Customized Portable Backdrops",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/customised-portable-backdrops"
+  },
+  {
+    "slug": "custom-promotional-canopy-tents",
+    "title": "Promotional Canopy Tents",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Promotional%20Canopy%20Tent/Promotional_Canopy_Tent_01",
+    "sourceTitle": "Promotional Canopy Tents",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/promotional-canopy-tents"
+  },
+  {
+    "slug": "custom-acrylic-signs",
+    "title": "Acrylic Signs",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Acrylic%20Signs/IN_Acrylic-Signs_Hero-image_01",
+    "sourceTitle": "Acrylic signs",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/acrylic-signs"
+  },
+  {
+    "slug": "custom-outdoor-signs",
+    "title": "Outdoor Signs",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Outdoor%20Signs/IN_Outdoor-Signs_Hero-image_01",
+    "sourceTitle": "Outdoor Signs",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/outdoor-signs"
+  },
+  {
+    "slug": "custom-plastic-signboards",
+    "title": "Plastic Signboards",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/plastic%20signboards/in_plastic-signboards_001",
+    "sourceTitle": "Plastic Signboards",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/plastic-signsboards"
+  },
+  {
+    "slug": "custom-board-signs",
+    "title": "Board Signs",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Board%20Signs/IN_Board-Signs_Hero-image_01",
+    "sourceTitle": "Board Signs",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/board-signs"
+  },
+  {
+    "slug": "custom-canvas-signs",
+    "title": "Canvas Signs",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Posters/Canvas%20Signs/IN_Canvas-Signs_Hero-image_01",
+    "sourceTitle": "Canvas Signs",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/canvas-signs"
+  },
+  {
+    "slug": "custom-magnetic-signs",
+    "title": "Magnetic Signs",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/magnetic%20signs/in_magnetic-signs_001",
+    "sourceTitle": "Magnetic Signs",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/magnetic-car-signs"
+  },
+  {
+    "slug": "custom-led-translite-sign-boards",
+    "title": "LED Translite Sign Boards",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/LED%20Trans%20light%20Sign%20Boards/LED_Translight_Sign_Board_01",
+    "sourceTitle": "LED Translite Sign Boards",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/signs/translite-board"
+  },
+  {
+    "slug": "custom-led-lollipop-displays",
+    "title": "LED Lollipop Displays",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/LED%20Lollipop%20Display/LED_Lollipop_Display_1",
+    "sourceTitle": "LED Lollipop Display",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/signs/lollipop-board"
+  },
+  {
+    "slug": "custom-led-clip-on-displays",
+    "title": "LED Clip-On Displays",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/LED%20Clip-On%20Display/IN_LED_Clip-on_Display_-_Black_Hero-image_01",
+    "sourceTitle": "LED Clip-On Displays",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/led-clip-on-displays"
+  },
+  {
+    "slug": "custom-car-door-decals",
+    "title": "Car Door Decals",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Posters/Custom%20Car%20Door%20Decals/IN_Custom-Car-Door-Decals_Hero-image_01",
+    "sourceTitle": "Custom Car Door Decals",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/car-door-decals"
+  },
+  {
+    "slug": "custom-promo-tables",
+    "title": "Promo Tables",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Promo%20Table/Promo_Table_01",
+    "sourceTitle": "Customised Promo Tables",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/customised-promo-tables"
+  },
+  {
+    "slug": "custom-foldable-pop-up-banners",
+    "title": "Foldable Pop Up Banners",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Customized%20Foldable%20Banner/Customized_Foldable_Banner_01",
+    "sourceTitle": "Foldable Pop Up Banners",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/foldable-pop-up-banners"
+  },
+  {
+    "slug": "custom-fabric-standees",
+    "title": "Fabric Standees",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Customized%20Elegant%20Standee/Customized_Elegant_Standee_01",
+    "sourceTitle": "Elegant Fabric Standees",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/elegant-fabric-standees"
+  },
+  {
+    "slug": "custom-qr-code-stands",
+    "title": "QR Code Stands",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/QR%20Code%20Standee/QR_code_standee_04",
+    "sourceTitle": "Customised QR Code Stand",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/customised-qr-code-stand"
+  },
+  {
+    "slug": "custom-led-display-stands",
+    "title": "LED Display Stands",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Table%20Top%20LED%20Frame/Table_Top_LED_Frame_Marquee_1",
+    "sourceTitle": "LED Display Stands",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/led-display-stands"
+  },
+  {
+    "slug": "custom-x-banners",
+    "title": "X-Banners",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/X%20Banner%20Standee/X_banner_01",
+    "sourceTitle": "X-Banners",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/x-banners"
+  },
+  {
+    "slug": "custom-fabric-banners",
+    "title": "Fabric Banners",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Fabric%20banner/Fabric_banner_1",
+    "sourceTitle": "Fabric Banners",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/fabric-banners"
+  },
+  {
+    "slug": "custom-mesh-banners",
+    "title": "Mesh Banners",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Mesh%20banner/Mesh_banner_01",
+    "sourceTitle": "Mesh Banners",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/mesh-banners"
+  },
+  {
+    "slug": "custom-tension-fabric-displays",
+    "title": "Tension Fabric Displays",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Tension%20Fabric%20Display/Tension_Fabric_Display_01",
+    "sourceTitle": "Tension Fabric Displays",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/tension-fabric-displays"
+  },
+  {
+    "slug": "custom-mini-x-banners",
+    "title": "Mini X Banners",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Mini%20X-Banner%20Standee/Mini_X-Banner_Standee_01",
+    "sourceTitle": "Mini X Banners",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/mini-x-banners"
+  },
+  {
+    "slug": "custom-posters",
+    "title": "Posters",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/posters/in_posters_002",
+    "sourceTitle": "Posters",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/posters"
+  },
+  {
+    "slug": "custom-bulk-posters",
+    "title": "Bulk Posters",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/bulk%20posters/in_bulk_posters_002",
+    "sourceTitle": "Bulk Posters",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/bulk-posters"
+  },
+  {
+    "slug": "custom-banners",
+    "title": "Banners",
+    "previousImage": "assets/custom-sign.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Sign%20and%20poster/Banners/IN_Banners_Hero-image_01",
+    "sourceTitle": "Banners",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/banners"
+  },
+  {
+    "slug": "custom-custom-logo-flags",
+    "title": "Custom Logo Flags",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Custom%20logo%20Flag/Custom_Logo_Flag_01",
+    "sourceTitle": "Custom Logo Flags",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/pole-flags"
+  },
+  {
+    "slug": "custom-sail-flags",
+    "title": "Sail Flags",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Sail%20Flag/Sail_Flag_01",
+    "sourceTitle": "Sail Flags",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/sail-flags"
+  },
+  {
+    "slug": "custom-table-flags",
+    "title": "Table Flags",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Customized%20Table%20Flag-Corss%20Stand/Customized_Table_Flag-Corss_Stand_01",
+    "sourceTitle": "Cross Stand Table Flags",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/cross-table-flags"
+  },
+  {
+    "slug": "custom-cross-stand-table-flags",
+    "title": "Cross Stand Table Flags",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Customized%20Table%20Flag-Corss%20Stand/Customized_Table_Flag-Corss_Stand_01",
+    "sourceTitle": "Cross Stand Table Flags",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/cross-table-flags"
+  },
+  {
+    "slug": "custom-hanging-flags",
+    "title": "Hanging Flags",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Customized%20Exchange%20Flag/Customized_Exchange_Flag_01",
+    "sourceTitle": "Hanging Flags",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/hanging-flags"
+  },
+  {
+    "slug": "custom-tour-guide-flags",
+    "title": "Tour Guide Flags",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Tour%20guide%20Flag/Tour_Guide_Flag_01",
+    "sourceTitle": "Tour Guide Flags",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/tour-guide-flags"
+  },
+  {
+    "slug": "custom-pole-flags",
+    "title": "Pole Flags",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Custom%20logo%20Flag/Custom_Logo_Flag_01",
+    "sourceTitle": "Pole Flags",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/pole-flags"
+  },
+  {
+    "slug": "custom-wall-mounted-flags",
+    "title": "Wall Mounted Flags",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Wall%20Mounted%20Custom%20Flag/Wall_Mounted_Custom_Flags_02",
+    "sourceTitle": "Wall Mounted Flags",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/wall-mounted-flags"
+  },
+  {
+    "slug": "custom-rectangle-flags",
+    "title": "Rectangle Flags",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Customized%20L%20Block%20rectangle%20flag/Customized_L_Block_rectangle_flag_01",
+    "sourceTitle": "Rectangle Flags",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/rectangle-flags"
+  },
+  {
+    "slug": "custom-teardrop-flags",
+    "title": "Teardrop Flags",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Customized%20TerarDrop%20Flag/Terar_Drop_Flag_01",
+    "sourceTitle": "Teardrop Flags",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/teardrop-flags"
+  },
+  {
+    "slug": "custom-custom-tablecloths",
+    "title": "Custom Tablecloths",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Sign%20and%20poster/Table%20Cloths/IN_Table-Cloth_Hero-image_01",
+    "sourceTitle": "Custom Tablecloths",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/custom-tablecloths"
+  },
+  {
+    "slug": "custom-table-runners",
+    "title": "Table Runners",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Sign%20and%20poster/Table%20Runners/IN_Table-Runners_Hero-image_01",
+    "sourceTitle": "Table Runners",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/table-runners"
+  },
+  {
+    "slug": "custom-table-mats",
+    "title": "Table Mats",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Table%20Mats/IN_Table-mats_Hero-image_01",
+    "sourceTitle": "Table Mats",
+    "sourcePage": "https://www.vistaprint.in/stationery/mats/table-mats"
+  },
+  {
+    "slug": "custom-place-mats",
+    "title": "Place Mats",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stationery%2C%20Letterheads%20and%20Stamps/Place%20Mats/IN_Place-mats_Hero-image_01",
+    "sourceTitle": "Place Mats",
+    "sourcePage": "https://www.vistaprint.in/stationery/mats/place-mats"
+  },
+  {
+    "slug": "custom-stretch-table-covers",
+    "title": "Stretch Table Covers",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stretech%20Table%20Covers/Stretech_Table_Covers_01",
+    "sourceTitle": "Stretch Table Covers",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/stretch-table-covers"
+  },
+  {
+    "slug": "custom-round-tablecloths",
+    "title": "Round Tablecloths",
+    "previousImage": "assets/custom-flag.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Round%20Table%20Cloth/Round_Table_Cloth_02",
+    "sourceTitle": "Round Tablecloths",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/round-tablecloths"
+  },
+  {
+    "slug": "custom-flyers",
+    "title": "Flyers",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Flyers%20Folders%20and%20Marketing%20Materials/FlyersMarquee_01",
+    "sourceTitle": "Flyers",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/flyers"
+  },
+  {
+    "slug": "custom-bulk-flyers",
+    "title": "Bulk Flyers",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Bulk%20Flyer/IN_Bulk-Flyer_01",
+    "sourceTitle": "Bulk Flyers",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/bulk-flyers"
+  },
+  {
+    "slug": "custom-brochures",
+    "title": "Brochures",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/brochures/in_brochures_002",
+    "sourceTitle": "Brochures",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/brochures"
+  },
+  {
+    "slug": "custom-booklets",
+    "title": "Booklets",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Booklets/IN_booklets_002",
+    "sourceTitle": "Booklets",
+    "sourcePage": "https://www.vistaprint.in/stationery/booklets"
+  },
+  {
+    "slug": "custom-perfect-binding-booklets",
+    "title": "Perfect Binding Booklets",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Perfect%20Bound%20Booklet/Perfect_bound_Booklets_01",
+    "sourceTitle": "Perfect Binding Booklets",
+    "sourcePage": "https://www.vistaprint.in/stationery/perfect-binding-booklets"
+  },
+  {
+    "slug": "custom-postcards",
+    "title": "Postcards",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Postcards/IN_Postcards_002",
+    "sourceTitle": "Postcards",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/postcards"
+  },
+  {
+    "slug": "custom-bookmarks",
+    "title": "Bookmarks",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/bookmarks/in_bookmarks_001",
+    "sourceTitle": "Custom Bookmarks",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/bookmarks"
+  },
+  {
+    "slug": "custom-menu-cards",
+    "title": "Menu Cards",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/menus/in_menus_001",
+    "sourceTitle": "Menu Cards",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/menu-cards"
+  },
+  {
+    "slug": "custom-loyalty-cards",
+    "title": "Loyalty Cards",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Loyalty%20Cards/IN_Loyalty-cards_Hero-image_01",
+    "sourceTitle": "Loyalty Cards",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/loyalty-cards"
+  },
+  {
+    "slug": "custom-gift-certificates",
+    "title": "Gift Certificates",
+    "previousImage": "assets/custom-paper.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/gift%20certificates/in_gift-certificates_001",
+    "sourceTitle": "Custom Gift Certificates",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/custom-gift-certificates"
+  },
+  {
+    "slug": "custom-button-badges",
+    "title": "Button Badges",
+    "previousImage": "assets/custom-badge.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Button%20Badge/IN_Button-Badge_Hero-image_01",
+    "sourceTitle": "Button Badges",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/custom-button-badges"
+  },
+  {
+    "slug": "custom-sheet-stickers",
+    "title": "Sheet Stickers",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/stickers/custom%20stickers/in_custom_stickers_001",
+    "sourceTitle": "Sheet Stickers",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/sheet-stickers"
+  },
+  {
+    "slug": "custom-custom-shape-stickers",
+    "title": "Custom Shape Stickers",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Unity%20PDP/Custom%20Shape%20Stickers/IN_Custom-Shape-Stickers_Hero-image_01",
+    "sourceTitle": "Custom Shape Stickers",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/custom-shape-stickers"
+  },
+  {
+    "slug": "custom-sticker-singles",
+    "title": "Sticker Singles",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stickers/Sticker%20Singles/IN_Sticker-Singles_001",
+    "sourceTitle": "Sticker Singles",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/sticker-singles"
+  },
+  {
+    "slug": "custom-uv-ink-transfer-stickers",
+    "title": "UV Ink Transfer Stickers",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/label%20and%20sticker/UV%20DTF%20Stickers/IN_UV-DTF-Stickers_Hero-image_01",
+    "sourceTitle": "UV Ink Transfer Stickers",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/uv-ink-transfer-stickers"
+  },
+  {
+    "slug": "custom-window-stickers",
+    "title": "Window Stickers",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/stickers/in_window-decals_001",
+    "sourceTitle": "Window Stickers",
+    "sourcePage": "https://www.vistaprint.in/signs-posters/window-decals"
+  },
+  {
+    "slug": "custom-dome-stickers",
+    "title": "Dome Stickers",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Kraftix%20Stickers%20and%20Labels/Dome%20Stickers/Dome_Stickers_01",
+    "sourceTitle": "Dome Stickers",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/dome-stickers"
+  },
+  {
+    "slug": "custom-qr-code-stickers",
+    "title": "QR Code Stickers",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/label%20and%20sticker/QR%20Code%20Stickers/IN_QR-Code-Stickers_Hero-image_01",
+    "sourceTitle": "QR Code Stickers",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/qr-code-stickers"
+  },
+  {
+    "slug": "custom-car-stickers",
+    "title": "Car Stickers",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/stickers/waterproof%20stickers/in_waterproof_stickers_001",
+    "sourceTitle": "Custom Car Stickers",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/custom-car-stickers"
+  },
+  {
+    "slug": "custom-visiting-card-stickers",
+    "title": "Visiting Card Stickers",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stickers/Visiting%20Card%20Stickers/IN_visiting_card_stickers_002",
+    "sourceTitle": "Visiting Card Stickers",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/visiting-card-stickers"
+  },
+  {
+    "slug": "custom-kraft-stickers",
+    "title": "Kraft Stickers",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Kraftix%20Stickers%20and%20Labels/Kraft%20Stickers/Kraft_Sticker_01",
+    "sourceTitle": "Kraft Stickers",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/kraft-paper-stickers"
+  },
+  {
+    "slug": "custom-holographic-stickers",
+    "title": "Holographic Stickers",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Kraftix%20Stickers%20and%20Labels/Holographic%20Stickers/Holographic_sticker_Marquee1",
+    "sourceTitle": "Holographic Stickers",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/holographic-stickers"
+  },
+  {
+    "slug": "custom-metal-stickers",
+    "title": "Metal Stickers",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Kraftix%20Stickers%20and%20Labels/Metal%20Stickers/Metal_sticker_Marquee1",
+    "sourceTitle": "Metal Stickers",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/metal-stickers"
+  },
+  {
+    "slug": "custom-roll-label-stickers",
+    "title": "Roll Label Stickers",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Roll%20Labels/In_Roll_labels_04",
+    "sourceTitle": "Roll Label Stickers",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/roll-label-stickers"
+  },
+  {
+    "slug": "custom-product-and-packaging-labels",
+    "title": "Product and Packaging Labels",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Labels%20and%20Stickers/Product%20and%20Packaging%20Labels/IN_Product-and-Packaging-Labels_Hero-image_01",
+    "sourceTitle": "Product and Packaging Labels",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/product-and-packaging-labels"
+  },
+  {
+    "slug": "custom-return-address-labels",
+    "title": "Return Address Labels",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/return%20address%20labels/in_return-address-labels_002",
+    "sourceTitle": "Return Address Labels",
+    "sourcePage": "https://www.vistaprint.in/stationery/return-address-labels"
+  },
+  {
+    "slug": "custom-iron-on-labels",
+    "title": "Iron-on Labels",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/label%20and%20sticker/Iron%20on%20Labels/IN_Iron-on-Labels_Hero-image_01",
+    "sourceTitle": "Custom Iron-on Labels",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/custom-iron-on-labels"
+  },
+  {
+    "slug": "custom-transparent-labels",
+    "title": "Transparent Labels",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/label%20and%20sticker/Transparent%20Labels/IN_Transparent-Labels_01",
+    "sourceTitle": "Transparent Labels",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/transparent-labels"
+  },
+  {
+    "slug": "custom-industrial-labels",
+    "title": "Industrial Labels",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Kraftix%20Stickers%20and%20Labels/Industrial%20Labels/Industrial_Lable_Marquee1",
+    "sourceTitle": "Industrial Labels",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/industrial-labels"
+  },
+  {
+    "slug": "custom-shipping-labels",
+    "title": "Shipping Labels",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/mailing%20labels/in_mailing-labels_001",
+    "sourceTitle": "Shipping and Mailing Labels",
+    "sourcePage": "https://www.vistaprint.in/stationery/shipping-and-mailing-labels"
+  },
+  {
+    "slug": "custom-envelope-seals",
+    "title": "Envelope Seals",
+    "previousImage": "assets/custom-envelope.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Envelope%20Seals/IN_envelope_seals_001",
+    "sourceTitle": "Envelope Seals",
+    "sourcePage": "https://www.vistaprint.in/stationery/envelope-seals"
+  },
+  {
+    "slug": "custom-laptop-skins",
+    "title": "Laptop Skins",
+    "previousImage": "assets/custom-sticker.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Laptop%20Skins/IN_Laptop-Skins_Hero-image_01",
+    "sourceTitle": "Laptop Skins",
+    "sourcePage": "https://www.vistaprint.in/technology/laptop/skins/laptop-skins-all-products"
+  },
+  {
+    "slug": "custom-custom-paper-bags",
+    "title": "Custom Paper Bags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/paper%20bags/in_paper-bags_001",
+    "sourceTitle": "Custom Paper Bags",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/paper-bags/custom-paper-bags"
+  },
+  {
+    "slug": "custom-printed-carry-bags",
+    "title": "Printed Carry Bags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Non%20Woven%20Stitched%20Bags/Non_Woven_Stitched_Bags_Marquee_1",
+    "sourceTitle": "Printed Carry Bags",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/printed-carry-bags"
+  },
+  {
+    "slug": "custom-premium-gift-bags",
+    "title": "Premium Gift Bags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Premium%20Gift%20bags/Premium_Gift_Bags_01",
+    "sourceTitle": "Premium Gift Bags",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/premium-gift-bags"
+  },
+  {
+    "slug": "custom-courier-bags",
+    "title": "Courier Bags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Courier%20Bags%20with%20POD/Courier_Bags_06",
+    "sourceTitle": "Courier Bags",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/courier-bags"
+  },
+  {
+    "slug": "custom-corrugated-boxes",
+    "title": "Corrugated Boxes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Corrugation%20Boxes/IN_Corrugation-Boxes_Hero-image_01",
+    "sourceTitle": "Corrugated Boxes",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/corrugated-boxes"
+  },
+  {
+    "slug": "custom-flat-mailer-boxes",
+    "title": "Flat Mailer Boxes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/marketing%20Materials/Flat%20Mailer%20Boxes/IN_Flat-Mailer-Boxes_Overview_Hero-image_01",
+    "sourceTitle": "Flat Mailer Boxes",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/mailer-boxes"
+  },
+  {
+    "slug": "custom-metallic-shopping-bags",
+    "title": "Metallic Shopping Bags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Metallic%20Shopping%20Bag/Metallic_Shopping_Bag_Marquee_1",
+    "sourceTitle": "Metallic Shopping Bags",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/paper-bags/metallic-shopping-bags"
+  },
+  {
+    "slug": "custom-custom-ribbons",
+    "title": "Custom Ribbons",
+    "previousImage": "assets/custom-ribbon.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Satin%20Ribbon/Ribbon_01",
+    "sourceTitle": "Customised Ribbons",
+    "sourcePage": "https://www.vistaprint.in/stationery/customised-ribbons"
+  },
+  {
+    "slug": "custom-die-cut-handle-bags",
+    "title": "Die Cut Handle Bags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Non%20Woven%20bags/Non_Woven_bag_Marquee_1",
+    "sourceTitle": "Die Cut Handle Bags",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/die-cut-handle-bags"
+  },
+  {
+    "slug": "custom-logo-mailer-boxes",
+    "title": "Logo Mailer Boxes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Umbrellas/IFM_Bulk%20Promotional%20Umbrella_23%20inches/IFM_Promotional_Umbrella_23_Inch_Blue_white",
+    "sourceTitle": "Logo Mailer Boxes",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/umbrellas/basic-promotional-golf-umbrellas"
+  },
+  {
+    "slug": "custom-full-print-mailer-boxes",
+    "title": "Full Print Mailer Boxes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Full%20Print%20Mailer%20Box/Full-Print_Mailer_Boxes_01",
+    "sourceTitle": "Full-Print Mailer Boxes",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/full-print-mailer-boxes"
+  },
+  {
+    "slug": "custom-full-print-paper-bags",
+    "title": "Full Print Paper Bags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Full-Print%20Paper%20Bags/Full-Print_Paper_Bags_01",
+    "sourceTitle": "Full-Print Paper Bags",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/paper-bags/full-print-paper-bags"
+  },
+  {
+    "slug": "custom-hang-tags",
+    "title": "Hang Tags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Hang%20Tags/New/IN_Hang-Tags_01",
+    "sourceTitle": "Hang Tags",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/hang-tags"
+  },
+  {
+    "slug": "custom-folded-hang-tags",
+    "title": "Folded Hang Tags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Packaging%20Materials/Folded%20Hang%20Tags/IN_Folded-hang-tags_Hero-image_01",
+    "sourceTitle": "Folded Hang Tags",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/folded-hang-tags"
+  },
+  {
+    "slug": "custom-baggage-tags",
+    "title": "Baggage Tags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://i.etsystatic.com/5701018/r/il/afbdb1/3200796786/il_fullxfull.3200796786_icsh.jpg",
+    "sourceTitle": "Personalised leather luggage tag",
+    "sourcePage": "https://www.etsy.com/listing/1036456646/personalized-full-grain-leather-luggage"
+  },
+  {
+    "slug": "custom-name-tags",
+    "title": "Name Tags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Tags/Name%20Tags/IN_name_tags_002",
+    "sourceTitle": "Name Tags",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/labels-stickers/name-tags"
+  },
+  {
+    "slug": "custom-raised-foil-hang-tags",
+    "title": "Raised Foil Hang Tags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Raised%20Foil%20Hang%20tag/Raised_foil_hang_tag_01",
+    "sourceTitle": "Raised Foil Hang Tags",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/raised-foil-hang-tags"
+  },
+  {
+    "slug": "custom-promotional-product-boxes",
+    "title": "Promotional Product Boxes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Promotional%20Product%20Boxes/Product_Boxes_Marquee_1",
+    "sourceTitle": "Promotional Product Boxes",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/promotional-product-boxes"
+  },
+  {
+    "slug": "custom-tuck-top-boxes",
+    "title": "Tuck Top Boxes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Tuck%20Top%20Boxes/Top_Tuck_Box_Marquee_01",
+    "sourceTitle": "Tuck Top Boxes",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/tuck-top-boxes"
+  },
+  {
+    "slug": "custom-lock-bottom-boxes",
+    "title": "Lock Bottom Boxes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Packaging%20Materials/Lock%20Bottom%20Boxes/IN_Lock-Bottom-Boxes_Hero-image_01",
+    "sourceTitle": "Lock Bottom Boxes",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/lock-bottom-boxes"
+  },
+  {
+    "slug": "custom-auto-lock-bottom-boxes",
+    "title": "Auto Lock Bottom Boxes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Packaging%20Materials/Auto%20Lock%20Boxes/IN_Auto-Lock-Boxes_Hero-image_01",
+    "sourceTitle": "Auto Lock Bottom Boxes",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/auto-lock-bottom-boxes"
+  },
+  {
+    "slug": "custom-chocolate-bar-boxes",
+    "title": "Chocolate Bar Boxes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Chocolate%20Boxes/Chocolate_Boxes_01",
+    "sourceTitle": "Chocolate Bar Boxes",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/chocolate-bar-boxes"
+  },
+  {
+    "slug": "custom-soap-boxes",
+    "title": "Soap Boxes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Soap%20Box/Soap_Boxes_01",
+    "sourceTitle": "Soap Boxes",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/soap-boxes"
+  },
+  {
+    "slug": "custom-pull-out-boxes",
+    "title": "Pull Out Boxes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Pull%20out%20boxes/Pull_Out_Boxes_02",
+    "sourceTitle": "Pull Out Boxes",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/pull-out-boxes"
+  },
+  {
+    "slug": "custom-popcorn-boxes",
+    "title": "Popcorn Boxes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Custom%20Popcorn%20Boxes/Custom_Popcorn_Container_01",
+    "sourceTitle": "Popcorn Boxes",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/popcorn-boxes"
+  },
+  {
+    "slug": "custom-burger-boxes",
+    "title": "Burger Boxes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Burger%20Box/Burger_Box_01",
+    "sourceTitle": "Burger Boxes",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/burger-boxes"
+  },
+  {
+    "slug": "custom-frosted-slider-bags",
+    "title": "Frosted Slider Bags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Frosted%20Slider%20Bag/Frosted_Slider_Bag_01",
+    "sourceTitle": "Frosted Slider Bags",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/frosted-zipper-bags"
+  },
+  {
+    "slug": "custom-transparent-seal-bags",
+    "title": "Transparent Seal Bags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/LDPE%20Transparent%20Bag/LDPE_Transparent_Bag_01",
+    "sourceTitle": "Transparent Seal Bags",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/transparent-seal-bags"
+  },
+  {
+    "slug": "custom-designer-shopping-bags",
+    "title": "Designer Shopping Bags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Predesigned%20Shopping%20Bags/Pre-designed_Shopping_Bags_01",
+    "sourceTitle": "Designer Shopping Bags",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/designer-shopping-bags"
+  },
+  {
+    "slug": "custom-luxury-shopping-bags",
+    "title": "Luxury Shopping Bags",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Luxury%20Shopping%20Bags/Luxury_Shopping_Bags__Grey",
+    "sourceTitle": "Luxury Shopping Bags",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/paper-bags/luxury-shopping-bags"
+  },
+  {
+    "slug": "custom-self-adhesive-tapes",
+    "title": "Self Adhesive Tapes",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Packaging%20Materials/IN_Self-Adhesive-Tapes_Hero-image_06",
+    "sourceTitle": "Self Adhesive Tapes",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/self-adhesive-tapes"
+  },
+  {
+    "slug": "custom-clear-plastic-cups",
+    "title": "Clear Plastic Cups",
+    "previousImage": "assets/custom-box.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Disposable%20PET%20Glass/Disposable_PET_Glass_Overview",
+    "sourceTitle": "Clear Plastic Cups",
+    "sourcePage": "https://www.vistaprint.in/packaging-materials/clear-plastic-cups"
+  },
+  {
+    "slug": "custom-self-inking-stamps",
+    "title": "Self Inking Stamps",
+    "previousImage": "assets/custom-stamp.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/stamps/rectangular%20self-inking%20stamps/in_rectangular-self-inking-stamps_001",
+    "sourceTitle": "Self Inking Stamps",
+    "sourcePage": "https://www.vistaprint.in/stationery/stamps/self-inking-stamps"
+  },
+  {
+    "slug": "custom-basic-rubber-stamps",
+    "title": "Basic Rubber Stamps",
+    "previousImage": "assets/custom-stamp.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stamps/Basic%20Rubber%20Stamps/IN_Basic-Rubber-Stamps_01",
+    "sourceTitle": "Basic Rubber Stamps",
+    "sourcePage": "https://www.vistaprint.in/stationery/stamps/basic-rubber-stamps"
+  },
+  {
+    "slug": "custom-pocket-stamps",
+    "title": "Pocket Stamps",
+    "previousImage": "assets/custom-stamp.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Stamps/Pocket%20Stamps%20updated/IN_Pocket-stamps_Hero-image_01",
+    "sourceTitle": "Pocket Stamps",
+    "sourcePage": "https://www.vistaprint.in/stationery/stamps/pocket-stamps"
+  },
+  {
+    "slug": "custom-name-stamps",
+    "title": "Name Stamps",
+    "previousImage": "assets/custom-stamp.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/stamps/signature%20stamps/in_signature_stamps_001",
+    "sourceTitle": "Name Stamps",
+    "sourcePage": "https://www.vistaprint.in/stationery/stamps/name-stamps"
+  },
+  {
+    "slug": "custom-paper-embossers",
+    "title": "Paper Embossers",
+    "previousImage": "assets/custom-stamp.svg",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Unity%20PDP/Paper%20Embosser/IN_Seal-Press-Stamps-41-mm_Hero-image_01",
+    "sourceTitle": "Paper Embosser",
+    "sourcePage": "https://www.vistaprint.in/stationery/stamps/paper-embosser"
+  },
+  {
+    "slug": "p39",
+    "title": "Visiting Card Printing – Price As per requirement",
+    "previousImage": "assets/product-p39.webp",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/visiting-cards/Standard%20Visiting%20Cards/IN_Standard-Visiting-Cards_Hero-image_01",
+    "sourceTitle": "Standard Visiting Cards",
+    "sourcePage": "https://www.vistaprint.in/business-cards/standard"
+  },
+  {
+    "slug": "p42",
+    "title": "Printed Mugs",
+    "previousImage": "assets/product-p42.webp",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Unity%20PDP/Personalised%20Mugs/IN_Custom-Mug_Hero-image_01",
+    "sourceTitle": "Personalised Mugs",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/mugs/personalised-mugs"
+  },
+  {
+    "slug": "p43",
+    "title": "Photo Frame (8×8 inch table stand)",
+    "previousImage": "assets/product-p43.webp",
+    "image": "https://m.media-amazon.com/images/I/71uEq90y3WL.jpg",
+    "sourceTitle": "Square 8×8 tabletop picture frame",
+    "sourcePage": "https://snapklik.com/en-ca/product/egofine-8x8-picture-frame-made-of-solid-wood-with-plexiglass-display-pictures-4x4-6x6-with-mat-or-8x8-without-mat-for-tabletop-and-wall-mounting-light-brown/02MH4PP7368Y5"
+  },
+  {
+    "slug": "p44",
+    "title": "Canvas Printed Bags – Design confirmation required.",
+    "previousImage": "assets/product-p44.webp",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Colored%20Canvas%20Tote%20Bags/IN_Colored-Canvas-Tote-Bags_Hero-image_01",
+    "sourceTitle": "Colored Canvas Tote Bags",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/bags/colored-canvas-tote-bags"
+  },
+  {
+    "slug": "p45",
+    "title": "Round Neck T-Shirts – Custom print.",
+    "previousImage": "assets/product-p45.webp",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Men%27s%20Basic%20Cotton%20T-Shirts/IN_Men_s-Basic-Cotton-T-Shirts_Hero-image_01",
+    "sourceTitle": "Men’s T-Shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/t-shirts/mens-t-shirts"
+  },
+  {
+    "slug": "p46",
+    "title": "Paper Bags – Custom size and branding.",
+    "previousImage": "assets/product-p46.webp",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/paper%20bags/in_paper-bags_001",
+    "sourceTitle": "Custom Paper Bags",
+    "sourcePage": "https://www.vistaprint.in/marketing-materials/paper-bags/custom-paper-bags"
+  },
+  {
+    "slug": "wp-29403",
+    "title": "Custom Photo Fridge Magnet",
+    "previousImage": "assets/source-29403.png",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/india%20lob/magnets/photo%20magnets/in_phot_magnets_002",
+    "sourceTitle": "Photo Magnets",
+    "sourcePage": "https://www.vistaprint.in/photo-gifts/magnets/extra-large-photo"
+  },
+  {
+    "slug": "wp-28522",
+    "title": "Tshirt printing",
+    "previousImage": "assets/source-28522.png",
+    "image": "https://cms.cloudinary.vpsvc.com/image/upload/if_ar_gt_1.1/c_scale%2Ct_pdpHeroGallery_Gallery/if_else/c_scale%2Cw_816/if_end/f_auto%2Cq_auto%3Abest%2Cdpr_1.0/India%20LOB/Clothing%20and%20Bags/Men%27s%20Basic%20Cotton%20T-Shirts/IN_Men_s-Basic-Cotton-T-Shirts_Hero-image_01",
+    "sourceTitle": "Men’s T-Shirts",
+    "sourcePage": "https://www.vistaprint.in/clothing-bags/t-shirts/mens-t-shirts"
+  }
+]

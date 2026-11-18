@@ -1143,7 +1143,11 @@ test("custom collection seeds additively, preserves source/admin data and filter
       null,
       "Do not invent PHULO prices from competitor pricing",
     );
-    await readFile(new URL("../../../public/" + row.image, import.meta.url));
+    assert.equal(new URL(row.image).protocol, "https:");
+    if (row.customisation.profile.mockup) {
+      assert.match(row.customisation.profile.mockupImage, /^assets\/[\w.-]+$/);
+      await readFile(new URL("../../../public/" + row.customisation.profile.mockupImage, import.meta.url));
+    }
   }
   const source = await Product.findOne({ slug: "p42" });
   assert.ok(source);
@@ -1279,4 +1283,40 @@ test("configured products validate selections and approval server-side, then per
   await mutation(agent, "patch", `/api/admin/products/${card._id}`, token)
     .send({ price: 0 })
     .expect(403);
+});
+
+test("product photos match the catalogue and migration preserves editor bases, prices and admin uploads", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { applyCustomImageCorrections } = await import("../src/services/bootstrap.service.js");
+  const rows = JSON.parse(await readFile(new URL("../../../public/custom-image-corrections.json", import.meta.url), "utf8"));
+  assert.equal(rows.length, 324);
+  assert.equal(new Set(rows.map((r: any) => r.slug)).size, 324);
+  const previewHosts = new Set(["cms.cloudinary.vpsvc.com", "rlv.zcache.com", "i.etsystatic.com", "utmprinting.com", "m.media-amazon.com"]);
+  for (const row of rows) {
+    const url = new URL(row.image);
+    assert.equal(url.protocol, "https:");
+    assert.ok(previewHosts.has(url.hostname));
+    assert.ok(row.image.length <= 2000);
+    assert.equal(row.image.includes("/image/fetch/"), false);
+    assert.ok(row.sourcePage.startsWith("https://"));
+    assert.ok(row.title);
+  }
+  const row = rows.find((r: any) => r.slug === "custom-personalised-mugs");
+  assert.ok(row);
+  await Product.updateOne({ slug: row.slug }, {
+    $set: { image: row.previousImage, price: 1234, "customisation.profile.mockup": true },
+    $unset: { "customisation.profile.mockupImage": 1 },
+  });
+  await applyCustomImageCorrections();
+  const p = await Product.findOne({ slug: row.slug });
+  assert.equal(p!.image, row.image);
+  assert.equal(p!.price, 1234);
+  assert.equal(p!.customisation!.profile.mockupImage, row.previousImage);
+  const published = p!.published;
+  await Product.updateOne({ slug: row.slug }, { $set: { image: "https://example.test/my-own-photo.webp" } });
+  await applyCustomImageCorrections();
+  const again = await Product.findOne({ slug: row.slug });
+  assert.equal(again!.image, "https://example.test/my-own-photo.webp");
+  assert.equal(again!.price, 1234);
+  assert.equal(again!.published, published);
 });
