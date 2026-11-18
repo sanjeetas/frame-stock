@@ -138,3 +138,8 @@ Public 800px product previews from the matching PHULO storefront product. Catalo
 
 - Product names, prices, price ranges and category memberships: public WooCommerce Store API `https://phulo.in/wp-json/wc/store/v1/products` (122 published products). Taxonomy: `/wp-json/wc/store/v1/products/categories` (26 categories). Source IDs are stored in each catalogue row; Existing `product-p*` previews are reused where their source upload matches; `assets/source-{sourceProductId}.*` contains previews for the additional source products.
 - `assets/ink-splash-reference.gif`: original animation supplied by the user at https://chatgpt.com/s/p_403941c46c9081919d9340d874166f2c. Only the top paint and bottom splash strips are displayed; website branding and buttons remain live HTML controls.
+
+
+### Customised product illustrations (November 2026)
+
+`public/assets/custom-*.svg` are original PHULO product-shape vector drawings created for this implementation. They are illustrative placement mockups, not copied VistaPrint photos or templates. Product-type research: https://www.vistaprint.in/, https://www.vistaprint.in/business-cards/rounded-corner-visiting-cards, https://www.vistaprint.in/photo-gifts/mugs/personalised-mugs, https://www.vistaprint.in/photo-gifts/magnets/fridge-magnets, https://www.vistaprint.in/clothing-bags/t-shirts. No competitor prices, branded supplier inventory, or template artwork were imported.

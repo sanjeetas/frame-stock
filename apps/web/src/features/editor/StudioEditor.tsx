@@ -66,6 +66,7 @@ import {
 } from "./studioTypes";
 import {
   buildStudioObject,
+  applyStudioClip,
   readStudioObject,
   readStudioPage,
   renderStudioPage,
@@ -190,6 +191,7 @@ export default function StudioEditor({
   const [document, setDocument] = useState(() =>
     createStudioDocument(initial || initialDesign, card),
   );
+  const twoSided = document.twoSided ?? document.format === "card";
   const documentRef = useRef(document);
   const [side, setSide] = useState<StudioSide>("front");
   const sideRef = useRef(side);
@@ -216,7 +218,7 @@ export default function StudioEditor({
     [revision, setRevision] = useState(0),
     [zoom, setZoom] = useState(100),
     [preview, setPreview] = useState(false),
-    [guides, setGuides] = useState(card);
+    [guides, setGuides] = useState(card || !!document.printArea);
   const previewRef = useRef(preview);
   previewRef.current = preview;
   const [thumbs, setThumbs] = useState<Partial<Record<StudioSide, string>>>({});
@@ -445,7 +447,29 @@ export default function StudioEditor({
     setBusy(true);
     setError("");
     try {
+      const area = documentRef.current.printArea;
+      if (
+        area &&
+        item.left === document.width / 2 &&
+        item.top === document.height / 2
+      ) {
+        item = {
+          ...item,
+          left: (area.x + area.width / 2) * document.width,
+          top: (area.y + area.height / 2) * document.height,
+          width: Math.min(item.width, area.width * document.width * 0.9),
+          ...(item.type === "image"
+            ? {
+                height: Math.min(
+                  item.height,
+                  area.height * document.height * 0.9,
+                ),
+              }
+            : {}),
+        };
+      }
       const object = await buildStudioObject(item, canvas);
+      applyStudioClip(object, documentRef.current);
       canvas.add(object);
       canvas.setActiveObject(object);
       canvas.requestRenderAll();
@@ -527,8 +551,14 @@ export default function StudioEditor({
   }
   function applyTemplate(id: string) {
     setTab("text");
-    if (document.format === "card") replace(createCardTemplate(id));
-    else {
+    if (document.format === "card") {
+      const next = resizeStudio(
+        createCardTemplate(id),
+        document.width,
+        document.height,
+      );
+      replace({ ...document, pages: next.pages, template: id });
+    } else {
       const theme = studioTemplates.find((item) => item.id === id)!;
       const next = createStudioDocument({
         ...initialDesign,
@@ -545,8 +575,20 @@ export default function StudioEditor({
         ),
         ...next.pages.front.elements.filter((item) => item.type === "text"),
       ];
-      next.template = id;
-      replace(next);
+      const resized = resizeStudio(next, document.width, document.height);
+      if (document.printArea) {
+        const area = document.printArea;
+        for (const page of Object.values(resized.pages))
+          for (const item of page.elements)
+            if (item.type === "text") {
+              item.left = (area.x + area.width / 2) * document.width;
+              item.top =
+                (area.y + area.height * (item.id === "headline" ? 0.4 : 0.65)) *
+                document.height;
+              item.width = area.width * document.width * 0.9;
+            }
+      }
+      replace({ ...document, pages: resized.pages, template: id });
     }
   }
   function savedSettings(): DesignSettings {
@@ -683,6 +725,7 @@ export default function StudioEditor({
               ),
             )
         : [target];
+      applyStudioClip(replacement, documentRef.current);
       canvas.remove(...obsolete);
       canvas.insertAt(index, replacement);
       canvas.setActiveObject(replacement);
@@ -912,12 +955,13 @@ export default function StudioEditor({
           </button>
           <p className="text-xs text-slate-500">
             {side === "front" ? "Front" : "Back"} artwork ·{" "}
-            {document.format === "card"
-              ? `${document.width / 10} × ${document.height / 10} mm including bleed`
-              : "Custom product proof"}
+            {document.specification ||
+              (document.format === "card"
+                ? `${document.width / 10} × ${document.height / 10} mm including bleed`
+                : "Custom product proof")}
           </p>
         </div>
-        {document.format === "card" && (
+        {twoSided && (
           <select
             className="studio-mobile-side"
             aria-label="Artwork side"
@@ -1052,8 +1096,22 @@ export default function StudioEditor({
                   <p className="text-sm leading-6 text-slate-600">
                     {document.format === "card"
                       ? "Two-sided visiting card artwork. Keep important text and logos inside the green safety guide. Confirm the final quantity, material and print quote before production."
-                      : "Your product photo stays fixed as a reference. Add text, uploaded images and graphics over it."}
+                      : document.printArea
+                        ? "Add text, photos and logos inside the outlined print area. Artwork outside this area is trimmed in the preview. Front and back are edited separately."
+                        : "Add text, photos and logos to your artwork. Final dimensions and production specifications are confirmed with your quote."}
                   </p>
+                  {initial?.productOptions && (
+                    <dl className="space-y-2 text-sm">
+                      {Object.entries(initial.productOptions).map(
+                        ([key, value]) => (
+                          <div key={key} className="flex justify-between gap-3">
+                            <dt className="capitalize text-slate-500">{key}</dt>
+                            <dd>{value}</dd>
+                          </div>
+                        ),
+                      )}
+                    </dl>
+                  )}
                   <p className="rounded-xl bg-cyan-50 p-4 text-sm">
                     {document.width} × {document.height} design units
                   </p>
@@ -1787,7 +1845,16 @@ export default function StudioEditor({
                 <div
                   className="studio-safety"
                   style={{
-                    inset: `${(safeMargin(document) / document.height) * 100}% ${(safeMargin(document) / document.width) * 100}%`,
+                    ...(document.printArea
+                      ? {
+                          left: `${document.printArea.x * 100}%`,
+                          top: `${document.printArea.y * 100}%`,
+                          width: `${document.printArea.width * 100}%`,
+                          height: `${document.printArea.height * 100}%`,
+                        }
+                      : {
+                          inset: `${(safeMargin(document) / document.height) * 100}% ${(safeMargin(document) / document.width) * 100}%`,
+                        }),
                   }}
                   aria-hidden="true"
                 >
@@ -1886,7 +1953,7 @@ export default function StudioEditor({
             </label>
           </div>
         </main>
-        {document.format === "card" && (
+        {twoSided && (
           <aside className="studio-sides" aria-label="Artwork sides">
             {(["front", "back"] as StudioSide[]).map((item) => (
               <button

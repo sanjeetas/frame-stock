@@ -354,9 +354,11 @@ function LegacyProofCanvas({
   );
 }
 
-export function ProofCanvas(props: Parameters<typeof LegacyProofCanvas>[0]) {
+export function ProofCanvas(
+  props: Parameters<typeof LegacyProofCanvas>[0] & { side?: "front" | "back" },
+) {
   return props.settings.studio ? (
-    <StudioPreview settings={props.settings} />
+    <StudioPreview settings={props.settings} side={props.side} />
   ) : (
     <LegacyProofCanvas {...props} />
   );

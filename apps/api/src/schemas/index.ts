@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { customisation, productOptions } from "./customisation.js";
 export const id = z.string().regex(/^[a-f\d]{24}$/i, "Invalid resource ID");
 export const idParams = z.object({ id }).strict();
 const email = z
@@ -28,6 +29,7 @@ export const productQuery = pagination
     search: z.string().trim().max(100).optional(),
     category: z.string().max(100).optional(),
     libraryCategory: z.string().trim().max(60).optional(),
+    customFamily: z.string().trim().min(1).max(60).optional(),
     categoryId: z.coerce.number().int().positive().optional(),
     group: z
       .enum([
@@ -53,6 +55,7 @@ const preview = z
   );
 export const productBody = z
   .object({
+    customisation: customisation.optional(),
     title: z.string().trim().min(1).max(150),
     category: z.string().trim().min(1).max(100),
     group: z.enum([
@@ -149,6 +152,14 @@ const studioDocument = z
   .object({
     version: z.literal(1),
     format: z.enum(["card", "product"]),
+    twoSided: z.boolean().optional(),
+    productColour: z
+      .string()
+      .regex(/^#[a-f\d]{6}$/i)
+      .optional(),
+    shape: z.enum(["circle", "oval", "rounded"]).optional(),
+    printArea: customisation.shape.profile.shape.printArea,
+    specification: z.string().max(150).optional(),
     width: z.number().int().min(200).max(2400),
     height: z.number().int().min(200).max(2400),
     template: z.string().max(40),
@@ -158,6 +169,7 @@ const studioDocument = z
 export const settings = z
   .object({
     studio: studioDocument.optional(),
+    productOptions: productOptions.optional(),
     artworkApproved: z.boolean().optional(),
     headline: z.string().max(90),
     subtitle: z.string().max(140),
@@ -199,6 +211,7 @@ export const orderBody = z
             customization: z
               .object({
                 requirements: z.string().max(2000).default(""),
+                options: productOptions.optional(),
                 design: settings.optional(),
               })
               .strict()

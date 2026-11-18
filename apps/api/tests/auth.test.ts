@@ -1017,6 +1017,12 @@ test("studio saves both sides, validates object limits and enforces image owners
     .expect(403);
   const card = await Product.findOne({ title: /Visiting Card/i });
   assert.ok(card);
+  const options = Object.fromEntries(
+    (card.customisation?.options || []).map((option) => [
+      option.key,
+      option.values[0]!,
+    ]),
+  );
   const order = (
     await mutation(alice, "post", "/api/orders", token)
       .send({
@@ -1028,7 +1034,12 @@ test("studio saves both sides, validates object limits and enforces image owners
             quantity: 100,
             customization: {
               requirements: "Print both sides",
-              design: { ...settings, artworkApproved: true },
+              options,
+              design: {
+                ...settings,
+                productOptions: options,
+                artworkApproved: true,
+              },
             },
           },
         ],
@@ -1108,4 +1119,164 @@ test("own upload listing and cropped/flipped studio images remain owner protecte
   await mutation(a, "post", "/api/designs", token)
     .send({ title: "Outside crop", settings: invalid })
     .expect(400);
+});
+
+test("custom collection seeds additively, preserves source/admin data and filters product families", async () => {
+  const { seedCustomProducts } =
+    await import("../src/services/bootstrap.service.js");
+  const { readFile } = await import("node:fs/promises");
+  const catalog = JSON.parse(
+    await readFile(
+      new URL("../../../public/custom-products.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  assert.equal(catalog.products.length, 316);
+  assert.equal(new Set(catalog.products.map((p: any) => p.id)).size, 316);
+  assert.equal(
+    new Set(catalog.products.map((p: any) => p.customisation.family)).size,
+    18,
+  );
+  for (const row of catalog.products) {
+    assert.equal(
+      row.price,
+      null,
+      "Do not invent PHULO prices from competitor pricing",
+    );
+    await readFile(new URL("../../../public/" + row.image, import.meta.url));
+  }
+  const source = await Product.findOne({ slug: "p42" });
+  assert.ok(source);
+  const before = {
+    category: source.category,
+    categoryIds: [...source.categoryIds],
+    price: source.price,
+    group: source.group,
+  };
+  await Product.updateOne(
+    { slug: "custom-personalised-mugs" },
+    {
+      $set: {
+        title: "Admin mug title",
+        price: 777,
+        published: false,
+        "customisation.quoteRequired": false,
+      },
+    },
+  );
+  await seedCustomProducts();
+  const again = await Product.findOne({ slug: "p42" });
+  assert.deepEqual(
+    {
+      category: again!.category,
+      categoryIds: [...again!.categoryIds],
+      price: again!.price,
+      group: again!.group,
+    },
+    before,
+  );
+  const adminMug = await Product.findOne({ slug: "custom-personalised-mugs" });
+  assert.equal(adminMug!.title, "Admin mug title");
+  assert.equal(adminMug!.published, false);
+  assert.equal(adminMug!.price, 777);
+  assert.equal(adminMug!.customisation!.quoteRequired, false);
+  const cards = await request(app)
+    .get("/api/products")
+    .query({
+      group: "Customised Products",
+      customFamily: "Visiting Cards",
+      limit: 100,
+    })
+    .expect(200);
+  assert.equal(cards.body.meta.total, 23);
+  assert.ok(
+    cards.body.data.every(
+      (p: any) => p.customisation.family === "Visiting Cards",
+    ),
+  );
+  const search = await request(app)
+    .get("/api/products")
+    .query({
+      group: "Customised Products",
+      customFamily: "Visiting Cards",
+      search: "Rounded Corner",
+    })
+    .expect(200);
+  assert.equal(search.body.meta.total, 1);
+  const families = await request(app)
+    .get("/api/custom-products/categories")
+    .expect(200);
+  assert.equal(families.body.data.length, 18);
+  const gifts = await request(app)
+    .get("/api/products")
+    .query({ group: "Gifting Items", search: "Printed Mugs" })
+    .expect(200);
+  assert.equal(gifts.body.data[0].slug, "p42");
+});
+
+test("configured products validate selections and approval server-side, then persist quote artwork and options", async () => {
+  const { createCardTemplate } =
+    await import("../../web/src/features/editor/studioTemplates.ts");
+  const freshApp = await createApp(config),
+    agent = request.agent(freshApp),
+    token = await csrf(agent);
+  await login(agent, "alice@example.test", token);
+  const card = await Product.findOne({
+    slug: "custom-rounded-corner-visiting-cards",
+  });
+  assert.ok(card?.customisation);
+  // A stored base price must never bypass a product's quote-required policy.
+  await Product.updateOne({ _id: card._id }, { $set: { price: 1 } });
+  const options = Object.fromEntries(
+    card.customisation.options.map((o) => [o.key, o.values[0]!]),
+  );
+  const artwork = {
+    ...settings,
+    studio: { ...createCardTemplate(), twoSided: true, shape: "rounded" },
+    productOptions: options,
+    artworkApproved: true,
+  };
+  const body = (customization: any) => ({
+    name: "Alice",
+    phone: "+918451010020",
+    items: [{ productId: String(card._id), quantity: 100, customization }],
+  });
+  const send = (customization: any) =>
+    mutation(agent, "post", "/api/orders", token).send(body(customization));
+  await send({ options }).expect(400);
+  await send({
+    options,
+    design: { ...artwork, artworkApproved: false },
+  }).expect(400);
+  await send({
+    options: { ...options, stock: "Free premium upgrade" },
+    design: artwork,
+  }).expect(400);
+  await send({
+    options: { ...options, userId: bobId },
+    design: artwork,
+  }).expect(400);
+  await send({
+    options,
+    design: { ...artwork, productOptions: { ...options, finish: "Glossy" } },
+  }).expect(400);
+  const placed = (
+    await send({
+      requirements: "Keep logo inside the safety area",
+      options,
+      design: artwork,
+    }).expect(201)
+  ).body.data;
+  assert.equal(placed.needsQuote, true);
+  assert.equal(placed.items[0].unitPrice, null);
+  assert.equal(placed.total, 0);
+  assert.deepEqual(placed.items[0].customization.options, options);
+  assert.equal(
+    placed.items[0].customization.design.studio.pages.back.elements.length,
+    2,
+  );
+  await bob.get(`/api/orders/${placed.id}`).expect(403);
+  await mutation(agent, "patch", `/api/admin/products/${card._id}`, token)
+    .send({ price: 0 })
+    .expect(403);
 });

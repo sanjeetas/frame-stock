@@ -17,8 +17,9 @@ import {
 import { Field } from "../../components/Field";
 import { Loading, ErrorState, Empty } from "../../components/Feedback";
 import { Card } from "../../components/ui/card";
-import type { Product, Order } from "../../types";
+import type { Product, Order, Customisation } from "../../types";
 const productSchema = z.object({
+  customisation: z.custom<Customisation>().optional(),
   libraryCategory: z.string().max(60).optional(),
   title: z.string().trim().min(1).max(150),
   category: z.string().trim().min(1).max(100),
@@ -124,7 +125,39 @@ export function Admin() {
     setProductError("");
     const form = new FormData(e.currentTarget),
       raw = Object.fromEntries(form);
+    const family = String(raw.customFamily || "").trim();
+    const configuration = family
+      ? {
+          ...(editing?.customisation || {
+            options: [
+              {
+                key: "size",
+                label: "Size",
+                values: ["Standard", "Custom size"],
+              },
+            ],
+            profile: {
+              width: 1200,
+              height: 900,
+              twoSided: false,
+              mockup: false,
+              label: "Custom artwork — final size confirmed with PHULO",
+            },
+          }),
+          family,
+          quoteRequired: raw.quoteRequired === "on",
+        }
+      : undefined;
+    if (configuration)
+      configuration.options = configuration.options.map((option) => ({
+        ...option,
+        values: String(raw["option-" + option.key] || option.values.join(" | "))
+          .split("|")
+          .map((v) => v.trim())
+          .filter(Boolean),
+      }));
     const parsed = productSchema.safeParse({
+      customisation: configuration,
       libraryCategory:
         raw.group === "Image Library"
           ? String(raw.libraryCategory || raw.category)
@@ -383,6 +416,9 @@ export function Admin() {
                         {i.title} × {i.quantity}
                       </p>
                       <p className="text-xs text-slate-500">
+                        {Object.entries(i.customization.options || {})
+                          .map(([key, value]) => `${key}: ${value}`)
+                          .join(" · ")}{" "}
                         {i.customization.requirements}
                       </p>
                       {i.customization.design && (
@@ -542,6 +578,56 @@ export function Admin() {
                 )}
               </Field>
             </div>
+            <details
+              className="rounded-xl border border-cyan-100 bg-cyan-50 p-4"
+              open={!!editing?.customisation}
+            >
+              <summary className="cursor-pointer font-semibold">
+                Customised product settings
+              </summary>
+              <div className="mt-4 space-y-4">
+                <Field
+                  label="Custom product family"
+                  hint="e.g. Visiting Cards, Magnets, Mugs & Drinkware. Leave blank for ordinary products."
+                >
+                  {(id) => (
+                    <Input
+                      id={id}
+                      name="customFamily"
+                      maxLength={60}
+                      defaultValue={editing?.customisation?.family || ""}
+                    />
+                  )}
+                </Field>
+                <label className="flex gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    name="quoteRequired"
+                    defaultChecked={
+                      editing?.customisation?.quoteRequired ?? true
+                    }
+                  />
+                  Final price requires a quote (uncheck to use the INR price
+                  above)
+                </label>
+                {editing?.customisation?.options.map((option) => (
+                  <Field
+                    key={option.key}
+                    label={option.label + " choices"}
+                    hint="Separate choices with |. Existing orders keep their saved choices."
+                  >
+                    {(id) => (
+                      <Input
+                        id={id}
+                        name={"option-" + option.key}
+                        defaultValue={option.values.join(" | ")}
+                        maxLength={1500}
+                      />
+                    )}
+                  </Field>
+                ))}
+              </div>
+            </details>
             <Field label="Description">
               {(id) => (
                 <Textarea

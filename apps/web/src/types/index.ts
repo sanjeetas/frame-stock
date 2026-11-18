@@ -12,7 +12,23 @@ export interface Category {
   parent: number;
   count: number;
 }
+export interface Customisation {
+  family: string;
+  quoteRequired: boolean;
+  options: { key: string; label: string; values: string[] }[];
+  profile: {
+    width: number;
+    height: number;
+    twoSided: boolean;
+    mockup: boolean;
+    label: string;
+    shape?: "circle" | "oval" | "rounded";
+    mockupImage?: string;
+    printArea?: { x: number; y: number; width: number; height: number };
+  };
+}
 export interface Product {
+  customisation?: Customisation;
   libraryCategory?: string;
   sourceProductId?: number;
   categoryIds?: number[];
@@ -51,6 +67,7 @@ export interface ApiResponse<T> {
 }
 export interface DesignSettings {
   studio?: StudioDocument;
+  productOptions?: Record<string, string>;
   artworkApproved?: boolean;
   headline: string;
   subtitle: string;
@@ -86,7 +103,11 @@ export interface CartItem {
   unit: string;
   price: number | null;
   quantity: number;
-  customization: { requirements: string; design?: DesignSettings };
+  customization: {
+    requirements: string;
+    options?: Record<string, string>;
+    design?: DesignSettings;
+  };
 }
 export interface Order {
   id: string;

@@ -92,7 +92,9 @@ export function Navigation({ categories, route, group, onBrowse }: Props) {
             key={item}
             className="nav-item"
             aria-current={
-              route === "catalog" && group === item ? "page" : undefined
+              ["catalog", "customised"].includes(route) && group === item
+                ? "page"
+                : undefined
             }
             onClick={() => choose(item)}
           >

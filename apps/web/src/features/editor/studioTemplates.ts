@@ -1,4 +1,4 @@
-import type { DesignSettings } from "../../types/index.ts";
+import type { Product, DesignSettings } from "../../types/index.ts";
 import {
   element,
   type StudioDocument,
@@ -258,4 +258,97 @@ export function createStudioDocument(
       back: { background: settings.bg, elements: [] },
     },
   };
+}
+
+/** Configure the same editor from bounded product metadata, rather than one editor per SKU. */
+export function createProductSettings(
+  product: Product,
+  options: Record<string, string>,
+  previous?: DesignSettings,
+): DesignSettings {
+  const config = product.customisation;
+  const settings: DesignSettings = {
+    ...(previous || {
+      headline: "",
+      subtitle: "",
+      bg: "#ffffff",
+      fg: "#103759",
+      font: "Arial",
+      size: 48,
+      y: 300,
+      square: false,
+      hasUploadedImage: false,
+    }),
+    productOptions: { ...options },
+    artworkApproved: false,
+    baseProductId: config && !config.profile.mockup ? undefined : product.id,
+  };
+  if (!config) return settings;
+  const p = config.profile;
+  let doc = previous?.studio
+    ? structuredClone(previous.studio)
+    : createStudioDocument(
+        { ...settings, studio: undefined },
+        config.family === "Visiting Cards",
+      );
+  if (!previous?.studio) {
+    const x = p.width / doc.width,
+      y = p.height / doc.height,
+      scale = Math.min(x, y);
+    for (const page of Object.values(doc.pages))
+      for (const el of page.elements) {
+        el.left *= x;
+        el.top *= y;
+        el.scaleX *= scale;
+        el.scaleY *= scale;
+      }
+    doc.width = p.width;
+    doc.height = p.height;
+  }
+  const colours: Record<string, string> = {
+    White: "#ffffff",
+    Black: "#24282d",
+    Navy: "#153752",
+    Red: "#bd2343",
+    Natural: "#e7d8b8",
+  };
+  doc.productColour = p.mockup ? colours[options.colour || ""] : undefined;
+  doc.twoSided = p.twoSided;
+  doc.shape =
+    options.shape === "Circle"
+      ? "circle"
+      : options.shape === "Rounded corners"
+        ? "rounded"
+        : options.shape === "Rectangle"
+          ? undefined
+          : p.shape;
+  if (!p.mockup && options.orientation) {
+    const width =
+      options.orientation === "Portrait"
+        ? 900
+        : options.orientation === "Landscape"
+          ? 1200
+          : p.width;
+    const height =
+      options.orientation === "Portrait"
+        ? 1200
+        : options.orientation === "Landscape"
+          ? 900
+          : p.height;
+    const x = width / doc.width,
+      y = height / doc.height;
+    for (const page of Object.values(doc.pages))
+      for (const el of page.elements) {
+        el.left *= x;
+        el.top *= y;
+        el.scaleX *= x;
+        el.scaleY *= y;
+      }
+    doc.width = width;
+    doc.height = height;
+  }
+  doc.printArea = p.printArea;
+  doc.specification = p.label;
+  settings.studio = doc;
+  return settings;
 }

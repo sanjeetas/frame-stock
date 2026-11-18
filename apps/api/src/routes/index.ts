@@ -147,6 +147,23 @@ export function resourceRoutes(auth: AuthService, config: Config) {
       );
     },
   );
+  r.get("/custom-products/categories", async (_req, res) =>
+    ok(
+      res,
+      await Product.aggregate([
+        {
+          $match: {
+            published: true,
+            libraryCategory: { $exists: false },
+            "customisation.family": { $exists: true },
+          },
+        },
+        { $group: { _id: "$customisation.family", count: { $sum: 1 } } },
+        { $sort: { _id: 1 } },
+        { $project: { _id: 0, name: "$_id", count: 1 } },
+      ]),
+    ),
+  );
   r.get("/categories", catalog.categories);
   r.get("/products", validate({ query: s.productQuery }), catalog.list);
   r.get("/products/:id", validate({ params: s.idParams }), catalog.get);

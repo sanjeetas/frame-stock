@@ -33,15 +33,22 @@ export function Catalog({
   const [search, setSearch] = useState(""),
     [sort, setSort] = useState("featured"),
     [page, setPage] = useState(1),
-    [wishes, setWishes] = useState<string[]>([]);
+    [wishes, setWishes] = useState<string[]>([]),
+    [customFamily, setCustomFamily] = useState("");
+  const custom = group === "Customised Products";
+  const families = useApiQuery<{ name: string; count: number }[]>(
+    custom ? "/custom-products/categories" : null,
+  );
+  useEffect(() => setCustomFamily(""), [group]);
   const query = useDebouncedValue(search);
-  useEffect(() => setPage(1), [query, categoryId, sort, group]);
+  useEffect(() => setPage(1), [query, categoryId, customFamily, sort, group]);
   const params = new URLSearchParams({
     page: String(page),
     limit: "12",
     sort,
     ...(query ? { search: query } : {}),
-    ...(categoryId ? { categoryId } : {}),
+    ...(categoryId && !custom ? { categoryId } : {}),
+    ...(custom && customFamily ? { customFamily } : {}),
     ...(group !== "All products" ? { group } : {}),
   });
   const { data, loading, error, reload } = useApiQuery<Product[]>(
@@ -72,8 +79,9 @@ export function Catalog({
             )}
           </h2>
           <p className="mt-4 max-w-lg text-base leading-7 text-blue-100">
-            Print it. Gift it. Make it yours. Discover standout prints,
-            personalised products and designs for every idea.
+            {custom
+              ? "Choose your product and specifications. Start with a template or upload, personalise your design, approve the preview and send your order request."
+              : "Print it. Gift it. Make it yours. Discover standout prints, personalised products and designs for every idea."}
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-3 text-sm">
             <span className="rounded-full bg-white px-4 py-2 font-semibold text-primary">
@@ -120,6 +128,31 @@ export function Catalog({
           </div>
         </div>
       </div>
+      {custom && (
+        <div className="mb-7 rounded-2xl border border-cyan-100 bg-white p-5">
+          <h3 className="font-bold text-primary">
+            Make something uniquely yours
+          </h3>
+          <ol className="mt-3 grid gap-3 text-sm text-slate-600 sm:grid-cols-4">
+            {[
+              "Choose product & options",
+              "Add text, logo or photos",
+              "Review both sides & approve",
+              "Request your print quote",
+            ].map((step, i) => (
+              <li key={step}>
+                <span className="mr-2 inline-flex size-6 items-center justify-center rounded-full bg-cyan-100 font-bold text-primary">
+                  {i + 1}
+                </span>
+                {step}
+              </li>
+            ))}
+          </ol>
+          {families.error && (
+            <ErrorState message={families.error} retry={families.reload} />
+          )}
+        </div>
+      )}
       <div className="mb-7 grid gap-3 rounded-2xl border border-cyan-100 bg-[#edf6fc] p-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
         <div className="relative">
           <label htmlFor="catalog-search" className="sr-only">
@@ -138,20 +171,36 @@ export function Catalog({
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <select
-          className="min-w-0 w-full"
-          aria-label="Filter by category"
-          value={categoryId}
-          onChange={(event) => onCategory(event.target.value)}
-        >
-          <option value="">All categories</option>
-          {categories.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item.parent ? "↳ " : ""}
-              {item.name}
-            </option>
-          ))}
-        </select>
+        {custom ? (
+          <select
+            className="min-w-0 w-full"
+            aria-label="Filter customised product family"
+            value={customFamily}
+            onChange={(e) => setCustomFamily(e.target.value)}
+          >
+            <option value="">All customised products</option>
+            {families.data?.data.map((family) => (
+              <option key={family.name} value={family.name}>
+                {family.name} ({family.count})
+              </option>
+            ))}
+          </select>
+        ) : (
+          <select
+            className="min-w-0 w-full"
+            aria-label="Filter by category"
+            value={categoryId}
+            onChange={(event) => onCategory(event.target.value)}
+          >
+            <option value="">All categories</option>
+            {categories.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.parent ? "↳ " : ""}
+                {item.name}
+              </option>
+            ))}
+          </select>
+        )}
         <select
           aria-label="Sort products"
           value={sort}
@@ -215,13 +264,17 @@ export function Catalog({
                 </button>
                 <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
                   <span className="text-sm font-bold text-primary">
-                    <Price product={p} />
+                    {p.customisation?.quoteRequired ? (
+                      "Price on request"
+                    ) : (
+                      <Price product={p} />
+                    )}
                     <span className="ml-1 text-xs font-normal text-slate-500">
                       {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
                     </span>
                   </span>
                   <Button variant="outline" size="sm" onClick={() => onOpen(p)}>
-                    View ↗
+                    {p.customisation ? "Choose & customise ↗" : "View ↗"}
                   </Button>
                 </div>
               </article>

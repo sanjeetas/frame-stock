@@ -248,3 +248,110 @@ test("image crop renders the chosen region and crop/flip/effects survive seriali
     await canvas.dispose();
   }
 });
+
+test("product specifications drive card shapes, product colours, print areas and persistent front/back artwork", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { createProductSettings } =
+    await import("../src/features/editor/studioTemplates.ts");
+  const catalog = JSON.parse(
+    await readFile(
+      new URL("../../../public/custom-products.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  const card = catalog.products.find(
+    (p: any) => p.title === "Square Visiting Cards",
+  );
+  const configured = createProductSettings(
+    { ...card, id: "test-card" },
+    { sides: "Front and back" },
+  );
+  assert.equal(configured.studio!.width, configured.studio!.height);
+  assert.equal(configured.baseProductId, undefined);
+  assert.equal(configured.studio!.twoSided, true);
+  const shirt = catalog.products.find(
+    (p: any) => p.title === "Men's Cotton T-Shirts",
+  );
+  const tshirt = createProductSettings(
+    { ...shirt, id: "shirt-id" },
+    { colour: "Navy", size: "XL" },
+  );
+  assert.equal(tshirt.baseProductId, "shirt-id");
+  assert.equal(tshirt.studio!.productColour, "#153752");
+  assert.ok(tshirt.studio!.printArea);
+  assert.equal(tshirt.studio!.twoSided, true);
+  const approved = { ...tshirt, artworkApproved: true };
+  const updated = createProductSettings(
+    { ...shirt, id: "shirt-id" },
+    { colour: "White", size: "M" },
+    approved,
+  );
+  assert.equal(updated.artworkApproved, false);
+  assert.equal(updated.productOptions!.size, "M");
+  assert.equal(approved.productOptions!.size, "XL");
+  assert.equal(updated.studio!.productColour, "#ffffff");
+  const frame = catalog.products.find((p: any) => p.title === "Photo Magnets");
+  const base = createProductSettings(frame, { orientation: "Square" });
+  const landscape = createProductSettings(
+    frame,
+    { orientation: "Landscape" },
+    base,
+  );
+  assert.equal(landscape.studio!.width, 1200);
+  assert.equal(landscape.studio!.height, 900);
+  assert.equal(
+    createProductSettings(frame, { orientation: "Square" }, landscape).studio!
+      .width,
+    1000,
+  );
+});
+
+test("print-area clipping trims exported product artwork while preserving editable object positions", async (t) => {
+  let fabric: typeof import("fabric/node");
+  try {
+    fabric = await import("fabric/node");
+  } catch {
+    t.skip("Optional native canvas unavailable");
+    return;
+  }
+  const { applyStudioClip } =
+    await import("../src/features/editor/studioCanvas.ts");
+  const canvas = new fabric.StaticCanvas(undefined, {
+    width: 400,
+    height: 400,
+    backgroundColor: "#ffffff",
+  });
+  const scene = {
+    ...createCardTemplate(),
+    format: "product" as const,
+    width: 400,
+    height: 400,
+    printArea: { x: 0.25, y: 0.25, width: 0.5, height: 0.5 },
+  };
+  const rect = new fabric.Rect({
+    left: 0,
+    top: 0,
+    originX: "left",
+    originY: "top",
+    width: 400,
+    height: 400,
+    fill: "#ff0000",
+  });
+  // Canvas and clipping paths must use the same Fabric runtime in the native test.
+  const browserFabric = await import("fabric");
+  browserFabric.setEnv(fabric.getEnv());
+  applyStudioClip(rect, scene);
+  canvas.add(rect);
+  canvas.renderAll();
+  const ctx = canvas.getContext();
+  assert.deepEqual(
+    [...ctx.getImageData(20, 20, 1, 1).data].slice(0, 3),
+    [255, 255, 255],
+  );
+  assert.deepEqual(
+    [...ctx.getImageData(200, 200, 1, 1).data].slice(0, 3),
+    [255, 0, 0],
+  );
+  assert.equal(rect.left, 0);
+  await canvas.dispose();
+});

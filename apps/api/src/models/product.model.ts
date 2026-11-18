@@ -1,4 +1,25 @@
 import { Schema, model } from "mongoose";
+const option = new Schema(
+  {
+    key: { type: String, required: true, maxlength: 40 },
+    label: { type: String, required: true, maxlength: 60 },
+    values: {
+      type: [String],
+      required: true,
+      validate: (v: string[]) => v.length > 0 && v.length <= 20,
+    },
+  },
+  { _id: false },
+);
+const customisationSchema = new Schema(
+  {
+    family: { type: String, required: true, maxlength: 60 },
+    quoteRequired: { type: Boolean, required: true },
+    options: { type: [option], validate: (v: unknown[]) => v.length <= 8 },
+    profile: { type: Schema.Types.Mixed, required: true },
+  },
+  { _id: false },
+);
 const schema = new Schema(
   {
     slug: { type: String, required: true, unique: true, maxlength: 80 },
@@ -16,6 +37,7 @@ const schema = new Schema(
       index: true,
     },
     libraryCategory: { type: String, maxlength: 60, index: true },
+    customisation: { type: customisationSchema, default: undefined },
     sourceOrder: { type: Number, min: 0, default: 100000 },
     sourceProductId: { type: Number, min: 1 },
     sourceVersion: { type: String },
@@ -51,6 +73,7 @@ const schema = new Schema(
 );
 schema.index({ published: 1, group: 1, createdAt: -1 });
 schema.index({ published: 1, categoryIds: 1 });
+schema.index({ published: 1, "customisation.family": 1 });
 export const Product = model("Product", schema);
 export function productDto(p: any) {
   return {
@@ -59,6 +82,9 @@ export function productDto(p: any) {
     title: p.title,
     category: p.category,
     group: p.group,
+    customisation: p.customisation?.toObject
+      ? p.customisation.toObject()
+      : p.customisation,
     libraryCategory: p.libraryCategory,
     sourceProductId: p.sourceProductId,
     categoryIds: p.categoryIds,

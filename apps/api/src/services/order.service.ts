@@ -23,12 +23,57 @@ export async function createOrder(
         "UNAVAILABLE_PRODUCT",
         "A selected product is unavailable.",
       );
+    const selected = i.customization?.options || {};
+    const config = p.customisation;
+    if (config) {
+      if (
+        !i.customization?.design?.studio ||
+        i.customization.design.artworkApproved !== true
+      )
+        throw new AppError(
+          400,
+          "ARTWORK_REQUIRED",
+          "Create and approve your product artwork before ordering.",
+        );
+      const allowedKeys = new Set(config.options.map((option) => option.key));
+      if (
+        Object.keys(selected).some((key) => !allowedKeys.has(key)) ||
+        config.options.some(
+          (option) =>
+            !selected[option.key] ||
+            !option.values.includes(selected[option.key]!),
+        )
+      )
+        throw new AppError(
+          400,
+          "INVALID_PRODUCT_OPTIONS",
+          "Choose a valid value for every product option.",
+        );
+      const designOptions = i.customization?.design?.productOptions;
+      if (
+        !designOptions ||
+        config.options.some(
+          (option) => designOptions[option.key] !== selected[option.key],
+        )
+      )
+        throw new AppError(
+          400,
+          "ARTWORK_OPTIONS_CHANGED",
+          "Product options changed. Review the artwork again.",
+        );
+    } else if (Object.keys(selected).length) {
+      throw new AppError(
+        400,
+        "INVALID_PRODUCT_OPTIONS",
+        "This product does not have selectable options.",
+      );
+    }
     return {
       product: p._id,
       title: p.title,
       kind: p.kind,
       unit: p.unit,
-      unitPrice: p.price,
+      unitPrice: config?.quoteRequired ? null : p.price,
       quantity: i.quantity,
       customization: i.customization,
     };

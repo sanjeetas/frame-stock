@@ -70,10 +70,24 @@ export function artworkWarnings(document: StudioDocument): string[] {
             (Math.abs(w * Math.cos(a)) + Math.abs(h * Math.sin(a))) / 2,
           halfH = (Math.abs(w * Math.sin(a)) + Math.abs(h * Math.cos(a))) / 2;
         return (
-          element.left - halfW < margin ||
-          element.top - halfH < margin ||
-          element.left + halfW > document.width - margin ||
-          element.top + halfH > document.height - margin
+          element.left - halfW <
+            (document.printArea
+              ? document.printArea.x * document.width
+              : margin) ||
+          element.top - halfH <
+            (document.printArea
+              ? document.printArea.y * document.height
+              : margin) ||
+          element.left + halfW >
+            (document.printArea
+              ? (document.printArea.x + document.printArea.width) *
+                document.width
+              : document.width - margin) ||
+          element.top + halfH >
+            (document.printArea
+              ? (document.printArea.y + document.printArea.height) *
+                document.height
+              : document.height - margin)
         );
       })
     )

@@ -32,7 +32,7 @@ import { useScrollReveal } from "./hooks/useScrollReveal";
 const categories = [
   ["Digital printing", "product-p78.webp", "All products", "220"],
   ["Signage & boards", "product-p6.webp", "All products", "219"],
-  ["Customised products", "product-p45.webp", "All products", "228"],
+  ["Customised products", "product-p45.webp", "Customised Products", ""],
   ["Gifting items", "product-p42.webp", "All products", "227"],
   ["Image library", "library-samples.svg", "Image Library", ""],
   ["Rollups & standees", "product-p24.webp", "All products", "223"],
@@ -43,7 +43,9 @@ export function App() {
   const [categoryId, setCategoryId] = useState("");
   const auth = useAuth(),
     [route, setRoute] = useState(location.hash.slice(1) || "home"),
-    [group, setGroup] = useState("All products"),
+    [group, setGroup] = useState(
+      location.hash === "#customised" ? "Customised Products" : "All products",
+    ),
     [authOpen, setAuthOpen] = useState(false),
     [cartOpen, setCartOpen] = useState(false),
     [cart, setCart] = useState<CartItem[]>([]),
@@ -53,6 +55,10 @@ export function App() {
   useEffect(() => {
     const change = () => {
       setRoute(location.hash.slice(1) || "home");
+      if (location.hash === "#customised") {
+        setGroup("Customised Products");
+        setCategoryId("");
+      }
       setSelected(null);
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
@@ -68,8 +74,13 @@ export function App() {
   function browse(g: string, category?: string) {
     setGroup(g);
     setCategoryId(category || "");
-    location.hash = g === "Image Library" ? "library" : "catalog";
-    if (route === "catalog" && g !== "Image Library")
+    location.hash =
+      g === "Image Library"
+        ? "library"
+        : g === "Customised Products"
+          ? "customised"
+          : "catalog";
+    if (["catalog", "customised"].includes(route) && g !== "Image Library")
       document
         .getElementById("catalog")
         ?.scrollIntoView({ behavior: "smooth" });
@@ -220,7 +231,12 @@ export function App() {
                       key={category.id}
                       className="block w-full border-b border-slate-100 px-4 py-3 text-left text-sm hover:bg-cyan-50"
                       onClick={() =>
-                        browse("All products", String(category.id))
+                        browse(
+                          category.id === 228
+                            ? "Customised Products"
+                            : "All products",
+                          category.id === 228 ? "" : String(category.id),
+                        )
                       }
                     >
                       {category.name}
@@ -313,7 +329,7 @@ export function App() {
             </section>
           </>
         )}
-        {(isHome || route === "catalog") && (
+        {(isHome || route === "catalog" || route === "customised") && (
           <Catalog
             group={group}
             categoryId={categoryId}

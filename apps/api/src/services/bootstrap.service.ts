@@ -54,6 +54,7 @@ export async function seedCatalog() {
     { ordered: false },
   );
   await applyCatalogImageCorrections();
+  await seedCustomProducts();
 }
 export async function bootstrapApplication(
   input: Record<string, string | undefined>,
@@ -109,6 +110,45 @@ export async function applyCatalogImageCorrections() {
       updateOne: {
         filter: { slug: row.slug, image: row.previousImage },
         update: { $set: { image: row.image } },
+      },
+    })),
+    { ordered: false },
+  );
+}
+
+// Additive seed: source categories/prices, admin edits and hidden products survive restarts.
+export async function seedCustomProducts() {
+  const input = JSON.parse(
+    await readFile(
+      new URL("../../../../public/custom-products.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  const catalog = z
+    .object({
+      products: z.array(
+        productBody.extend({ id: z.string().regex(/^[\w-]{1,80}$/) }),
+      ),
+      links: z.record(z.string(), productBody.shape.customisation.unwrap()),
+    })
+    .parse(input);
+  await Product.bulkWrite(
+    catalog.products.map(({ id: slug, ...data }) => ({
+      updateOne: {
+        filter: { slug },
+        update: {
+          $setOnInsert: { ...data, slug, kind: "product", hasFile: false },
+        },
+        upsert: true,
+      },
+    })),
+    { ordered: false },
+  );
+  await Product.bulkWrite(
+    Object.entries(catalog.links).map(([slug, customisation]) => ({
+      updateOne: {
+        filter: { slug, customisation: { $exists: false } },
+        update: { $set: { customisation, editable: true } },
       },
     })),
     { ordered: false },

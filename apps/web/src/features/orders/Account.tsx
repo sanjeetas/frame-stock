@@ -141,6 +141,13 @@ export function Account({
                     >
                       <span>
                         {i.title} × {i.quantity}
+                        {i.customization.options && (
+                          <span className="mt-1 block text-xs text-slate-500">
+                            {Object.entries(i.customization.options)
+                              .map(([key, value]) => `${key}: ${value}`)
+                              .join(" · ")}
+                          </span>
+                        )}
                       </span>
                       {i.kind === "image" && o.status !== "completed" && (
                         <span className="text-sm text-amber-800">

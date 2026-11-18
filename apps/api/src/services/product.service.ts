@@ -29,7 +29,17 @@ export async function listProducts(
         ? { $exists: true }
         : { $exists: false };
   if (query.libraryCategory) filter.libraryCategory = query.libraryCategory;
-  if (query.group) filter.group = query.group;
+  if (query.group === "Customised Products") {
+    filter.$and = [
+      {
+        $or: [
+          { group: query.group },
+          { "customisation.family": { $exists: true } },
+        ],
+      },
+    ];
+  } else if (query.group) filter.group = query.group;
+  if (query.customFamily) filter["customisation.family"] = query.customFamily;
   if (query.category) filter.category = query.category;
   if (query.categoryId) {
     const categories = await listCategories();

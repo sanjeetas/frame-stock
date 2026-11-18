@@ -30,8 +30,18 @@ export function StudioReview({
           Check spelling, contact details, image placement and both sides before
           applying this design to your order.
         </p>
+        {settings.productOptions && (
+          <dl className="mt-5 flex flex-wrap gap-3 rounded-xl bg-white p-4 text-sm">
+            {Object.entries(settings.productOptions).map(([key, value]) => (
+              <div key={key}>
+                <dt className="capitalize text-slate-500">{key}</dt>
+                <dd className="font-semibold">{value}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
         <div className="mt-7 grid gap-6 md:grid-cols-2">
-          {(settings.studio!.format === "card"
+          {((settings.studio!.twoSided ?? settings.studio!.format === "card")
             ? (["front", "back"] as const)
             : (["front"] as const)
           ).map((side) => (

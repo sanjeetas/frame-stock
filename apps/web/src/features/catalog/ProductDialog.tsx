@@ -15,6 +15,7 @@ import { imageUrl } from "../../lib/utils";
 import { LicenseRequest } from "../library/LicenseRequest";
 import { ProofCanvas } from "../editor/ProofCanvas";
 import { Price } from "./Price";
+import { createProductSettings } from "../editor/studioTemplates";
 interface Props {
   product: Product | null;
   onClose: () => void;
@@ -22,23 +23,35 @@ interface Props {
   onSignIn: () => void;
 }
 export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
+  const [options, setOptions] = useState<Record<string, string>>(() =>
+    Object.fromEntries(
+      (p?.customisation?.options || []).map((option) => [
+        option.key,
+        option.values[0]!,
+      ]),
+    ),
+  );
+  const [proofSide, setProofSide] = useState<"front" | "back">("front");
   const artworkRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState(false);
   const [editor, setEditor] = useState(false),
     [design, setDesign] = useState<DesignSettings | undefined>(),
     [error, setError] = useState("");
   const startingDesign = useMemo(
-    () => ({
-      ...initialDesign,
-      headline: "",
-      subtitle: "",
-      ...(p?.kind === "image"
-        ? { imageProductId: p.id }
-        : p
-          ? { baseProductId: p.id }
-          : {}),
-    }),
-    [p?.id],
+    () =>
+      p?.customisation
+        ? createProductSettings(p, options)
+        : {
+            ...initialDesign,
+            headline: "",
+            subtitle: "",
+            ...(p?.kind === "image"
+              ? { imageProductId: p.id }
+              : p
+                ? { baseProductId: p.id }
+                : {}),
+          },
+    [p?.id, options],
   );
   async function downloadPreview() {
     if (!p) return;
@@ -95,15 +108,22 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
       setError("Quantity must be between 1 and 10,000.");
       return;
     }
+    if (p.customisation && (!design?.artworkApproved || !design.studio)) {
+      setError(
+        "Customise your artwork and approve its preview before adding it to your order.",
+      );
+      return;
+    }
     onAdd({
       key: crypto.randomUUID(),
       productId: p.id,
       title: p.title,
       unit: p.unit,
-      price: p.price,
+      price: p.customisation?.quoteRequired ? null : p.price,
       quantity,
       customization: {
         requirements: String(form.get("requirements") || ""),
+        ...(p.customisation ? { options } : {}),
         ...(design ? { design } : {}),
       },
     });
@@ -129,7 +149,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                 className="aspect-square overflow-hidden rounded-lg bg-slate-100"
               >
                 {design ? (
-                  <ProofCanvas settings={design} />
+                  <ProofCanvas settings={design} side={proofSide} />
                 ) : (
                   <Artwork product={p} />
                 )}
@@ -145,7 +165,11 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                   {p.description}
                 </DialogDescription>
                 <p className="mb-5 text-xl font-bold text-primary">
-                  <Price product={p} />{" "}
+                  {p.customisation?.quoteRequired ? (
+                    "Price on request"
+                  ) : (
+                    <Price product={p} />
+                  )}{" "}
                   <span className="text-xs font-normal">
                     {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
                   </span>
@@ -160,6 +184,67 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                   />
                 ) : (
                   <form onSubmit={add} className="space-y-4">
+                    {p.customisation && (
+                      <>
+                        <p className="rounded-lg bg-cyan-50 p-3 text-sm text-primary">
+                          Choose your specifications, then create and approve
+                          your artwork. PHULO will confirm the final print
+                          quote.
+                        </p>
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          {p.customisation.options.map((option) => (
+                            <Field key={option.key} label={option.label}>
+                              {(id) => (
+                                <select
+                                  id={id}
+                                  className="w-full"
+                                  value={options[option.key]}
+                                  onChange={(e) => {
+                                    const next = {
+                                      ...options,
+                                      [option.key]: e.target.value,
+                                    };
+                                    setOptions(next);
+                                    if (design)
+                                      setDesign(
+                                        createProductSettings(p, next, design),
+                                      );
+                                    setError("");
+                                  }}
+                                >
+                                  {option.values.map((value) => (
+                                    <option key={value}>{value}</option>
+                                  ))}
+                                </select>
+                              )}
+                            </Field>
+                          ))}
+                        </div>
+                        {design?.studio &&
+                          (design.studio.twoSided ||
+                            design.studio.format === "card") && (
+                            <div
+                              className="flex gap-2"
+                              aria-label="Preview artwork side"
+                            >
+                              {(["front", "back"] as const).map((side) => (
+                                <Button
+                                  key={side}
+                                  type="button"
+                                  size="sm"
+                                  variant={
+                                    proofSide === side ? "default" : "outline"
+                                  }
+                                  onClick={() => setProofSide(side)}
+                                  className="capitalize"
+                                >
+                                  {side} preview
+                                </Button>
+                              ))}
+                            </div>
+                          )}
+                      </>
+                    )}
                     <Field label="Quantity / area units" error={error}>
                       {(id) => (
                         <Input
@@ -184,10 +269,15 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                     </Field>
                     {design && (
                       <p role="status" className="text-sm text-emerald-700">
-                        Custom design applied.
+                        {design.artworkApproved
+                          ? "Artwork approved and ready for your order."
+                          : "Options changed — review your artwork again."}
                       </p>
                     )}
-                    <Button className="w-full">
+                    <Button
+                      className="w-full"
+                      disabled={!!p.customisation && !design?.artworkApproved}
+                    >
                       {p.kind === "image"
                         ? "Add HD license request"
                         : "Add to order"}
@@ -205,7 +295,8 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                           : "Download free preview"}
                       </Button>
                     )}
-                    {(p.editable ||
+                    {(p.customisation ||
+                      p.editable ||
                       p.group === "Customised Products" ||
                       /visiting.?card|business.?card/i.test(p.title)) && (
                       <Button
@@ -216,7 +307,9 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                       >
                         {/visiting.?card|business.?card/i.test(p.title)
                           ? "Choose template & customise ↗"
-                          : "Customise design ↗"}
+                          : design
+                            ? "Edit / review your artwork ↗"
+                            : "Start designing ↗"}
                       </Button>
                     )}
                     <Button asChild variant="outline" className="w-full">

@@ -7,6 +7,8 @@ import {
   Circle,
   FabricImage,
   Shadow,
+  Ellipse,
+  filters,
   type FabricObject,
 } from "fabric";
 import { cropPixels } from "./studioActions";
@@ -21,8 +23,14 @@ import { api } from "../../lib/api";
 import { apiBase, imageUrl } from "../../lib/utils";
 export type StudioObject = FabricObject & { studioElement?: StudioElement };
 const imageCache = new Map<string, Promise<HTMLImageElement>>();
-async function imageElement(productId?: string, uploadId?: string) {
-  const key = productId ? `product:${productId}` : `upload:${uploadId}`;
+async function imageElement(
+  productId?: string,
+  uploadId?: string,
+  mockup = false,
+) {
+  const key = productId
+    ? `product:${productId}:${mockup}`
+    : `upload:${uploadId}`;
   const load = async () => {
     let url: string;
     if (uploadId) {
@@ -32,7 +40,12 @@ async function imageElement(productId?: string, uploadId?: string) {
       const product = await api<Product>("/products/" + productId);
       if (!product.data.image)
         throw Error("This product has no preview image.");
-      url = imageUrl(product.data.image);
+      url = imageUrl(
+        mockup
+          ? product.data.customisation?.profile.mockupImage ||
+              product.data.image
+          : product.data.image,
+      );
     }
     const response = await fetch(url, { credentials: "include" });
     if (!response.ok)
@@ -213,8 +226,8 @@ export async function renderStudioPage(
 ) {
   const page = document.pages[side];
   let background: FabricImage | undefined;
-  if (baseProductId && document.format === "product" && side === "front") {
-    const source = await imageElement(baseProductId);
+  if (baseProductId && document.format === "product") {
+    const source = await imageElement(baseProductId, undefined, true);
     const image = new FabricImage(source, {
       selectable: false,
       evented: false,
@@ -228,6 +241,16 @@ export async function renderStudioPage(
       document.height / source.naturalHeight,
     );
     image.scale(ratio);
+    if (document.productColour) {
+      image.filters = [
+        new filters.BlendColor({
+          color: document.productColour,
+          mode: "multiply",
+          alpha: 1,
+        }),
+      ];
+      image.applyFilters();
+    }
     background = image;
   }
   const objects = await Promise.all(
@@ -238,6 +261,7 @@ export async function renderStudioPage(
   canvas.setDimensions({ width: document.width, height: document.height });
   canvas.backgroundColor = page.background;
   if (background) canvas.add(background);
+  for (const object of objects) applyStudioClip(object, document);
   canvas.add(...objects);
   if (watermark)
     for (let y = 20; y < document.height + 100; y += 130)
@@ -270,4 +294,34 @@ export async function studioPreview(
   } finally {
     await canvas.dispose();
   }
+}
+
+export function applyStudioClip(
+  object: StudioObject,
+  document: StudioDocument,
+) {
+  const area = document.printArea;
+  if (!area && !document.shape) return;
+  const left = area ? area.x * document.width : 0;
+  const top = area ? area.y * document.height : 0;
+  const width = area ? area.width * document.width : document.width;
+  const height = area ? area.height * document.height : document.height;
+  const common = {
+    left,
+    top,
+    width,
+    height,
+    originX: "left" as const,
+    originY: "top" as const,
+    absolutePositioned: true,
+    fill: "#000000",
+  };
+  object.clipPath =
+    document.shape === "circle" || document.shape === "oval"
+      ? new Ellipse({ ...common, rx: width / 2, ry: height / 2 })
+      : new Rect({
+          ...common,
+          rx: document.shape === "rounded" ? 35 : 0,
+          ry: document.shape === "rounded" ? 35 : 0,
+        });
 }

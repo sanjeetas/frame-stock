@@ -35,6 +35,11 @@ export interface StudioPage {
 export interface StudioDocument {
   version: 1;
   format: "card" | "product";
+  twoSided?: boolean;
+  productColour?: string;
+  shape?: "circle" | "oval" | "rounded";
+  printArea?: { x: number; y: number; width: number; height: number };
+  specification?: string;
   width: number;
   height: number;
   template: string;

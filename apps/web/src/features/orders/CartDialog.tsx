@@ -117,6 +117,13 @@ export function CartDialog({
                 {i.quantity} {i.unit} · {money(i.price)}
                 {i.customization.design ? " · Custom design" : ""}
               </p>
+              {i.customization.options && (
+                <p className="mt-1 text-xs text-primary">
+                  {Object.entries(i.customization.options)
+                    .map(([key, value]) => `${key}: ${value}`)
+                    .join(" · ")}
+                </p>
+              )}
               <p className="text-xs text-slate-500">
                 {i.customization.requirements}
               </p>
