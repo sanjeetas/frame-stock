@@ -1,3 +1,4 @@
+import { magnetTemplate } from "./magnetTemplate";
 import {
   useCallback,
   useEffect,
@@ -362,7 +363,14 @@ export default function StudioEditor({
     setLoading(true);
     setError("");
     setSelected(null);
-    renderStudioPage(canvas, documentRef.current, side, initial?.baseProductId, false, view)
+    renderStudioPage(
+      canvas,
+      documentRef.current,
+      side,
+      initial?.baseProductId,
+      false,
+      view,
+    )
       .then(() => {
         if (mounted) {
           loaded = true;
@@ -552,7 +560,26 @@ export default function StudioEditor({
   }
   function applyTemplate(id: string) {
     setTab("text");
-    if (document.format === "card") {
+    if (document.surface === "magnet") {
+      const theme = studioTemplates.find((item) => item.id === id)!;
+      const page = magnetTemplate(document.width, document.height);
+      page.background = theme.background;
+      const photos = document.pages.front.elements.filter(
+        (item) => item.type === "image",
+      );
+      if (photos.length)
+        page.elements = [
+          ...photos,
+          ...page.elements.filter((item) => item.id === "magnet-caption"),
+        ];
+      page.elements.find((item) => item.id === "magnet-caption")!.fill =
+        theme.color;
+      replace({
+        ...document,
+        template: id,
+        pages: { ...document.pages, front: page },
+      });
+    } else if (document.format === "card") {
       const next = resizeStudio(
         createCardTemplate(id),
         document.width,
@@ -676,6 +703,18 @@ export default function StudioEditor({
     setBusy(true);
     setError("");
     try {
+      if (
+        !targetId &&
+        documentRef.current.surface === "magnet" &&
+        canvas
+          .getObjects()
+          .some(
+            (item) =>
+              (item as StudioObject).studioElement?.id ===
+              "magnet-photo-placeholder",
+          )
+      )
+        targetId = "magnet-photo-placeholder";
       let target = targetId
         ? (canvas
             .getObjects()
@@ -718,15 +757,24 @@ export default function StudioEditor({
       });
       const replacement = await buildStudioObject(item, canvas),
         index = canvas.getObjects().indexOf(target);
-      const obsolete = logo
+      const magnetPhoto = previous.id === "magnet-photo-placeholder";
+      const obsolete = magnetPhoto
         ? canvas
             .getObjects()
             .filter((item) =>
-              ["logo-placeholder", "logo-label"].includes(
+              ["magnet-photo-placeholder", "magnet-photo-label"].includes(
                 (item as StudioObject).studioElement?.id || "",
               ),
             )
-        : [target];
+        : logo
+          ? canvas
+              .getObjects()
+              .filter((item) =>
+                ["logo-placeholder", "logo-label"].includes(
+                  (item as StudioObject).studioElement?.id || "",
+                ),
+              )
+          : [target];
       applyStudioClip(replacement, documentRef.current);
       canvas.remove(...obsolete);
       canvas.insertAt(index, replacement);
@@ -1043,12 +1091,51 @@ export default function StudioEditor({
             <aside className="studio-panel">
               {initial?.baseProductId && (
                 <div className="mb-5 rounded-xl border bg-slate-50 p-3">
-                  <img src={`${apiBase}/products/${initial.baseProductId}/preview`} alt={product?.title || "Selected product reference"} className="mx-auto mb-2 h-24 w-full object-contain" />
-                  <p className="text-sm font-semibold">{product?.title || "Selected product"}</p>
-                  {document.format === "product" && <div className="mt-3 flex gap-2">
-                    {(["product", "artwork"] as const).map((mode) => <Button key={mode} size="sm" variant={view === mode ? "default" : "outline"} aria-pressed={view === mode} disabled={loading || busy} onClick={() => { commit(); setView(mode); }}>{mode === "product" ? "Product view" : "Artwork view"}</Button>)}
-                  </div>}
-                  <p className="mt-2 text-xs text-slate-600">Product reference. Add and move your own text or images above it. Printed text in the photo is part of the reference.</p>
+                  <img
+                    src={`${apiBase}/products/${initial.baseProductId}/preview`}
+                    alt={product?.title || "Selected product reference"}
+                    className="mx-auto mb-2 h-24 w-full object-contain"
+                  />
+                  <p className="text-sm font-semibold">
+                    {product?.title || "Selected product"}
+                  </p>
+                  {document.surface === "magnet" && (
+                    <Button
+                      className="w-full"
+                      onClick={() => {
+                        setTab("uploads");
+                        askUpload(false);
+                      }}
+                      disabled={loading || busy}
+                    >
+                      <Upload size={20} /> Add your photo
+                    </Button>
+                  )}
+
+                  {document.format === "product" && (
+                    <div className="mt-3 flex gap-2">
+                      {(["product", "artwork"] as const).map((mode) => (
+                        <Button
+                          key={mode}
+                          size="sm"
+                          variant={view === mode ? "default" : "outline"}
+                          aria-pressed={view === mode}
+                          disabled={loading || busy}
+                          onClick={() => {
+                            commit();
+                            setView(mode);
+                          }}
+                        >
+                          {mode === "product" ? "Product view" : "Artwork view"}
+                        </Button>
+                      ))}
+                    </div>
+                  )}
+                  <p className="mt-2 text-xs text-slate-600">
+                    {document.surface === "magnet"
+                      ? "Single magnet, front view. Upload your photo to replace the coloured placeholder. Edit and move the caption directly."
+                      : "Product reference. Add and move your own text or images above it. Printed text in the photo is part of the reference."}
+                  </p>
                 </div>
               )}
               <h2 className="mb-5 text-xl font-bold">
@@ -1227,6 +1314,7 @@ export default function StudioEditor({
                     Upload photo / logo
                   </Button>
                   {(selected?.type === "image" ||
+                    selected?.id === "magnet-photo-placeholder" ||
                     selected?.id === "logo-placeholder" ||
                     selected?.id === "logo-label") && (
                     <Button
@@ -1276,6 +1364,7 @@ export default function StudioEditor({
                               Add image
                             </Button>
                             {(selected?.type === "image" ||
+                              selected?.id === "magnet-photo-placeholder" ||
                               selected?.id === "logo-placeholder" ||
                               selected?.id === "logo-label") && (
                               <button

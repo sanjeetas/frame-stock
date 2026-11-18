@@ -35,6 +35,7 @@ export interface StudioPage {
 export interface StudioDocument {
   version: 1;
   format: "card" | "product";
+  surface?: "magnet";
   twoSided?: boolean;
   productColour?: string;
   shape?: "circle" | "oval" | "rounded";

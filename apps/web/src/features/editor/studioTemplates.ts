@@ -1,3 +1,4 @@
+import { magnetTemplate } from "./magnetTemplate.ts";
 import type { Product, DesignSettings } from "../../types/index.ts";
 import {
   element,
@@ -349,6 +350,14 @@ export function createProductSettings(
   }
   doc.printArea = p.printArea;
   doc.specification = p.label;
+  if (config.family === "Magnets" && product.title !== "Magnet Calendars") {
+    doc.surface = "magnet";
+    doc.shape =
+      options.shape === "Rectangle" ? undefined : doc.shape || "rounded";
+    doc.printArea = { x: 0.08, y: 0.08, width: 0.84, height: 0.84 };
+    if (!previous?.studio)
+      doc.pages.front = magnetTemplate(doc.width, doc.height);
+  }
   settings.studio = doc;
   return settings;
 }

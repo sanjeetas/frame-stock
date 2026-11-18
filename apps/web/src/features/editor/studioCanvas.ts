@@ -25,20 +25,39 @@ async function imageElement(productId?: string, uploadId?: string) {
   const key = productId ? `product:${productId}` : `upload:${uploadId}`;
   const load = async () => {
     if (uploadId) await api("/auth/me");
-    const response = await fetch(apiBase + (uploadId ? "/design-images/" + uploadId : "/products/" + productId + "/preview"), { credentials: "include" });
-    if (!response.ok) throw Error("Image could not be loaded. Try again or choose another image.");
+    const response = await fetch(
+      apiBase +
+        (uploadId
+          ? "/design-images/" + uploadId
+          : "/products/" + productId + "/preview"),
+      { credentials: "include" },
+    );
+    if (!response.ok)
+      throw Error(
+        "Image could not be loaded. Try again or choose another image.",
+      );
     const objectUrl = URL.createObjectURL(await response.blob());
     try {
       const image = new Image();
       image.src = objectUrl;
       await image.decode();
       return image;
-    } finally { URL.revokeObjectURL(objectUrl); }
+    } finally {
+      URL.revokeObjectURL(objectUrl);
+    }
   };
   // Private uploads always use the current session; only public product previews are cached.
   if (uploadId) return load();
-  if (imageCache.size >= 12 && !imageCache.has(key)) imageCache.delete(imageCache.keys().next().value!);
-  if (!imageCache.has(key)) imageCache.set(key, load().catch((error) => { imageCache.delete(key); throw error; }));
+  if (imageCache.size >= 12 && !imageCache.has(key))
+    imageCache.delete(imageCache.keys().next().value!);
+  if (!imageCache.has(key))
+    imageCache.set(
+      key,
+      load().catch((error) => {
+        imageCache.delete(key);
+        throw error;
+      }),
+    );
   return imageCache.get(key)!;
 }
 export function createStudioImage(
@@ -192,7 +211,12 @@ export async function renderStudioPage(
 ) {
   const page = document.pages[side];
   let background: FabricImage | undefined;
-  if (baseProductId && document.format === "product" && view === "product") {
+  if (
+    baseProductId &&
+    document.format === "product" &&
+    document.surface !== "magnet" &&
+    view === "product"
+  ) {
     const source = await imageElement(baseProductId);
     const image = new FabricImage(source, {
       selectable: false,
@@ -216,6 +240,55 @@ export async function renderStudioPage(
   canvas.clear();
   canvas.setDimensions({ width: document.width, height: document.height });
   canvas.backgroundColor = page.background;
+  if (document.surface === "magnet" && view === "product") {
+    // Keep workspace furniture outside the persisted artwork layers.
+    canvas.add(
+      new Rect({
+        left: 0,
+        top: 0,
+        width: document.width,
+        height: document.height,
+        originX: "left",
+        originY: "top",
+        fill: "#edf1f5",
+        selectable: false,
+        evented: false,
+      }),
+    );
+    const area = document.printArea || {
+      x: 0.08,
+      y: 0.08,
+      width: 0.84,
+      height: 0.84,
+    };
+    const options = {
+      left: area.x * document.width,
+      top: area.y * document.height,
+      width: area.width * document.width,
+      height: area.height * document.height,
+      originX: "left" as const,
+      originY: "top" as const,
+      fill: page.background,
+      stroke: "#cbd5e1",
+      strokeWidth: 2,
+      selectable: false,
+      evented: false,
+      shadow: new Shadow({ color: "#10375926", blur: 16, offsetY: 8 }),
+    };
+    canvas.add(
+      document.shape === "circle" || document.shape === "oval"
+        ? new Ellipse({
+            ...options,
+            rx: options.width / 2,
+            ry: options.height / 2,
+          })
+        : new Rect({
+            ...options,
+            rx: document.shape === "rounded" ? 35 : 0,
+            ry: document.shape === "rounded" ? 35 : 0,
+          }),
+    );
+  }
   if (background) canvas.add(background);
   for (const object of objects) applyStudioClip(object, document);
   canvas.add(...objects);

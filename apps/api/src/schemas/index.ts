@@ -152,6 +152,7 @@ const studioDocument = z
   .object({
     version: z.literal(1),
     format: z.enum(["card", "product"]),
+    surface: z.literal("magnet").optional(),
     twoSided: z.boolean().optional(),
     productColour: z
       .string()

@@ -154,30 +154,92 @@ export async function seedCustomProducts() {
     { ordered: false },
   );
   await applyCustomImageCorrections();
+  await applySingleMagnetCorrections();
 }
-
 
 // Swap only the shipped placeholder paths; preserve custom admin uploads and prices.
 export async function applyCustomImageCorrections() {
-  const rows = z.array(z.object({
-    slug: z.string().regex(/^[\w-]{1,80}$/),
-    previousImage: z.string().regex(/^assets\/[\w.-]+$/),
-    image: productBody.shape.image.refine((value) => value.startsWith("https://"), "Use a verified HTTPS product photo."),
-  })).parse(JSON.parse(await readFile(
-    new URL("../../../../public/custom-image-corrections.json", import.meta.url), "utf8",
-  )));
+  const rows = z
+    .array(
+      z.object({
+        slug: z.string().regex(/^[\w-]{1,80}$/),
+        previousImage: z.string().regex(/^assets\/[\w.-]+$/),
+        image: productBody.shape.image.refine(
+          (value) => value.startsWith("https://"),
+          "Use a verified HTTPS product photo.",
+        ),
+      }),
+    )
+    .parse(
+      JSON.parse(
+        await readFile(
+          new URL(
+            "../../../../public/custom-image-corrections.json",
+            import.meta.url,
+          ),
+          "utf8",
+        ),
+      ),
+    );
   if (!rows.length) return;
   // Keep the editor's blank base separate from catalogue photography.
-  await Product.bulkWrite(rows.map((row) => ({ updateOne: {
-    filter: {
-      slug: row.slug, image: row.previousImage,
-      "customisation.profile.mockup": true,
-      "customisation.profile.mockupImage": { $exists: false },
-    },
-    update: { $set: { "customisation.profile.mockupImage": row.previousImage } },
-  } })), { ordered: false });
-  await Product.bulkWrite(rows.map((row) => ({ updateOne: {
-    filter: { slug: row.slug, image: row.previousImage },
-    update: { $set: { image: row.image } },
-  } })), { ordered: false });
+  await Product.bulkWrite(
+    rows.map((row) => ({
+      updateOne: {
+        filter: {
+          slug: row.slug,
+          image: row.previousImage,
+          "customisation.profile.mockup": true,
+          "customisation.profile.mockupImage": { $exists: false },
+        },
+        update: {
+          $set: { "customisation.profile.mockupImage": row.previousImage },
+        },
+      },
+    })),
+    { ordered: false },
+  );
+  await Product.bulkWrite(
+    rows.map((row) => ({
+      updateOne: {
+        filter: { slug: row.slug, image: row.previousImage },
+        update: { $set: { image: row.image } },
+      },
+    })),
+    { ordered: false },
+  );
+}
+
+// Correct only the shipped multi-product scenes; preserve admin photos and pricing.
+export async function applySingleMagnetCorrections() {
+  const rows = z
+    .array(
+      z
+        .object({
+          slug: z.string().regex(/^[\w-]{1,80}$/),
+          previousImage: z.url(),
+          image: z.literal("assets/single-photo-magnet.svg"),
+        })
+        .strict(),
+    )
+    .parse(
+      JSON.parse(
+        await readFile(
+          new URL(
+            "../../../../public/single-magnet-corrections.json",
+            import.meta.url,
+          ),
+          "utf8",
+        ),
+      ),
+    );
+  await Product.bulkWrite(
+    rows.map((row) => ({
+      updateOne: {
+        filter: { slug: row.slug, image: row.previousImage },
+        update: { $set: { image: row.image } },
+      },
+    })),
+    { ordered: false },
+  );
 }

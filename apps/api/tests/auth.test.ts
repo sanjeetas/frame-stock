@@ -1143,10 +1143,17 @@ test("custom collection seeds additively, preserves source/admin data and filter
       null,
       "Do not invent PHULO prices from competitor pricing",
     );
-    assert.equal(new URL(row.image).protocol, "https:");
+    if (row.image.startsWith("assets/"))
+      await readFile(new URL("../../../public/" + row.image, import.meta.url));
+    else assert.equal(new URL(row.image).protocol, "https:");
     if (row.customisation.profile.mockup) {
       assert.match(row.customisation.profile.mockupImage, /^assets\/[\w.-]+$/);
-      await readFile(new URL("../../../public/" + row.customisation.profile.mockupImage, import.meta.url));
+      await readFile(
+        new URL(
+          "../../../public/" + row.customisation.profile.mockupImage,
+          import.meta.url,
+        ),
+      );
     }
   }
   const source = await Product.findOne({ slug: "p42" });
@@ -1287,11 +1294,23 @@ test("configured products validate selections and approval server-side, then per
 
 test("product photos match the catalogue and migration preserves editor bases, prices and admin uploads", async () => {
   const { readFile } = await import("node:fs/promises");
-  const { applyCustomImageCorrections } = await import("../src/services/bootstrap.service.js");
-  const rows = JSON.parse(await readFile(new URL("../../../public/custom-image-corrections.json", import.meta.url), "utf8"));
+  const { applyCustomImageCorrections } =
+    await import("../src/services/bootstrap.service.js");
+  const rows = JSON.parse(
+    await readFile(
+      new URL("../../../public/custom-image-corrections.json", import.meta.url),
+      "utf8",
+    ),
+  );
   assert.equal(rows.length, 324);
   assert.equal(new Set(rows.map((r: any) => r.slug)).size, 324);
-  const previewHosts = new Set(["cms.cloudinary.vpsvc.com", "rlv.zcache.com", "i.etsystatic.com", "utmprinting.com", "m.media-amazon.com"]);
+  const previewHosts = new Set([
+    "cms.cloudinary.vpsvc.com",
+    "rlv.zcache.com",
+    "i.etsystatic.com",
+    "utmprinting.com",
+    "m.media-amazon.com",
+  ]);
   for (const row of rows) {
     const url = new URL(row.image);
     assert.equal(url.protocol, "https:");
@@ -1303,17 +1322,27 @@ test("product photos match the catalogue and migration preserves editor bases, p
   }
   const row = rows.find((r: any) => r.slug === "custom-personalised-mugs");
   assert.ok(row);
-  await Product.updateOne({ slug: row.slug }, {
-    $set: { image: row.previousImage, price: 1234, "customisation.profile.mockup": true },
-    $unset: { "customisation.profile.mockupImage": 1 },
-  });
+  await Product.updateOne(
+    { slug: row.slug },
+    {
+      $set: {
+        image: row.previousImage,
+        price: 1234,
+        "customisation.profile.mockup": true,
+      },
+      $unset: { "customisation.profile.mockupImage": 1 },
+    },
+  );
   await applyCustomImageCorrections();
   const p = await Product.findOne({ slug: row.slug });
   assert.equal(p!.image, row.image);
   assert.equal(p!.price, 1234);
   assert.equal(p!.customisation!.profile.mockupImage, row.previousImage);
   const published = p!.published;
-  await Product.updateOne({ slug: row.slug }, { $set: { image: "https://example.test/my-own-photo.webp" } });
+  await Product.updateOne(
+    { slug: row.slug },
+    { $set: { image: "https://example.test/my-own-photo.webp" } },
+  );
   await applyCustomImageCorrections();
   const again = await Product.findOne({ slug: row.slug });
   assert.equal(again!.image, "https://example.test/my-own-photo.webp");
@@ -1323,28 +1352,128 @@ test("product photos match the catalogue and migration preserves editor bases, p
 
 test("product editor previews use the published catalogue photo and reject private or unsafe sources", async () => {
   const sharp = (await import("sharp")).default;
-  const { validatePreviewSource } = await import("../src/services/product-preview.service.js");
-  for (const source of ["http://phulo.in/a.png", "https://127.0.0.1/a.png", "https://phulo.in.evil.test/a.png", "https://user:secret@phulo.in/a.png", "https://phulo.in:8080/a.png"])
+  const { validatePreviewSource } =
+    await import("../src/services/product-preview.service.js");
+  for (const source of [
+    "http://phulo.in/a.png",
+    "https://127.0.0.1/a.png",
+    "https://phulo.in.evil.test/a.png",
+    "https://user:secret@phulo.in/a.png",
+    "https://phulo.in:8080/a.png",
+  ])
     assert.throws(() => validatePreviewSource(source));
-  const image = await sharp({ create: { width: 24, height: 16, channels: 3, background: "#d92180" } }).png().toBuffer();
+  const image = await sharp({
+    create: { width: 24, height: 16, channels: 3, background: "#d92180" },
+  })
+    .png()
+    .toBuffer();
   const originalFetch = globalThis.fetch;
   let calls = 0;
-  globalThis.fetch = async () => { calls++; return new Response(image, { headers: { "Content-Type": "image/png" } }); };
+  globalThis.fetch = async () => {
+    calls++;
+    return new Response(image, { headers: { "Content-Type": "image/png" } });
+  };
   try {
-    const p = await Product.create({ slug: "editor-preview-regression", title: "Photo Magnet", category: "Magnets", group: "Customised Products", kind: "product", image: "https://cms.cloudinary.vpsvc.com/magnet.png", editable: true });
-    const result = await request(app).get(`/api/products/${p.id}/preview`).expect(200).expect("Content-Type", /image\/png/);
+    const p = await Product.create({
+      slug: "editor-preview-regression",
+      title: "Photo Magnet",
+      category: "Magnets",
+      group: "Customised Products",
+      kind: "product",
+      image: "https://cms.cloudinary.vpsvc.com/magnet.png",
+      editable: true,
+    });
+    const result = await request(app)
+      .get(`/api/products/${p.id}/preview`)
+      .expect(200)
+      .expect("Content-Type", /image\/png/);
     const pixel = await sharp(result.body).raw().toBuffer();
     assert.deepEqual([...pixel.subarray(0, 3)], [217, 33, 128]);
     await request(app).get(`/api/products/${p.id}/preview`).expect(200);
     assert.equal(calls, 1);
-    await request(app).get(`/api/products/${p.id}/preview?url=https://evil.test`).expect(400);
+    await request(app)
+      .get(`/api/products/${p.id}/preview?url=https://evil.test`)
+      .expect(400);
     await Product.updateOne({ _id: p.id }, { published: false });
     await request(app).get(`/api/products/${p.id}/preview`).expect(404);
-    await Product.updateOne({ _id: p.id }, { published: true, image: "/api/design-images/012345678901234567890123" });
+    await Product.updateOne(
+      { _id: p.id },
+      { published: true, image: "/api/design-images/012345678901234567890123" },
+    );
     await request(app).get(`/api/products/${p.id}/preview`).expect(400);
-    await Product.updateOne({ _id: p.id }, { image: "https://phulo.in/redirect.png" });
-    globalThis.fetch = async () => new Response(null, { status: 302, headers: { location: "http://127.0.0.1/private" } });
+    await Product.updateOne(
+      { _id: p.id },
+      { image: "https://phulo.in/redirect.png" },
+    );
+    globalThis.fetch = async () =>
+      new Response(null, {
+        status: 302,
+        headers: { location: "http://127.0.0.1/private" },
+      });
     await request(app).get(`/api/products/${p.id}/preview`).expect(400);
     await p.deleteOne();
-  } finally { globalThis.fetch = originalFetch; }
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("single magnet correction replaces fridge scenes once and preserves admin images, price and visibility", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { applySingleMagnetCorrections } =
+    await import("../src/services/bootstrap.service.js");
+  const rows = JSON.parse(
+    await readFile(
+      new URL(
+        "../../../public/single-magnet-corrections.json",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  );
+  for (const row of rows) {
+    await Product.updateOne(
+      { slug: row.slug },
+      { $set: { image: row.previousImage, price: 375, published: false } },
+    );
+  }
+  await applySingleMagnetCorrections();
+  for (const row of rows) {
+    const product = await Product.findOne({ slug: row.slug });
+    assert.equal(product!.image, "assets/single-photo-magnet.svg");
+    assert.equal(product!.price, 375);
+    assert.equal(product!.published, false);
+    await Product.updateOne(
+      { slug: row.slug },
+      { $set: { image: "https://example.test/admin-magnet.png" } },
+    );
+  }
+  await applySingleMagnetCorrections();
+  assert.equal(
+    (await Product.findOne({ slug: rows[0].slug }))!.image,
+    "https://example.test/admin-magnet.png",
+  );
+  const { settings } = await import("../src/schemas/index.js");
+  const { createProductSettings } =
+    await import("../../web/src/features/editor/studioTemplates.ts");
+  const catalog = JSON.parse(
+    await readFile(
+      new URL("../../../public/custom-products.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  const product = catalog.products.find(
+    (p: any) => p.id === "custom-photo-magnets",
+  );
+  const design = createProductSettings(
+    { ...product, id: String(new mongoose.Types.ObjectId()) },
+    {},
+  );
+  assert.equal(settings.parse(design).studio!.surface, "magnet");
+  assert.equal(
+    settings.safeParse({
+      ...design,
+      studio: { ...design.studio, surface: "arbitrary" },
+    }).success,
+    false,
+  );
 });

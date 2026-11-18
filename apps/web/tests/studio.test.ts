@@ -358,15 +358,111 @@ test("print-area clipping trims exported product artwork while preserving editab
 
 test("magnet and other product editors retain the selected product identity", async () => {
   const { readFile } = await import("node:fs/promises");
-  const { createProductSettings } = await import("../src/features/editor/studioTemplates.ts");
-  const catalogue = JSON.parse(await readFile(new URL("../../../public/custom-products.json", import.meta.url), "utf8"));
-  for (const title of ["Photo Magnets", "Men's Cotton T-Shirts", "Square Visiting Cards"]) {
+  const { createProductSettings } =
+    await import("../src/features/editor/studioTemplates.ts");
+  const catalogue = JSON.parse(
+    await readFile(
+      new URL("../../../public/custom-products.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  for (const title of [
+    "Photo Magnets",
+    "Men's Cotton T-Shirts",
+    "Square Visiting Cards",
+  ]) {
     const product = catalogue.products.find((p: any) => p.title === title);
     assert.ok(product, title);
-    const settings = createProductSettings({ ...product, id: "selected-product" }, {});
+    const settings = createProductSettings(
+      { ...product, id: "selected-product" },
+      {},
+    );
     assert.equal(settings.baseProductId, "selected-product", title);
-    const reopened = createProductSettings({ ...product, id: "selected-product" }, {}, settings);
+    const reopened = createProductSettings(
+      { ...product, id: "selected-product" },
+      {},
+      settings,
+    );
     assert.equal(reopened.baseProductId, "selected-product");
     assert.deepEqual(reopened.studio!.pages, settings.studio!.pages);
+  }
+});
+
+test("single magnet renders without a fridge or a scene request; editing and export preserve only customer layers", async () => {
+  const native = await import("fabric/node");
+  const fabric = await import("fabric");
+  fabric.setEnv(native.getEnv());
+  const { readFile } = await import("node:fs/promises");
+  const { createProductSettings } =
+    await import("../src/features/editor/studioTemplates.ts");
+  const { renderStudioPage, readStudioPage, studioPreview } =
+    await import("../src/features/editor/studioCanvas.ts");
+  const products = JSON.parse(
+    await readFile(
+      new URL("../../../public/custom-products.json", import.meta.url),
+      "utf8",
+    ),
+  ).products;
+  const photo = products.find((p: any) => p.title === "Photo Magnets");
+  const configured = createProductSettings(
+    { ...photo, id: "single-magnet" },
+    { shape: "Rounded corners" },
+  );
+  const doc = configured.studio!;
+  assert.equal(doc.surface, "magnet");
+  assert.equal(doc.shape, "rounded");
+  assert.equal(
+    doc.pages.front.elements.filter((e) => e.id === "magnet-photo-placeholder")
+      .length,
+    1,
+  );
+  const canvas = new fabric.Canvas(undefined);
+  const fetchBefore = globalThis.fetch;
+  globalThis.fetch = async () => {
+    throw new Error("Single magnet must not load a fridge scene");
+  };
+  try {
+    await renderStudioPage(canvas, doc, "front", configured.baseProductId);
+    assert.equal(canvas.getObjects().filter((o) => !o.selectable).length, 2);
+    const bounds = canvas.getObjects()[1]!.getBoundingRect();
+    assert.equal(bounds.left, doc.width * 0.08);
+    assert.equal(bounds.top, doc.height * 0.08);
+    const caption = canvas
+      .getObjects()
+      .find(
+        (o) => (o as any).studioElement?.id === "magnet-caption",
+      ) as InstanceType<typeof fabric.Textbox>;
+    caption.set({ text: "My new caption", left: 410, top: 760 });
+    caption.setCoords();
+    const page = readStudioPage(canvas);
+    assert.equal(page.background, "#ffffff");
+    assert.equal(page.elements.length, doc.pages.front.elements.length);
+    assert.equal(
+      page.elements.find((e) => e.id === "magnet-caption")!.text,
+      "My new caption",
+    );
+    doc.pages.front = page;
+    await renderStudioPage(
+      canvas,
+      doc,
+      "front",
+      configured.baseProductId,
+      false,
+      "artwork",
+    );
+    assert.equal(canvas.getObjects().length, page.elements.length);
+    await renderStudioPage(canvas, doc, "front", configured.baseProductId);
+    assert.equal(
+      readStudioPage(canvas).elements.find((e) => e.id === "magnet-caption")!
+        .left,
+      410,
+    );
+    assert.match(
+      await studioPreview(doc, "front", configured.baseProductId),
+      /^data:image\/png;base64,/,
+    );
+  } finally {
+    globalThis.fetch = fetchBefore;
+    await canvas.dispose();
   }
 });
