@@ -239,23 +239,26 @@ export function MagnetTemplates({
                               preserveAspectRatio="none"
                             >
                               <rect width="200" height="140" fill="#d6d6d6" />
-                              <g fill="white">
-                                <circle cx="100" cy="36" r="15" />
-                                <path d="M67 95V66Q67 50 100 50Q133 50 133 66V95Z" />
-                                <circle cx="51" cy="51" r="12" />
-                                <path d="M27 107V76Q27 63 51 63Q75 63 75 76V107Z" />
-                                <circle cx="150" cy="54" r="11" />
-                                <path d="M129 107V79Q129 65 150 65Q174 65 174 79V107Z" />
-                              </g>
+                              <rect
+                                x="12"
+                                y="12"
+                                width="176"
+                                height="116"
+                                rx="4"
+                                fill="none"
+                                stroke="#aeb8c1"
+                                strokeWidth="1.5"
+                                strokeDasharray="5 4"
+                              />
                               <text
                                 x="100"
-                                y="119"
+                                y="72"
                                 textAnchor="middle"
                                 fontFamily="Arial"
                                 fontSize="12"
                                 fill="#777"
                               >
-                                Your Photo Here
+                                YOUR PHOTO HERE
                               </text>
                             </svg>
                           );

@@ -81,6 +81,7 @@ import {
 } from "./studioCanvas";
 
 interface Props {
+  startInEditor?: boolean;
   initial?: DesignSettings;
   existingId?: string;
   product?: Product;
@@ -182,6 +183,7 @@ function NumberField({
   );
 }
 export default function StudioEditor({
+  startInEditor,
   initial,
   existingId,
   product,
@@ -203,7 +205,11 @@ export default function StudioEditor({
   const sideRef = useRef(side);
   sideRef.current = side;
   const [tab, setTab] = useState<Tab>(
-      card || document.surface === "magnet" ? "templates" : "text",
+      startInEditor
+        ? "uploads"
+        : card || document.surface === "magnet"
+          ? "templates"
+          : "text",
     ),
     [selected, setSelected] = useState<StudioElement | null>(null);
   const [node, setNode] = useState<HTMLCanvasElement | null>(null),
@@ -1101,11 +1107,13 @@ export default function StudioEditor({
               {initial?.baseProductId &&
                 !(document.surface === "magnet" && tab === "templates") && (
                   <div className="mb-5 rounded-xl border bg-slate-50 p-3">
-                    <img
-                      src={`${apiBase}/products/${initial.baseProductId}/preview`}
-                      alt={product?.title || "Selected product reference"}
-                      className="mx-auto mb-2 h-24 w-full object-contain"
-                    />
+                    {document.surface !== "magnet" && (
+                      <img
+                        src={`${apiBase}/products/${initial.baseProductId}/preview`}
+                        alt={product?.title || "Selected product reference"}
+                        className="mx-auto mb-2 h-24 w-full object-contain"
+                      />
+                    )}
                     <p className="text-sm font-semibold">
                       {product?.title || "Selected product"}
                     </p>

@@ -16,6 +16,9 @@ import { LicenseRequest } from "../library/LicenseRequest";
 import { ProofCanvas } from "../editor/ProofCanvas";
 import { Price } from "./Price";
 import { createProductSettings } from "../editor/studioTemplates";
+import { MagnetTemplates } from "../editor/MagnetTemplates";
+import { applyMagnetLayout } from "../editor/magnetTemplate";
+import { resizeStudio } from "../editor/studioActions";
 interface Props {
   product: Product | null;
   onClose: () => void;
@@ -23,6 +26,9 @@ interface Props {
   onSignIn: () => void;
 }
 export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
+  const isMagnet =
+    p?.customisation?.family === "Magnets" && p.title !== "Magnet Calendars";
+  const [choosingTemplate, setChoosingTemplate] = useState(isMagnet);
   const [options, setOptions] = useState<Record<string, string>>(() =>
     Object.fromEntries(
       (p?.customisation?.options || []).map((option) => [
@@ -53,6 +59,32 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
           },
     [p?.id, options],
   );
+  function chooseMagnetVariation(id: string, year: number) {
+    if (!p || !startingDesign.studio) return;
+    const nextOptions = { ...options, orientation: "Landscape" };
+    const configured = createProductSettings(
+      p,
+      nextOptions,
+      design || startingDesign,
+    );
+    const scene = resizeStudio(configured.studio!, 1200, 900);
+    setDesign({
+      ...configured,
+      productOptions: nextOptions,
+      studio: applyMagnetLayout(
+        {
+          ...scene,
+          specification:
+            "Landscape magnet artwork — confirm your finished size",
+        },
+        id,
+        year,
+      ),
+    });
+    setOptions(nextOptions);
+    setChoosingTemplate(false);
+    setEditor(true);
+  }
   async function downloadPreview() {
     if (!p) return;
     setDownloading(true);
@@ -132,7 +164,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
   return (
     <>
       <Dialog
-        open={!!p}
+        open={!!p && !editor}
         onOpenChange={(v) => {
           if (!v) {
             onClose();
@@ -141,204 +173,252 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
           }
         }}
       >
-        <DialogContent className="max-w-4xl">
-          {p && (
-            <div className="grid gap-6 md:grid-cols-2">
-              <div
-                ref={artworkRef}
-                className="aspect-square overflow-hidden rounded-lg bg-slate-100"
-              >
-                {design ? (
-                  <ProofCanvas settings={design} side={proofSide} />
-                ) : (
-                  <Artwork product={p} />
-                )}
-              </div>
-              <div>
-                <p className="mb-2 text-xs tracking-widest text-cyan-700">
-                  {p.category}
-                </p>
-                <DialogTitle className="text-2xl font-bold">
-                  {p.title}
+        <DialogContent
+          className={
+            choosingTemplate
+              ? "h-dvh max-h-dvh w-screen max-w-none rounded-none p-0"
+              : "max-w-4xl"
+          }
+        >
+          {p && choosingTemplate ? (
+            <>
+              <div className="flex items-center justify-between gap-3 border-b px-5 py-4 pr-14">
+                <DialogTitle className="text-lg font-semibold">
+                  {p.title} — choose a variation
                 </DialogTitle>
-                <DialogDescription className="my-3 text-sm leading-6 text-slate-500">
-                  {p.description}
-                </DialogDescription>
-                <p className="mb-5 text-xl font-bold text-primary">
-                  {p.customisation?.quoteRequired ? (
-                    "Price on request"
-                  ) : (
-                    <Price product={p} />
-                  )}{" "}
-                  <span className="text-xs font-normal">
-                    {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
-                  </span>
-                </p>
-                {p.libraryCategory ? (
-                  <LicenseRequest
-                    product={p}
-                    onSignIn={onSignIn}
-                    onPreview={downloadPreview}
-                    downloading={downloading}
-                    onEdit={() => setEditor(true)}
-                  />
-                ) : (
-                  <form onSubmit={add} className="space-y-4">
-                    {p.customisation && (
-                      <>
-                        <p className="rounded-lg bg-cyan-50 p-3 text-sm text-primary">
-                          Choose your specifications, then create and approve
-                          your artwork. PHULO will confirm the final print
-                          quote.
-                        </p>
-                        <div className="grid gap-3 sm:grid-cols-2">
-                          {p.customisation.options.map((option) => (
-                            <Field key={option.key} label={option.label}>
-                              {(id) => (
-                                <select
-                                  id={id}
-                                  className="w-full"
-                                  value={options[option.key]}
-                                  onChange={(e) => {
-                                    const next = {
-                                      ...options,
-                                      [option.key]: e.target.value,
-                                    };
-                                    setOptions(next);
-                                    if (design)
-                                      setDesign(
-                                        createProductSettings(p, next, design),
-                                      );
-                                    setError("");
-                                  }}
-                                >
-                                  {option.values.map((value) => (
-                                    <option key={value}>{value}</option>
-                                  ))}
-                                </select>
-                              )}
-                            </Field>
-                          ))}
-                        </div>
-                        {design?.studio &&
-                          (design.studio.twoSided ||
-                            design.studio.format === "card") && (
-                            <div
-                              className="flex gap-2"
-                              aria-label="Preview artwork side"
-                            >
-                              {(["front", "back"] as const).map((side) => (
-                                <Button
-                                  key={side}
-                                  type="button"
-                                  size="sm"
-                                  variant={
-                                    proofSide === side ? "default" : "outline"
-                                  }
-                                  onClick={() => setProofSide(side)}
-                                  className="capitalize"
-                                >
-                                  {side} preview
-                                </Button>
-                              ))}
-                            </div>
-                          )}
-                      </>
-                    )}
-                    <Field label="Quantity / area units" error={error}>
-                      {(id) => (
-                        <Input
-                          id={id}
-                          name="quantity"
-                          type="number"
-                          defaultValue={1}
-                          min={1}
-                          max={10000}
-                        />
-                      )}
-                    </Field>
-                    <Field label="Size, material & requirements">
-                      {(id) => (
-                        <Textarea
-                          id={id}
-                          name="requirements"
-                          maxLength={2000}
-                          placeholder="e.g. 3 × 6 ft, outdoor, matte finish"
-                        />
-                      )}
-                    </Field>
-                    {design && (
-                      <p role="status" className="text-sm text-emerald-700">
-                        {design.artworkApproved
-                          ? "Artwork approved and ready for your order."
-                          : "Options changed — review your artwork again."}
-                      </p>
-                    )}
-                    <Button
-                      className="w-full"
-                      disabled={!!p.customisation && !design?.artworkApproved}
-                    >
-                      {p.kind === "image"
-                        ? "Add HD license request"
-                        : "Add to order"}
-                    </Button>
-                    {p.kind === "image" && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="w-full"
-                        disabled={downloading}
-                        onClick={downloadPreview}
-                      >
-                        {downloading
-                          ? "Preparing preview…"
-                          : "Download free preview"}
-                      </Button>
-                    )}
-                    {(p.customisation ||
-                      p.editable ||
-                      p.group === "Customised Products" ||
-                      /visiting.?card|business.?card/i.test(p.title)) && (
-                      <Button
-                        type="button"
-                        className="w-full"
-                        variant="outline"
-                        onClick={() => setEditor(true)}
-                      >
-                        {/visiting.?card|business.?card/i.test(p.title)
-                          ? "Choose template & customise ↗"
-                          : design
-                            ? "Edit / review your artwork ↗"
-                            : "Start designing ↗"}
-                      </Button>
-                    )}
-                    <Button asChild variant="outline" className="w-full">
-                      <a
-                        href={
-                          "https://wa.me/918451010020?text=" +
-                          encodeURIComponent(
-                            "Hi PHULO, I need a quote for " + p.title,
-                          )
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Discuss on WhatsApp ↗
-                      </a>
-                    </Button>
-                  </form>
-                )}
-                <p className="mt-4 text-xs leading-5 text-slate-500">
-                  {p.kind === "image"
-                    ? "Free watermarked preview. HD originals unlock in My image downloads after PHULO verifies payment."
-                    : "Product images show representative print examples. Final size, material, availability and pricing are confirmed before production."}
-                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setChoosingTemplate(false)}
+                >
+                  Product details
+                </Button>
               </div>
-            </div>
+              <DialogDescription className="sr-only">
+                Choose a single-magnet design to open its editable photo and
+                text placeholders.
+              </DialogDescription>
+              <MagnetTemplates
+                product={p}
+                selected={design?.studio?.template || ""}
+                disabled={false}
+                onSelect={chooseMagnetVariation}
+                onUpload={() =>
+                  chooseMagnetVariation(
+                    "full-photo",
+                    new Date().getUTCFullYear() + 1,
+                  )
+                }
+              />
+            </>
+          ) : (
+            p && (
+              <div className="grid gap-6 md:grid-cols-2">
+                <div
+                  ref={artworkRef}
+                  className="aspect-square overflow-hidden rounded-lg bg-slate-100"
+                >
+                  {design ? (
+                    <ProofCanvas settings={design} side={proofSide} />
+                  ) : (
+                    <Artwork product={p} />
+                  )}
+                </div>
+                <div>
+                  <p className="mb-2 text-xs tracking-widest text-cyan-700">
+                    {p.category}
+                  </p>
+                  <DialogTitle className="text-2xl font-bold">
+                    {p.title}
+                  </DialogTitle>
+                  <DialogDescription className="my-3 text-sm leading-6 text-slate-500">
+                    {p.description}
+                  </DialogDescription>
+                  <p className="mb-5 text-xl font-bold text-primary">
+                    {p.customisation?.quoteRequired ? (
+                      "Price on request"
+                    ) : (
+                      <Price product={p} />
+                    )}{" "}
+                    <span className="text-xs font-normal">
+                      {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
+                    </span>
+                  </p>
+                  {p.libraryCategory ? (
+                    <LicenseRequest
+                      product={p}
+                      onSignIn={onSignIn}
+                      onPreview={downloadPreview}
+                      downloading={downloading}
+                      onEdit={() => setEditor(true)}
+                    />
+                  ) : (
+                    <form onSubmit={add} className="space-y-4">
+                      {p.customisation && (
+                        <>
+                          <p className="rounded-lg bg-cyan-50 p-3 text-sm text-primary">
+                            Choose your specifications, then create and approve
+                            your artwork. PHULO will confirm the final print
+                            quote.
+                          </p>
+                          <div className="grid gap-3 sm:grid-cols-2">
+                            {p.customisation.options.map((option) => (
+                              <Field key={option.key} label={option.label}>
+                                {(id) => (
+                                  <select
+                                    id={id}
+                                    className="w-full"
+                                    value={options[option.key]}
+                                    onChange={(e) => {
+                                      const next = {
+                                        ...options,
+                                        [option.key]: e.target.value,
+                                      };
+                                      setOptions(next);
+                                      if (design)
+                                        setDesign(
+                                          createProductSettings(
+                                            p,
+                                            next,
+                                            design,
+                                          ),
+                                        );
+                                      setError("");
+                                    }}
+                                  >
+                                    {option.values.map((value) => (
+                                      <option key={value}>{value}</option>
+                                    ))}
+                                  </select>
+                                )}
+                              </Field>
+                            ))}
+                          </div>
+                          {design?.studio &&
+                            (design.studio.twoSided ||
+                              design.studio.format === "card") && (
+                              <div
+                                className="flex gap-2"
+                                aria-label="Preview artwork side"
+                              >
+                                {(["front", "back"] as const).map((side) => (
+                                  <Button
+                                    key={side}
+                                    type="button"
+                                    size="sm"
+                                    variant={
+                                      proofSide === side ? "default" : "outline"
+                                    }
+                                    onClick={() => setProofSide(side)}
+                                    className="capitalize"
+                                  >
+                                    {side} preview
+                                  </Button>
+                                ))}
+                              </div>
+                            )}
+                        </>
+                      )}
+                      <Field label="Quantity / area units" error={error}>
+                        {(id) => (
+                          <Input
+                            id={id}
+                            name="quantity"
+                            type="number"
+                            defaultValue={1}
+                            min={1}
+                            max={10000}
+                          />
+                        )}
+                      </Field>
+                      <Field label="Size, material & requirements">
+                        {(id) => (
+                          <Textarea
+                            id={id}
+                            name="requirements"
+                            maxLength={2000}
+                            placeholder="e.g. 3 × 6 ft, outdoor, matte finish"
+                          />
+                        )}
+                      </Field>
+                      {design && (
+                        <p role="status" className="text-sm text-emerald-700">
+                          {design.artworkApproved
+                            ? "Artwork approved and ready for your order."
+                            : "Options changed — review your artwork again."}
+                        </p>
+                      )}
+                      <Button
+                        className="w-full"
+                        disabled={!!p.customisation && !design?.artworkApproved}
+                      >
+                        {p.kind === "image"
+                          ? "Add HD license request"
+                          : "Add to order"}
+                      </Button>
+                      {p.kind === "image" && (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="w-full"
+                          disabled={downloading}
+                          onClick={downloadPreview}
+                        >
+                          {downloading
+                            ? "Preparing preview…"
+                            : "Download free preview"}
+                        </Button>
+                      )}
+                      {(p.customisation ||
+                        p.editable ||
+                        p.group === "Customised Products" ||
+                        /visiting.?card|business.?card/i.test(p.title)) && (
+                        <Button
+                          type="button"
+                          className="w-full"
+                          variant="outline"
+                          onClick={() =>
+                            isMagnet && !design
+                              ? setChoosingTemplate(true)
+                              : setEditor(true)
+                          }
+                        >
+                          {/visiting.?card|business.?card/i.test(p.title)
+                            ? "Choose template & customise ↗"
+                            : design
+                              ? "Edit / review your artwork ↗"
+                              : "Start designing ↗"}
+                        </Button>
+                      )}
+                      <Button asChild variant="outline" className="w-full">
+                        <a
+                          href={
+                            "https://wa.me/918451010020?text=" +
+                            encodeURIComponent(
+                              "Hi PHULO, I need a quote for " + p.title,
+                            )
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Discuss on WhatsApp ↗
+                        </a>
+                      </Button>
+                    </form>
+                  )}
+                  <p className="mt-4 text-xs leading-5 text-slate-500">
+                    {p.kind === "image"
+                      ? "Free watermarked preview. HD originals unlock in My image downloads after PHULO verifies payment."
+                      : "Product images show representative print examples. Final size, material, availability and pricing are confirmed before production."}
+                  </p>
+                </div>
+              </div>
+            )
           )}
         </DialogContent>
       </Dialog>
       <DesignEditor
+        startInEditor={isMagnet}
         product={p || undefined}
         open={editor}
         onOpenChange={setEditor}

@@ -9,6 +9,7 @@ import type { DesignSettings, Product } from "../../types";
 export { initialDesign } from "./designDefaults";
 const StudioEditor = lazy(() => import("./StudioEditor"));
 interface Props {
+  startInEditor?: boolean;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   initial?: DesignSettings;
