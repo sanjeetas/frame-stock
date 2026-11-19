@@ -1,3 +1,5 @@
+import { ProductOptions } from "./ProductOptions";
+import { colourMatrix } from "./productColours";
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import type { DesignSettings, Product } from "../../types";
@@ -15,12 +17,14 @@ export function ProductVariations({
   selected,
   disabled = false,
   onSelect,
+  onOptionsChange,
 }: {
   product: Product;
   options: Record<string, string>;
   selected?: string;
   disabled?: boolean;
   onSelect: (settings: DesignSettings) => void;
+  onOptionsChange?: (options: Record<string, string>) => void;
 }) {
   const [search, setSearch] = useState("");
   const [year, setYear] = useState(new Date().getUTCFullYear() + 1);
@@ -48,6 +52,14 @@ export function ProductVariations({
         move each element. These previews show blank products and editable
         placeholders.
       </p>
+      {onOptionsChange && (
+        <ProductOptions
+          product={product}
+          options={options}
+          onChange={onOptionsChange}
+          disabled={disabled}
+        />
+      )}
       <label className="my-5 flex items-center gap-3 rounded-xl border bg-white px-4">
         <Search size={21} />
         <span className="sr-only">Search design variations</span>
@@ -114,6 +126,17 @@ export function ProductVariations({
                   className="w-full"
                 >
                   <defs>
+                    {doc.productColour && (
+                      <filter
+                        id={`product-colour-${t.id}`}
+                        colorInterpolationFilters="sRGB"
+                      >
+                        <feColorMatrix
+                          type="matrix"
+                          values={colourMatrix(doc.productColour)}
+                        />
+                      </filter>
+                    )}
                     <clipPath id={`variation-${t.id}`}>
                       {round ? (
                         <ellipse
@@ -148,6 +171,11 @@ export function ProductVariations({
                   {doc.mockupImage && (
                     <image
                       href={asset(doc.mockupImage)}
+                      filter={
+                        doc.productColour
+                          ? `url(#product-colour-${t.id})`
+                          : undefined
+                      }
                       width={doc.width}
                       height={doc.height}
                       preserveAspectRatio="xMidYMid meet"

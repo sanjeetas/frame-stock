@@ -1,5 +1,6 @@
 import {
   getEnv,
+  filters,
   Canvas,
   StaticCanvas,
   Textbox,
@@ -244,6 +245,16 @@ export async function renderStudioPage(
       document.width / source.naturalWidth,
       document.height / source.naturalHeight,
     );
+    if (document.productColour) {
+      image.filters = [
+        new filters.BlendColor({
+          color: document.productColour,
+          mode: "multiply",
+          alpha: 1,
+        }),
+      ];
+      image.applyFilters();
+    }
     image.scale(ratio);
     background = image;
   }

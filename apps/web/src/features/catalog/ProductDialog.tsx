@@ -221,6 +221,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                 <ProductVariations
                   product={p}
                   options={options}
+                  onOptionsChange={setOptions}
                   selected={design?.studio?.template}
                   onSelect={chooseProductVariation}
                 />
@@ -440,13 +441,8 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
         initial={design || startingDesign}
         onApply={(settings) => {
           setDesign(settings);
-          const orientation = settings.productOptions?.orientation;
-          if (
-            settings.studio?.surface === "magnet" &&
-            options.orientation &&
-            orientation
-          )
-            setOptions((current) => ({ ...current, orientation }));
+          if (p?.customisation && settings.productOptions)
+            setOptions(settings.productOptions);
         }}
         onSignIn={onSignIn}
       />

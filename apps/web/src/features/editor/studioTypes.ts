@@ -39,6 +39,7 @@ export interface StudioDocument {
   mockupImage?: string;
   twoSided?: boolean;
   productColour?: string;
+  productOptions?: Record<string, string>;
   shape?: "circle" | "oval" | "rounded";
   printArea?: { x: number; y: number; width: number; height: number };
   specification?: string;

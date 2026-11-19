@@ -1,3 +1,4 @@
+import { ProductOptions } from "./ProductOptions";
 import { ProductVariations } from "./ProductVariations";
 import { productVariation, isProductPhotoSlot } from "./productVariations";
 import {
@@ -207,6 +208,8 @@ export default function StudioEditor({
       card,
     ),
   );
+  const selectedProductOptions =
+    document.productOptions || initial?.productOptions || {};
   const twoSided = document.twoSided ?? document.format === "card";
   const documentRef = useRef(document);
   const [side, setSide] = useState<StudioSide>("front");
@@ -647,9 +650,10 @@ export default function StudioEditor({
         (item) => item.uploadId,
       ),
       productOptions:
-        scene.surface === "magnet" && initial?.productOptions?.orientation
+        scene.surface === "magnet" &&
+        (scene.productOptions || initial?.productOptions)?.orientation
           ? {
-              ...initial.productOptions,
+              ...(scene.productOptions || initial?.productOptions),
               orientation:
                 scene.width > scene.height
                   ? "Landscape"
@@ -657,7 +661,7 @@ export default function StudioEditor({
                     ? "Portrait"
                     : "Square",
             }
-          : initial?.productOptions,
+          : scene.productOptions || initial?.productOptions,
       studio: scene,
       artworkApproved: false,
     };
@@ -1140,7 +1144,7 @@ export default function StudioEditor({
             <aside className="studio-panel">
               {initial?.baseProductId && !browsingVariations && (
                 <div className="mb-5 rounded-xl border bg-slate-50 p-3">
-                  {document.mockupImage && (
+                  {document.mockupImage && !document.productColour && (
                     <img
                       src={asset(document.mockupImage!)}
                       alt={product?.title || "Selected product reference"}
@@ -1150,6 +1154,22 @@ export default function StudioEditor({
                   <p className="text-sm font-semibold">
                     {product?.title || "Selected product"}
                   </p>
+                  {product?.customisation && (
+                    <ProductOptions
+                      product={product}
+                      options={selectedProductOptions}
+                      disabled={loading || busy}
+                      onChange={(next) => {
+                        commit();
+                        const configured = createProductSettings(
+                          product,
+                          next,
+                          savedSettings(),
+                        );
+                        replace(configured.studio!);
+                      }}
+                    />
+                  )}
                   {document.surface === "magnet" && (
                     <Button
                       className="w-full"
@@ -1252,9 +1272,9 @@ export default function StudioEditor({
                         ? "Add text, photos and logos inside the outlined print area. Artwork outside this area is trimmed in the preview. Front and back are edited separately."
                         : "Add text, photos and logos to your artwork. Final dimensions and production specifications are confirmed with your quote."}
                   </p>
-                  {initial?.productOptions && (
+                  {Object.keys(selectedProductOptions).length > 0 && (
                     <dl className="space-y-2 text-sm">
-                      {Object.entries(initial.productOptions).map(
+                      {Object.entries(selectedProductOptions).map(
                         ([key, value]) => (
                           <div key={key} className="flex justify-between gap-3">
                             <dt className="capitalize text-slate-500">{key}</dt>
@@ -1664,14 +1684,21 @@ export default function StudioEditor({
                 product?.customisation && (
                   <ProductVariations
                     product={product}
-                    options={initial?.productOptions || {}}
+                    options={selectedProductOptions}
+                    onOptionsChange={(next) => {
+                      commit();
+                      replace(
+                        createProductSettings(product, next, savedSettings())
+                          .studio!,
+                      );
+                    }}
                     selected={document.template}
                     disabled={loading || busy || loadFailed}
                     onSelect={(settings) => {
                       commit();
                       const configured = productVariation(
                         product,
-                        initial?.productOptions || {},
+                        selectedProductOptions,
                         settings.studio!.template,
                         savedSettings(),
                         Number(
@@ -2205,6 +2232,7 @@ export default function StudioEditor({
       </div>
       {review && (
         <StudioReview
+          product={product}
           settings={savedSettings()}
           onBack={() => setReview(false)}
           onConfirm={() => {

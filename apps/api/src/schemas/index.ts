@@ -159,6 +159,7 @@ const studioDocument = z
       .max(150)
       .optional(),
     twoSided: z.boolean().optional(),
+    productOptions: productOptions.optional(),
     productColour: z
       .string()
       .regex(/^#[a-f\d]{6}$/i)

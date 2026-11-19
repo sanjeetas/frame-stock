@@ -3,13 +3,15 @@ import { ArrowLeft, CheckCircle2, AlertTriangle } from "lucide-react";
 import { StudioPreview } from "./StudioPreview";
 import { artworkWarnings } from "./studioActions";
 import { Button } from "../../components/ui/button";
-import type { DesignSettings } from "../../types";
+import type { DesignSettings, Product } from "../../types";
 export function StudioReview({
   settings,
+  product,
   onBack,
   onConfirm,
 }: {
   settings: DesignSettings;
+  product?: Product;
   onBack: () => void;
   onConfirm: () => void;
 }) {
@@ -30,6 +32,27 @@ export function StudioReview({
           Check spelling, contact details, image placement and both sides before
           applying this design to your order.
         </p>
+        {(product || settings.productOptions) && (
+          <div className="mt-5 flex flex-wrap items-center gap-3 rounded-xl border border-cyan-100 bg-cyan-50 p-4">
+            {product && <p className="font-bold">{product.title}</p>}
+            {settings.productOptions?.size && (
+              <span className="rounded-full bg-white px-4 py-2 font-semibold">
+                Size: {settings.productOptions.size}
+              </span>
+            )}
+            {settings.productOptions?.colour && (
+              <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-semibold">
+                {settings.studio?.productColour && (
+                  <span
+                    className="size-6 rounded-full border border-slate-300"
+                    style={{ backgroundColor: settings.studio.productColour }}
+                  />
+                )}
+                Colour: {settings.productOptions.colour}
+              </span>
+            )}
+          </div>
+        )}
         {settings.productOptions && (
           <dl className="mt-5 flex flex-wrap gap-3 rounded-xl bg-white p-4 text-sm">
             {Object.entries(settings.productOptions).map(([key, value]) => (

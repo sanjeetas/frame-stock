@@ -100,6 +100,7 @@ test("product editor loads only the blank mockup, keeps the editable layers sepa
   const fabric = await import("fabric");
   const { Image } = await import("canvas");
   fabric.setEnv(native.getEnv());
+  fabric.setFilterBackend(new fabric.Canvas2dFilterBackend());
   const { renderStudioPage, readStudioPage, studioPreview } =
     await import("../src/features/editor/studioCanvas.ts");
   const fixture = new native.StaticCanvas(undefined, {
@@ -152,6 +153,20 @@ test("product editor loads only the blank mockup, keeps the editable layers sepa
       design.baseProductId,
     );
     assert.equal(requests.length, 1);
+    design.studio!.productColour = "#24282d";
+    await renderStudioPage(
+      canvas,
+      design.studio!,
+      "front",
+      design.baseProductId,
+    );
+    canvas.renderAll();
+    const pixel = canvas.getContext().getImageData(50, 50, 1, 1).data;
+    for (const [i, value] of [7, 19, 31].entries())
+      assert.ok(
+        Math.abs(pixel[i]! - value) <= 1,
+        `Tint channel ${i}: ${pixel[i]}`,
+      );
     assert.equal(canvas.getObjects()[0]!.selectable, false);
     const headline = canvas
       .getObjects()
@@ -255,4 +270,32 @@ test("calendar products offer actual year-based layouts with a replaceable photo
     ),
     false,
   );
+});
+
+test("changing T-shirt colour and size preserves the design and the selected options survive saving", async () => {
+  const { createProductSettings } =
+    await import("../src/features/editor/studioTemplates.ts");
+  const row = catalog.products.find(
+    (p: any) => p.title === "Men's Cotton T-Shirts",
+  );
+  const product = { ...row, id: "012345678901234567890123" };
+  const original = productVariation(
+    product,
+    { size: "XL", colour: "Navy" },
+    "photo-message",
+  );
+  original.studio!.pages.front.elements.find(
+    (e) => e.id === "product-headline",
+  )!.text = "My shirt";
+  const next = createProductSettings(
+    product,
+    { size: "L", colour: "Red" },
+    original,
+  );
+  assert.equal(original.studio!.productColour, "#153752");
+  assert.equal(next.studio!.productColour, "#bd2343");
+  assert.deepEqual(next.studio!.productOptions, { size: "L", colour: "Red" });
+  assert.deepEqual(next.studio!.pages, original.studio!.pages);
+  assert.equal(settings.parse(next).studio!.productOptions!.size, "L");
+  assert.equal(next.artworkApproved, false);
 });

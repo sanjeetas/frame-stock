@@ -1,3 +1,4 @@
+import { productColours } from "./productColours.ts";
 import { magnetTemplate } from "./magnetTemplate.ts";
 import type { Product, DesignSettings } from "../../types/index.ts";
 import {
@@ -306,14 +307,10 @@ export function createProductSettings(
     doc.width = p.width;
     doc.height = p.height;
   }
-  const colours: Record<string, string> = {
-    White: "#ffffff",
-    Black: "#24282d",
-    Navy: "#153752",
-    Red: "#bd2343",
-    Natural: "#e7d8b8",
-  };
-  doc.productColour = p.mockup ? colours[options.colour || ""] : undefined;
+  doc.productOptions = { ...options };
+  doc.productColour = p.mockup
+    ? productColours[options.colour || ""]
+    : undefined;
   doc.twoSided = p.twoSided;
   doc.shape =
     options.shape === "Circle"
