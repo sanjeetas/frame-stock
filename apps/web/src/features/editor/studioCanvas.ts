@@ -18,18 +18,28 @@ import type {
   StudioSide,
 } from "./studioTypes";
 import { api } from "../../lib/api";
-import { apiBase } from "../../lib/utils";
+import { apiBase, asset } from "../../lib/utils";
 export type StudioObject = FabricObject & { studioElement?: StudioElement };
 const imageCache = new Map<string, Promise<HTMLImageElement>>();
-async function imageElement(productId?: string, uploadId?: string) {
-  const key = productId ? `product:${productId}` : `upload:${uploadId}`;
+async function imageElement(
+  productId?: string,
+  uploadId?: string,
+  mockupImage?: string,
+) {
+  const key = mockupImage
+    ? `mockup:${mockupImage}`
+    : productId
+      ? `product:${productId}`
+      : `upload:${uploadId}`;
   const load = async () => {
     if (uploadId) await api("/auth/me");
     const response = await fetch(
-      apiBase +
-        (uploadId
-          ? "/design-images/" + uploadId
-          : "/products/" + productId + "/preview"),
+      mockupImage
+        ? asset(mockupImage)
+        : apiBase +
+            (uploadId
+              ? "/design-images/" + uploadId
+              : "/products/" + productId + "/preview"),
       { credentials: "include" },
     );
     if (!response.ok)
@@ -212,12 +222,16 @@ export async function renderStudioPage(
   const page = document.pages[side];
   let background: FabricImage | undefined;
   if (
-    baseProductId &&
+    document.mockupImage &&
     document.format === "product" &&
     document.surface !== "magnet" &&
     view === "product"
   ) {
-    const source = await imageElement(baseProductId);
+    const source = await imageElement(
+      undefined,
+      undefined,
+      document.mockupImage,
+    );
     const image = new FabricImage(source, {
       selectable: false,
       evented: false,

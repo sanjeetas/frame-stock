@@ -44,6 +44,16 @@ export function artworkWarnings(document: StudioDocument): string[] {
     if (
       page.elements.some(
         (element) =>
+          element.type === "rect" &&
+          /^(product|magnet)-photo-placeholder(?:-[2-4])?$/.test(element.id),
+      )
+    )
+      warnings.push(
+        `${side === "front" ? "Front" : "Back"}: replace the photo or logo placeholder before printing.`,
+      );
+    if (
+      page.elements.some(
+        (element) =>
           element.id === "logo-placeholder" || element.id === "logo-label",
       )
     )

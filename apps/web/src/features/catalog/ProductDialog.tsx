@@ -1,3 +1,4 @@
+import { ProductVariations } from "../editor/ProductVariations";
 import { useState, useRef, useMemo, type FormEvent } from "react";
 import {
   Dialog,
@@ -28,7 +29,7 @@ interface Props {
 export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
   const isMagnet =
     p?.customisation?.family === "Magnets" && p.title !== "Magnet Calendars";
-  const [choosingTemplate, setChoosingTemplate] = useState(isMagnet);
+  const [choosingTemplate, setChoosingTemplate] = useState(!!p?.customisation);
   const [options, setOptions] = useState<Record<string, string>>(() =>
     Object.fromEntries(
       (p?.customisation?.options || []).map((option) => [
@@ -59,6 +60,11 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
           },
     [p?.id, options],
   );
+  function chooseProductVariation(settings: DesignSettings) {
+    setDesign(settings);
+    setChoosingTemplate(false);
+    setEditor(true);
+  }
   function chooseMagnetVariation(id: string, year: number) {
     if (!p || !startingDesign.studio) return;
     const nextOptions = { ...options, orientation: "Landscape" };
@@ -195,21 +201,30 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                 </Button>
               </div>
               <DialogDescription className="sr-only">
-                Choose a single-magnet design to open its editable photo and
-                text placeholders.
+                Choose a design sample to open its editable photo, logo and text
+                placeholders.
               </DialogDescription>
-              <MagnetTemplates
-                product={p}
-                selected={design?.studio?.template || ""}
-                disabled={false}
-                onSelect={chooseMagnetVariation}
-                onUpload={() =>
-                  chooseMagnetVariation(
-                    "full-photo",
-                    new Date().getUTCFullYear() + 1,
-                  )
-                }
-              />
+              {isMagnet ? (
+                <MagnetTemplates
+                  product={p}
+                  selected={design?.studio?.template || ""}
+                  disabled={false}
+                  onSelect={chooseMagnetVariation}
+                  onUpload={() =>
+                    chooseMagnetVariation(
+                      "full-photo",
+                      new Date().getUTCFullYear() + 1,
+                    )
+                  }
+                />
+              ) : (
+                <ProductVariations
+                  product={p}
+                  options={options}
+                  selected={design?.studio?.template}
+                  onSelect={chooseProductVariation}
+                />
+              )}
             </>
           ) : (
             p && (
@@ -378,7 +393,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                           className="w-full"
                           variant="outline"
                           onClick={() =>
-                            isMagnet && !design
+                            p.customisation && !design
                               ? setChoosingTemplate(true)
                               : setEditor(true)
                           }
@@ -418,7 +433,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
         </DialogContent>
       </Dialog>
       <DesignEditor
-        startInEditor={isMagnet}
+        startInEditor={!!p?.customisation}
         product={p || undefined}
         open={editor}
         onOpenChange={setEditor}

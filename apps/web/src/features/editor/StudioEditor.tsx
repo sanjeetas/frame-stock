@@ -1,3 +1,5 @@
+import { ProductVariations } from "./ProductVariations";
+import { productVariation, isProductPhotoSlot } from "./productVariations";
 import {
   applyMagnetLayout,
   isMagnetPhotoSlot,
@@ -61,6 +63,7 @@ import { StudioPreview } from "./StudioPreview";
 import { initialDesign } from "./designDefaults";
 import {
   createCardTemplate,
+  createProductSettings,
   createStudioDocument,
   studioTemplates,
 } from "./studioTemplates";
@@ -197,7 +200,12 @@ export default function StudioEditor({
     initial?.studio?.format === "card" ||
     /visiting.?card|business.?card/i.test(product?.title || "");
   const [document, setDocument] = useState(() =>
-    createStudioDocument(initial || initialDesign, card),
+    createStudioDocument(
+      product?.customisation && initial
+        ? createProductSettings(product, initial.productOptions || {}, initial)
+        : initial || initialDesign,
+      card,
+    ),
   );
   const twoSided = document.twoSided ?? document.format === "card";
   const documentRef = useRef(document);
@@ -261,7 +269,11 @@ export default function StudioEditor({
     [],
   );
   const textElements = document.pages[side].elements.filter(
-    (item) => item.type === "text" && item.id !== "logo-label",
+    (item) =>
+      item.type === "text" &&
+      item.id !== "logo-label" &&
+      item.id !== "product-photo-label" &&
+      !item.id.startsWith("magnet-photo-label"),
   );
   const active = () => canvas?.getActiveObject() as StudioObject | undefined;
   const positionContext = useCallback((c: Canvas) => {
@@ -618,7 +630,11 @@ export default function StudioEditor({
   function savedSettings(): DesignSettings {
     const scene = documentRef.current;
     const labels = scene.pages.front.elements.filter(
-      (item) => item.type === "text" && item.id !== "logo-label",
+      (item) =>
+        item.type === "text" &&
+        item.id !== "logo-label" &&
+        item.id !== "product-photo-label" &&
+        !item.id.startsWith("magnet-photo-label"),
     );
     return {
       ...initialDesign,
@@ -699,6 +715,12 @@ export default function StudioEditor({
     }
   }
   function askUpload(replace = false) {
+    if (isProductPhotoSlot(selected?.id)) {
+      uploadTarget.current = "product-photo-placeholder";
+      setTab("uploads");
+      fileInput.current?.click();
+      return;
+    }
     uploadTarget.current =
       documentRef.current.surface === "magnet" &&
       magnetPhotoTarget(selected?.id)
@@ -717,6 +739,14 @@ export default function StudioEditor({
     setBusy(true);
     setError("");
     try {
+      if (isProductPhotoSlot(targetId)) targetId = "product-photo-placeholder";
+      if (!targetId)
+        targetId = (
+          canvas.getObjects().find((item) => {
+            const el = (item as StudioObject).studioElement;
+            return el?.type === "rect" && el.id === "product-photo-placeholder";
+          }) as StudioObject | undefined
+        )?.studioElement?.id;
       if (documentRef.current.surface === "magnet")
         targetId = magnetPhotoTarget(targetId) || targetId;
       if (!targetId && documentRef.current.surface === "magnet")
@@ -768,7 +798,8 @@ export default function StudioEditor({
       });
       const replacement = await buildStudioObject(item, canvas),
         index = canvas.getObjects().indexOf(target);
-      const magnetPhoto = isMagnetPhotoSlot(previous.id);
+      const magnetPhoto =
+        isMagnetPhotoSlot(previous.id) || isProductPhotoSlot(previous.id);
       const obsolete = magnetPhoto
         ? canvas
             .getObjects()
@@ -900,6 +931,9 @@ export default function StudioEditor({
       setBusy(false);
     }
   }
+  const browsingVariations =
+    tab === "templates" &&
+    (document.surface === "magnet" || !!product?.customisation);
   const selectedText = selected?.type === "text";
   const page = document.pages[side];
   return (
@@ -1084,7 +1118,7 @@ export default function StudioEditor({
         </ToolButton>
       </header>
       <div
-        className={`studio-body ${document.surface === "magnet" && tab === "templates" ? "studio-magnet-gallery" : ""}`}
+        className={`studio-body ${browsingVariations ? "studio-variation-gallery" : ""}`}
         inert={review}
       >
         {!preview && (
@@ -1104,61 +1138,58 @@ export default function StudioEditor({
               ))}
             </nav>
             <aside className="studio-panel">
-              {initial?.baseProductId &&
-                !(document.surface === "magnet" && tab === "templates") && (
-                  <div className="mb-5 rounded-xl border bg-slate-50 p-3">
-                    {document.surface !== "magnet" && (
-                      <img
-                        src={`${apiBase}/products/${initial.baseProductId}/preview`}
-                        alt={product?.title || "Selected product reference"}
-                        className="mx-auto mb-2 h-24 w-full object-contain"
-                      />
-                    )}
-                    <p className="text-sm font-semibold">
-                      {product?.title || "Selected product"}
-                    </p>
-                    {document.surface === "magnet" && (
-                      <Button
-                        className="w-full"
-                        onClick={() => {
-                          setTab("uploads");
-                          askUpload(false);
-                        }}
-                        disabled={loading || busy}
-                      >
-                        <Upload size={20} /> Add your photo
-                      </Button>
-                    )}
+              {initial?.baseProductId && !browsingVariations && (
+                <div className="mb-5 rounded-xl border bg-slate-50 p-3">
+                  {document.mockupImage && (
+                    <img
+                      src={asset(document.mockupImage!)}
+                      alt={product?.title || "Selected product reference"}
+                      className="mx-auto mb-2 h-24 w-full object-contain"
+                    />
+                  )}
+                  <p className="text-sm font-semibold">
+                    {product?.title || "Selected product"}
+                  </p>
+                  {document.surface === "magnet" && (
+                    <Button
+                      className="w-full"
+                      onClick={() => {
+                        setTab("uploads");
+                        askUpload(false);
+                      }}
+                      disabled={loading || busy}
+                    >
+                      <Upload size={20} /> Add your photo
+                    </Button>
+                  )}
 
-                    {document.format === "product" && (
-                      <div className="mt-3 flex gap-2">
-                        {(["product", "artwork"] as const).map((mode) => (
-                          <Button
-                            key={mode}
-                            size="sm"
-                            variant={view === mode ? "default" : "outline"}
-                            aria-pressed={view === mode}
-                            disabled={loading || busy}
-                            onClick={() => {
-                              commit();
-                              setView(mode);
-                            }}
-                          >
-                            {mode === "product"
-                              ? "Product view"
-                              : "Artwork view"}
-                          </Button>
-                        ))}
-                      </div>
-                    )}
-                    <p className="mt-2 text-xs text-slate-600">
-                      {document.surface === "magnet"
-                        ? "Single magnet, front view. Upload your photo to replace the coloured placeholder. Edit and move the caption directly."
-                        : "Product reference. Add and move your own text or images above it. Printed text in the photo is part of the reference."}
-                    </p>
-                  </div>
-                )}
-              {!(document.surface === "magnet" && tab === "templates") && (
+                  {document.format === "product" && (
+                    <div className="mt-3 flex gap-2">
+                      {(["product", "artwork"] as const).map((mode) => (
+                        <Button
+                          key={mode}
+                          size="sm"
+                          variant={view === mode ? "default" : "outline"}
+                          aria-pressed={view === mode}
+                          disabled={loading || busy}
+                          onClick={() => {
+                            commit();
+                            setView(mode);
+                          }}
+                        >
+                          {mode === "product" ? "Product view" : "Artwork view"}
+                        </Button>
+                      ))}
+                    </div>
+                  )}
+                  <p className="mt-2 text-xs text-slate-600">
+                    {document.surface === "magnet"
+                      ? "Single magnet, front view. Upload your photo to replace the coloured placeholder. Edit and move the caption directly."
+                      : "Replace photo and logo placeholders. Drag your text and images inside the marked print area."}
+                  </p>
+                </div>
+              )}
+              {!browsingVariations && (
                 <h2 className="mb-5 text-xl font-bold">
                   {tools.find((tool) => tool.tab === tab)?.label}
                 </h2>
@@ -1346,6 +1377,7 @@ export default function StudioEditor({
                   </Button>
                   {(selected?.type === "image" ||
                     !!magnetPhotoTarget(selected?.id) ||
+                    isProductPhotoSlot(selected?.id) ||
                     selected?.id === "logo-placeholder" ||
                     selected?.id === "logo-label") && (
                     <Button
@@ -1396,6 +1428,7 @@ export default function StudioEditor({
                             </Button>
                             {(selected?.type === "image" ||
                               !!magnetPhotoTarget(selected?.id) ||
+                              isProductPhotoSlot(selected?.id) ||
                               selected?.id === "logo-placeholder" ||
                               selected?.id === "logo-label") && (
                               <button
@@ -1626,44 +1659,72 @@ export default function StudioEditor({
                   }}
                 />
               )}
-              {tab === "templates" && document.surface !== "magnet" && (
-                <div className="space-y-4">
-                  <p className="text-xs leading-5 text-slate-500">
-                    Applying a template replaces the artwork layout. Undo
-                    restores your previous design.
-                  </p>
-                  {studioTemplates.map((template) => (
-                    <button
-                      key={template.id}
-                      className="w-full overflow-hidden rounded-xl border border-slate-200 text-left hover:border-cyan-500"
-                      onClick={() => applyTemplate(template.id)}
-                      disabled={loading || busy || loadFailed}
-                    >
-                      {document.format === "card" ? (
-                        <div className="aspect-[940/580] bg-slate-50">
-                          <StudioPreview
-                            settings={templatePreviews[template.id]!}
-                          />
-                        </div>
-                      ) : (
-                        <div
-                          className="h-28 p-5"
-                          style={{
-                            backgroundColor: template.background,
-                            color: template.color,
-                          }}
-                        >
-                          <p className="font-bold">Your design</p>
-                          <p className="mt-2 text-sm">Make it yours</p>
-                        </div>
-                      )}
-                      <p className="border-t border-slate-100 p-3 text-sm font-semibold">
-                        {template.name}
-                      </p>
-                    </button>
-                  ))}
-                </div>
-              )}
+              {tab === "templates" &&
+                document.surface !== "magnet" &&
+                product?.customisation && (
+                  <ProductVariations
+                    product={product}
+                    options={initial?.productOptions || {}}
+                    selected={document.template}
+                    disabled={loading || busy || loadFailed}
+                    onSelect={(settings) => {
+                      commit();
+                      const configured = productVariation(
+                        product,
+                        initial?.productOptions || {},
+                        settings.studio!.template,
+                        savedSettings(),
+                        Number(
+                          settings.studio!.pages.front.elements.find(
+                            (e) => e.id === "calendar-year",
+                          )?.text,
+                        ) || undefined,
+                      );
+                      replace(configured.studio!);
+                      setTab("uploads");
+                    }}
+                  />
+                )}
+              {tab === "templates" &&
+                document.surface !== "magnet" &&
+                !product?.customisation && (
+                  <div className="space-y-4">
+                    <p className="text-xs leading-5 text-slate-500">
+                      Applying a template replaces the artwork layout. Undo
+                      restores your previous design.
+                    </p>
+                    {studioTemplates.map((template) => (
+                      <button
+                        key={template.id}
+                        className="w-full overflow-hidden rounded-xl border border-slate-200 text-left hover:border-cyan-500"
+                        onClick={() => applyTemplate(template.id)}
+                        disabled={loading || busy || loadFailed}
+                      >
+                        {document.format === "card" ? (
+                          <div className="aspect-[940/580] bg-slate-50">
+                            <StudioPreview
+                              settings={templatePreviews[template.id]!}
+                            />
+                          </div>
+                        ) : (
+                          <div
+                            className="h-28 p-5"
+                            style={{
+                              backgroundColor: template.background,
+                              color: template.color,
+                            }}
+                          >
+                            <p className="font-bold">Your design</p>
+                            <p className="mt-2 text-sm">Make it yours</p>
+                          </div>
+                        )}
+                        <p className="border-t border-slate-100 p-3 text-sm font-semibold">
+                          {template.name}
+                        </p>
+                      </button>
+                    ))}
+                  </div>
+                )}
               {tab === "more" && (
                 <StudioMorePanel
                   selected={selected}

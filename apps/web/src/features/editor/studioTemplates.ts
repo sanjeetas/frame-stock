@@ -348,6 +348,7 @@ export function createProductSettings(
     doc.width = width;
     doc.height = height;
   }
+  doc.mockupImage = p.mockup && p.mockupImage ? p.mockupImage : undefined;
   doc.printArea = p.printArea;
   doc.specification = p.label;
   if (config.family === "Magnets" && product.title !== "Magnet Calendars") {

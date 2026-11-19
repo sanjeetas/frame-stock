@@ -991,11 +991,11 @@
 }
 
 /* Template browsing uses the whole studio, including on small phones. */
-.studio-body.studio-magnet-gallery { display: flex; }
-.studio-magnet-gallery .studio-rail,
-.studio-magnet-gallery .studio-workspace,
-.studio-magnet-gallery .studio-sides { display: none; }
-.studio-magnet-gallery .studio-panel {
+.studio-body.studio-variation-gallery { display: flex; }
+.studio-variation-gallery .studio-rail,
+.studio-variation-gallery .studio-workspace,
+.studio-variation-gallery .studio-sides { display: none; }
+.studio-variation-gallery .studio-panel {
   flex: 1;
   width: 100%;
   min-width: 0;

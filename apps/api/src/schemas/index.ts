@@ -153,6 +153,11 @@ const studioDocument = z
     version: z.literal(1),
     format: z.enum(["card", "product"]),
     surface: z.literal("magnet").optional(),
+    mockupImage: z
+      .string()
+      .regex(/^assets\/custom-[a-z-]+\.svg$/)
+      .max(150)
+      .optional(),
     twoSided: z.boolean().optional(),
     productColour: z
       .string()
