@@ -289,7 +289,7 @@ test("catalog pagination, server-calculated order price, ownership and private f
     .get("/api/orders/" + orderId + "/download/0")
     .expect(200);
   assert.match(
-    download.headers["content-disposition"],
+    download.get("Content-Disposition") ?? "",
     /^attachment; filename="?original\.zip"?$/,
   );
   await bob.get("/api/orders/" + orderId + "/download/0").expect(403);
@@ -559,7 +559,7 @@ test("public previews are resized PNGs and cannot expose original files", async 
     .send(image)
     .expect(200);
   const preview = await request(app).get(response.body.data.image).expect(200);
-  assert.match(preview.headers["content-type"], /^image\/png/);
+  assert.match(preview.get("Content-Type") ?? "", /^image\/png/);
   const metadata = await sharp(preview.body).metadata();
   assert.equal(metadata.width, 800);
   assert.equal(metadata.height, 800);
@@ -797,7 +797,7 @@ test("image library filters, priced HD licenses and original downloads are separ
   const download = await alice
     .get(`/api/orders/${license.id}/download/0`)
     .expect(200);
-  assert.match(download.headers["content-disposition"], /2400x1600\.png/);
+  assert.match(download.get("Content-Disposition") ?? "", /2400x1600\.png/);
   assert.equal(download.body[0], 137);
   const bobToken = await csrf(bob);
   await login(bob, "bob@example.test", bobToken);

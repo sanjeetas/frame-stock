@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "rootDir": "../../..",
+    "types": [
+      "node",
+      "vite/client"
+    ]
+  },
+  "include": [
+    "./**/*.ts",
+    "../src/**/*.d.ts"
+  ]
+}

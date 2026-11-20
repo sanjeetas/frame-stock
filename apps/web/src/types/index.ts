@@ -1,4 +1,4 @@
-import type { StudioDocument } from "../features/editor/studioTypes";
+import type { StudioDocument } from "../features/editor/studioTypes.js";
 export interface User {
   id: string;
   name: string;

@@ -109,7 +109,7 @@ test("product editor loads only the blank mockup, keeps the editable layers sepa
     backgroundColor: "#3478ad",
   });
   const bytes = Buffer.from(
-    fixture.toDataURL({ format: "png" }).split(",")[1]!,
+    fixture.toDataURL({ format: "png", multiplier: 1 }).split(",")[1]!,
     "base64",
   );
   await fixture.dispose();
@@ -124,16 +124,20 @@ test("product editor loads only the blank mockup, keeps the editable layers sepa
   };
   globalThis.Image = class extends Image {
     url = "";
-    set src(value: string) {
-      this.url = value;
-    }
-    get src() {
-      return this.url;
+    constructor() {
+      super();
+      Object.defineProperty(this, "src", {
+        get: () => this.url,
+        set: (value: string) => { this.url = value; },
+      });
     }
     async decode() {
-      super.src = Buffer.from(
+      const source = Buffer.from(
         await (await originalFetch(this.url)).arrayBuffer(),
       );
+      const setter = Object.getOwnPropertyDescriptor(Image.prototype, "src")?.set;
+      assert.ok(setter, "node-canvas provides its native image source setter");
+      setter.call(this, source);
     }
   } as any;
   const canvas = new fabric.Canvas(undefined);

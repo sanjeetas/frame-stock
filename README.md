@@ -28,6 +28,33 @@ npm run admin:create
 
 Remove the bootstrap admin password from the environment afterward. Existing accounts are never silently promoted or overwritten. Public registration only creates `user` accounts and rejects role/owner/userId inputs.
 
+## Running locally in VS Code
+
+1. Open the repository root (the folder containing this README and the root `package.json`), not just `apps/web` or an individual file. Install Node.js 24 or newer; check `node --version` and `npm --version` in a new terminal.
+2. Run `npm ci` from that root. This installs both workspaces; do not install dependencies individually or copy `node_modules` from another machine.
+3. Copy `.env.example` to `.env`. On Windows PowerShell use `Copy-Item .env.example .env`; on macOS/Linux use `cp .env.example .env`.
+4. Set `MONGODB_URI` to your Atlas connection string (URL-encode special characters in the database password and allow your computer's IP in Atlas). Alternatively run the local replica set using `docker compose up -d --wait mongo` and keep the example local URI.
+5. Generate **two separate** secrets with the command in Quick setup. Paste one into `ACCESS_TOKEN_SECRET` and the other into `CSRF_SECRET`. Keep `FRONTEND_ORIGIN=http://localhost:5173` for local development. Never commit `.env` or paste credentials into frontend files.
+6. Run `npm run seed` once for the catalogue, then `npm run dev`. Leave that terminal running and open **http://localhost:5173**. Express runs on port 3000; the browser connects through Vite's API proxy. Press Ctrl+C to stop both processes. Later starts only need `npm run dev`.
+
+### TypeScript and the Problems panel
+
+`npm run check` checks the application **and test files** in both workspaces. Tests have their own `tests/tsconfig.json` so VS Code uses the same strict settings, Node types and module rules as the command line. The API build still includes only production `src` files.
+
+This repository uses TypeScript 7. Install the recommended **TypeScript (Native Preview)** VS Code extension if your editor's bundled TypeScript is older. After installing dependencies or pulling these changes, run **Developer: Reload Window** from the command palette. Do not point `typescript.tsdk` at a nonexistent `tsserver.js` inside the TypeScript 7 package.
+
+If Problems remain, run `npm run check` from the root first. Missing modules usually mean `npm ci` did not complete; an environment validation error means `.env` is missing required values; MongoDB connection errors mean the URI, Atlas IP access list or local replica set needs attention. If ports 3000 or 5173 are occupied, stop the earlier dev process before restarting. No diagnostics are disabled by this configuration.
+
+Verification commands:
+
+```sh
+npm run check
+npm test
+npm run build
+```
+
+Tests use an isolated temporary MongoDB replica set and do not require production credentials. The first test run downloads a MongoDB binary and needs internet access. Production builds can be run with `npm start` after configuring `.env`; local development should use `npm run dev`.
+
 ## Environment variables
 
 | Variable                                      | Purpose                                                                                                                            |

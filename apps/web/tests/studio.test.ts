@@ -221,7 +221,7 @@ test("image crop renders the chosen region and crop/flip/effects survive seriali
     const image = createStudioImage(source, scene);
     canvas.add(image);
     const sharp = (await import("sharp")).default;
-    const png = canvas.toDataURL({ format: "png" });
+    const png = canvas.toDataURL({ format: "png", multiplier: 1 });
     const stats = await sharp(
       Buffer.from(png.split(",")[1]!, "base64"),
     ).stats();
@@ -231,6 +231,7 @@ test("image crop renders the chosen region and crop/flip/effects survive seriali
     assert.equal(stored.crop!.x, 0.5);
     assert.equal(stored.flipX, true);
     const reloaded = createStudioImage(source, stored);
+    assert.ok(reloaded instanceof fabric.FabricImage);
     assert.equal(reloaded.cropX, 100);
     assert.equal(reloaded.scaleX, image.scaleX);
     const text = await buildStudioObject(
