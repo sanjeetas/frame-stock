@@ -1,3 +1,4 @@
+import { isAllowedOrigin } from "../config/origin.js";
 import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import type { RequestHandler, CookieOptions } from "express";
 import type { Config } from "../config/env.js";
@@ -24,7 +25,7 @@ export function csrf(config: Config) {
       token = req.get("x-csrf-token"),
       origin = req.get("origin");
     if (
-      origin !== config.FRONTEND_ORIGIN ||
+      !isAllowedOrigin(origin, config) ||
       typeof cookie !== "string" ||
       !token ||
       !/^([a-f0-9]{64})\.([a-f0-9]{64})$/.test(token)

@@ -1,3 +1,4 @@
+import { isAllowedOrigin } from "./config/origin.js";
 import { pipeline } from "node:stream/promises";
 import { bucket } from "./services/blob.service.js";
 import express from "express";
@@ -30,7 +31,7 @@ export async function createApp(config: Config) {
   app.use(
     cors({
       origin(origin, cb) {
-        if (!origin || origin === config.FRONTEND_ORIGIN) return cb(null, true);
+        if (!origin || isAllowedOrigin(origin, config)) return cb(null, true);
         cb(new AppError(403, "ORIGIN_FORBIDDEN", "Origin is not allowed."));
       },
       credentials: true,
