@@ -56,7 +56,7 @@ import { useApiQuery } from "../../hooks/useApiQuery";
 import { api } from "../../lib/api";
 import { StudioReview } from "./StudioReview";
 import { StudioMorePanel } from "./StudioMorePanel";
-import { safeMargin, resizeStudio } from "./studioActions";
+import { safeMargin, resizeStudio, printedSides } from "./studioActions";
 import { apiBase } from "../../lib/utils";
 import { asset } from "../../lib/utils";
 import type { Design, DesignSettings, Product } from "../../types";
@@ -212,7 +212,9 @@ export default function StudioEditor({
     document.productOptions || initial?.productOptions || {};
   const twoSided = document.twoSided ?? document.format === "card";
   const documentRef = useRef(document);
-  const [side, setSide] = useState<StudioSide>("front");
+  const [side, setSide] = useState<StudioSide>(
+    initial?.productOptions?.sides === "Back only" ? "back" : "front",
+  );
   const sideRef = useRef(side);
   sideRef.current = side;
   const [tab, setTab] = useState<Tab>(
@@ -459,11 +461,17 @@ export default function StudioEditor({
     canvas.skipTargetFind = preview || loadingRef.current;
     canvas.requestRenderAll();
   }, [canvas, preview]);
-  function replace(next: StudioDocument) {
+  function replace(next: StudioDocument, keepSide = false) {
     setThumbs({});
     publish(next);
-    setSide("front");
+    setSide(keepSide ? sideRef.current : printedSides(next)[0]!);
     setRevision((value) => value + 1);
+  }
+  function changeProductOptions(next: Record<string, string>) {
+    if (!product) return;
+    commit();
+    const configured = createProductSettings(product, next, savedSettings());
+    replace(configured.studio!, true);
   }
   function travel(direction: number) {
     if (busy || loadingRef.current) return;
@@ -632,7 +640,9 @@ export default function StudioEditor({
   }
   function savedSettings(): DesignSettings {
     const scene = documentRef.current;
-    const labels = scene.pages.front.elements.filter(
+    const labels = scene.pages[
+      scene.productOptions?.sides === "Back only" ? "back" : "front"
+    ].elements.filter(
       (item) =>
         item.type === "text" &&
         item.id !== "logo-label" &&
@@ -1159,15 +1169,7 @@ export default function StudioEditor({
                       product={product}
                       options={selectedProductOptions}
                       disabled={loading || busy}
-                      onChange={(next) => {
-                        commit();
-                        const configured = createProductSettings(
-                          product,
-                          next,
-                          savedSettings(),
-                        );
-                        replace(configured.studio!);
-                      }}
+                      onChange={changeProductOptions}
                     />
                   )}
                   {document.surface === "magnet" && (
@@ -1685,13 +1687,7 @@ export default function StudioEditor({
                   <ProductVariations
                     product={product}
                     options={selectedProductOptions}
-                    onOptionsChange={(next) => {
-                      commit();
-                      replace(
-                        createProductSettings(product, next, savedSettings())
-                          .studio!,
-                      );
-                    }}
+                    onOptionsChange={changeProductOptions}
                     selected={document.template}
                     disabled={loading || busy || loadFailed}
                     onSelect={(settings) => {

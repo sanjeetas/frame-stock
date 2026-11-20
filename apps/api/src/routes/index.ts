@@ -158,18 +158,48 @@ export function resourceRoutes(auth: AuthService, config: Config) {
             "customisation.family": { $exists: true },
           },
         },
-        { $group: { _id: "$customisation.family", count: { $sum: 1 } } },
+        { $sort: { sourceOrder: 1, _id: 1 } },
+        {
+          $group: {
+            _id: "$customisation.family",
+            count: { $sum: 1 },
+            image: { $first: "$image" },
+            sampleTitle: { $first: "$title" },
+          },
+        },
         { $sort: { _id: 1 } },
-        { $project: { _id: 0, name: "$_id", count: 1 } },
+        {
+          $project: {
+            _id: 0,
+            name: "$_id",
+            count: 1,
+            image: 1,
+            sampleTitle: 1,
+          },
+        },
       ]),
     ),
   );
   r.get("/categories", catalog.categories);
   r.get("/products", validate({ query: s.productQuery }), catalog.list);
-  r.get("/products/:id/preview", rateLimit({
-    windowMs: 60000, limit: 60, standardHeaders: "draft-8", legacyHeaders: false,
-    message: { success: false, error: { code: "RATE_LIMITED", message: "Too many preview requests. Please wait a minute." } },
-  }), validate({ params: s.idParams, query: z.object({}).strict() }), catalog.preview);
+  r.get(
+    "/products/:id/preview",
+    rateLimit({
+      windowMs: 60000,
+      limit: 60,
+      standardHeaders: "draft-8",
+      legacyHeaders: false,
+      message: {
+        success: false,
+        error: {
+          code: "RATE_LIMITED",
+          message: "Too many preview requests. Please wait a minute.",
+        },
+      },
+    }),
+    validate({ params: s.idParams, query: z.object({}).strict() }),
+    catalog.preview,
+  );
   r.get("/products/:id", validate({ params: s.idParams }), catalog.get);
   r.use("/orders", identity);
   r.get("/orders", validate({ query: s.orderQuery }), orders.list);

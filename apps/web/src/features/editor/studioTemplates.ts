@@ -1,3 +1,5 @@
+import { designInk, readyDesigns } from "./apparelDesigns.ts";
+import { mockupSurface } from "./mockupSurfaces.ts";
 import { productColours } from "./productColours.ts";
 import { magnetTemplate } from "./magnetTemplate.ts";
 import type { Product, DesignSettings } from "../../types/index.ts";
@@ -287,6 +289,7 @@ export function createProductSettings(
   };
   if (!config) return settings;
   const p = config.profile;
+  const surface = mockupSurface(product);
   let doc = previous?.studio
     ? structuredClone(previous.studio)
     : createStudioDocument(
@@ -308,9 +311,21 @@ export function createProductSettings(
     doc.height = p.height;
   }
   doc.productOptions = { ...options };
-  doc.productColour = p.mockup
-    ? productColours[options.colour || ""]
-    : undefined;
+  doc.productColour =
+    (surface?.tint ?? p.mockup)
+      ? productColours[options.colour || ""]
+      : undefined;
+  if (
+    previous?.studio &&
+    readyDesigns.slice(0, 4).some((t) => t.id === doc.template)
+  ) {
+    const oldInk = designInk(previous.studio.productColour),
+      ink = designInk(doc.productColour);
+    if (oldInk !== ink)
+      for (const page of Object.values(doc.pages))
+        for (const item of page.elements)
+          if (item.fill === oldInk) item.fill = ink;
+  }
   doc.twoSided = p.twoSided;
   doc.shape =
     options.shape === "Circle"
@@ -348,6 +363,45 @@ export function createProductSettings(
   doc.mockupImage = p.mockup && p.mockupImage ? p.mockupImage : undefined;
   doc.printArea = p.printArea;
   doc.specification = p.label;
+  if (surface) {
+    const old = previous?.studio?.printArea ||
+        doc.printArea || { x: 0, y: 0, width: 1, height: 1 },
+      width = 1200,
+      height = 1000;
+    const unchanged =
+      doc.width === width &&
+      doc.height === height &&
+      old.x === surface.area.x &&
+      old.y === surface.area.y &&
+      old.width === surface.area.width &&
+      old.height === surface.area.height;
+    if (!unchanged)
+      for (const page of Object.values(doc.pages))
+        for (const item of page.elements) {
+          item.left =
+            (surface.area.x +
+              ((item.left / doc.width - old.x) / old.width) *
+                surface.area.width) *
+            width;
+          item.top =
+            (surface.area.y +
+              ((item.top / doc.height - old.y) / old.height) *
+                surface.area.height) *
+            height;
+          item.scaleX *= (surface.area.width * width) / (old.width * doc.width);
+          item.scaleY *=
+            (surface.area.height * height) / (old.height * doc.height);
+        }
+    if (/\/(clock|coaster)\.webp$/.test(surface.front)) doc.shape = "circle";
+    doc.width = width;
+    doc.height = height;
+    doc.printArea = { ...surface.area };
+    doc.mockupImage = surface.front;
+    doc.mockupBackImage = surface.back;
+    doc.specification =
+      surface.label + " — confirm finished dimensions with PHULO";
+  }
+
   if (config.family === "Magnets" && product.title !== "Magnet Calendars") {
     doc.surface = "magnet";
     doc.shape =

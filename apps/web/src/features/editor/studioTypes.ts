@@ -37,6 +37,7 @@ export interface StudioDocument {
   format: "card" | "product";
   surface?: "magnet";
   mockupImage?: string;
+  mockupBackImage?: string;
   twoSided?: boolean;
   productColour?: string;
   productOptions?: Record<string, string>;

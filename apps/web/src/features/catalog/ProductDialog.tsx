@@ -61,6 +61,9 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
     [p?.id, options],
   );
   function chooseProductVariation(settings: DesignSettings) {
+    setProofSide(
+      settings.productOptions?.sides === "Back only" ? "back" : "front",
+    );
     setDesign(settings);
     setChoosingTemplate(false);
     setEditor(true);
@@ -440,6 +443,9 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
         onOpenChange={setEditor}
         initial={design || startingDesign}
         onApply={(settings) => {
+          setProofSide(
+            settings.productOptions?.sides === "Back only" ? "back" : "front",
+          );
           setDesign(settings);
           if (p?.customisation && settings.productOptions)
             setOptions(settings.productOptions);

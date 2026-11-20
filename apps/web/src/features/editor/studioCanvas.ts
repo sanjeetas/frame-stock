@@ -1,3 +1,4 @@
+import { studioMockup, mockupLighting } from "./mockupSurfaces.ts";
 import {
   getEnv,
   filters,
@@ -222,17 +223,15 @@ export async function renderStudioPage(
 ) {
   const page = document.pages[side];
   let background: FabricImage | undefined;
+  const mockup = studioMockup(document, side);
+  let texture: FabricImage | undefined;
   if (
-    document.mockupImage &&
+    mockup &&
     document.format === "product" &&
     document.surface !== "magnet" &&
     view === "product"
   ) {
-    const source = await imageElement(
-      undefined,
-      undefined,
-      document.mockupImage,
-    );
+    const source = await imageElement(undefined, undefined, mockup);
     const image = new FabricImage(source, {
       selectable: false,
       evented: false,
@@ -257,6 +256,19 @@ export async function renderStudioPage(
     }
     image.scale(ratio);
     background = image;
+    if (mockupLighting(mockup)) {
+      texture = new FabricImage(source, {
+        left: document.width / 2,
+        top: document.height / 2,
+        originX: "center",
+        originY: "center",
+        selectable: false,
+        evented: false,
+        opacity: mockupLighting(mockup),
+        globalCompositeOperation: "multiply",
+      });
+      texture.scale(ratio);
+    }
   }
   const objects = await Promise.all(
     page.elements.map((element) => buildStudioObject(element, canvas)),
@@ -317,6 +329,8 @@ export async function renderStudioPage(
   if (background) canvas.add(background);
   for (const object of objects) applyStudioClip(object, document);
   canvas.add(...objects);
+  canvas.overlayImage = texture;
+  canvas.overlayVpt = true;
   if (watermark)
     for (let y = 20; y < document.height + 100; y += 130)
       for (let x = -100; x < document.width; x += 300)

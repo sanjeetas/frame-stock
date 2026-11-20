@@ -155,7 +155,12 @@ const studioDocument = z
     surface: z.literal("magnet").optional(),
     mockupImage: z
       .string()
-      .regex(/^assets\/custom-[a-z-]+\.svg$/)
+      .regex(/^assets\/(?:custom-[a-z-]+\.svg|mockups\/[a-z-]+\.webp)$/)
+      .max(150)
+      .optional(),
+    mockupBackImage: z
+      .string()
+      .regex(/^assets\/mockups\/[a-z-]+\.webp$/)
       .max(150)
       .optional(),
     twoSided: z.boolean().optional(),

@@ -15,6 +15,7 @@ import { Button } from "../../components/ui/button";
 import { Loading, ErrorState, Empty } from "../../components/Feedback";
 import type { Product, Category } from "../../types";
 import { Price } from "./Price";
+import { imageUrl } from "../../lib/utils";
 import { Artwork } from "./Artwork";
 interface Props {
   group: string;
@@ -36,9 +37,9 @@ export function Catalog({
     [wishes, setWishes] = useState<string[]>([]),
     [customFamily, setCustomFamily] = useState("");
   const custom = group === "Customised Products";
-  const families = useApiQuery<{ name: string; count: number }[]>(
-    custom ? "/custom-products/categories" : null,
-  );
+  const families = useApiQuery<
+    { name: string; count: number; image?: string; sampleTitle?: string }[]
+  >(custom ? "/custom-products/categories" : null);
   useEffect(() => setCustomFamily(""), [group]);
   const query = useDebouncedValue(search);
   useEffect(() => setPage(1), [query, categoryId, customFamily, sort, group]);
@@ -54,6 +55,7 @@ export function Catalog({
   const { data, loading, error, reload } = useApiQuery<Product[]>(
     "/products?" + params,
   );
+  const showFamilies = custom && !customFamily && !query;
   const category = categories.find((item) => String(item.id) === categoryId);
   return (
     <section id="catalog" className="mx-auto max-w-7xl px-5 py-10">
@@ -135,10 +137,10 @@ export function Catalog({
           </h3>
           <ol className="mt-3 grid gap-3 text-sm text-slate-600 sm:grid-cols-4">
             {[
-              "Choose product & options",
-              "Add text, logo or photos",
-              "Review both sides & approve",
-              "Request your print quote",
+              "Choose category & product type",
+              "Pick a design variation",
+              "Personalise & review",
+              "Approve & request a quote",
             ].map((step, i) => (
               <li key={step}>
                 <span className="mr-2 inline-flex size-6 items-center justify-center rounded-full bg-cyan-100 font-bold text-primary">
@@ -152,6 +154,27 @@ export function Catalog({
             <ErrorState message={families.error} retry={families.reload} />
           )}
         </div>
+      )}
+      {custom && customFamily && (
+        <nav
+          aria-label="Customised product breadcrumb"
+          className="mb-5 flex flex-wrap items-center gap-2 text-sm"
+        >
+          <button
+            className="underline"
+            onClick={() => {
+              setCustomFamily("");
+              setSearch("");
+            }}
+          >
+            Customised products
+          </button>
+          <span>/</span>
+          <span className="font-semibold">{customFamily}</span>
+          <span className="text-slate-500">
+            → Select a product type → Choose a design → Personalise
+          </span>
+        </nav>
       )}
       <div className="mb-7 grid gap-3 rounded-2xl border border-cyan-100 bg-[#edf6fc] p-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
         <div className="relative">
@@ -178,7 +201,7 @@ export function Catalog({
             value={customFamily}
             onChange={(e) => setCustomFamily(e.target.value)}
           >
-            <option value="">All customised products</option>
+            <option value="">Browse custom categories</option>
             {families.data?.data.map((family) => (
               <option key={family.name} value={family.name}>
                 {family.name} ({family.count})
@@ -212,7 +235,77 @@ export function Catalog({
           <option value="az">Name: A–Z</option>
         </select>
       </div>
-      {loading ? (
+      {customFamily === "T-Shirts & Apparel" && (
+        <div className="mb-6 flex flex-wrap gap-2" aria-label="T-shirt types">
+          {[
+            ["All types", ""],
+            ["Cotton crew-neck", "Cotton T-Shirts"],
+            ["Full sleeve", "Full Sleeve"],
+            ["Polo", "Polo"],
+            ["Hoodies", "Hoodies"],
+            ["Shirts", "Dress Shirts"],
+            ["Jackets", "Jackets"],
+            ["Aprons", "Aprons"],
+            ["Women's", "Women"],
+            ["Kids", "Kids"],
+          ].map(([label, value]) => (
+            <button
+              type="button"
+              key={label}
+              aria-pressed={search === value}
+              className={`rounded-full border px-4 py-2 text-sm ${search === value ? "border-cyan-600 bg-cyan-50" : "bg-white"}`}
+              onClick={() => setSearch(value!)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
+      {showFamilies ? (
+        families.loading ? (
+          <Loading text="Loading custom categories…" />
+        ) : families.error ? (
+          <ErrorState message={families.error} retry={families.reload} />
+        ) : (
+          <div>
+            <h3 className="mb-5 text-2xl font-bold">
+              What would you like to customise?
+            </h3>
+            <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
+              {families.data?.data.map((family) => (
+                <button
+                  key={family.name}
+                  type="button"
+                  aria-label={`Browse ${family.name}`}
+                  className="overflow-hidden rounded-2xl border bg-white text-left shadow-sm transition-shadow hover:shadow-lg"
+                  onClick={() => {
+                    setCustomFamily(family.name);
+                    setSearch("");
+                  }}
+                >
+                  <div className="aspect-[1.2] bg-slate-50 p-3">
+                    {family.image && (
+                      <img
+                        src={imageUrl(family.image)}
+                        alt={family.sampleTitle || family.name}
+                        loading="lazy"
+                        className="size-full object-contain"
+                        referrerPolicy="no-referrer"
+                      />
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <p className="font-semibold">{family.name}</p>
+                    <p className="mt-1 text-sm text-slate-500">
+                      {family.count} product types
+                    </p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )
+      ) : loading ? (
         <Loading text="Loading collection…" />
       ) : error ? (
         <ErrorState message={error} retry={reload} />

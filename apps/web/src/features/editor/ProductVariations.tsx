@@ -1,3 +1,4 @@
+import { studioMockup, mockupLighting } from "./mockupSurfaces";
 import { ProductOptions } from "./ProductOptions";
 import { colourMatrix } from "./productColours";
 import { useMemo, useState } from "react";
@@ -100,6 +101,9 @@ export function ProductVariations({
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
         {filtered.map((t) => {
           const doc = t.settings.studio!;
+          const side = options.sides === "Back only" ? "back" : "front";
+          const page = doc.pages[side],
+            model = studioMockup(doc, side);
           const area = doc.printArea || { x: 0, y: 0, width: 1, height: 1 };
           const clip = {
             x: area.x * doc.width,
@@ -150,27 +154,25 @@ export function ProductVariations({
                       )}
                     </clipPath>
                   </defs>
-                  {round && !doc.mockupImage ? (
+                  {round && !model ? (
                     <ellipse
                       cx={doc.width / 2}
                       cy={doc.height / 2}
                       rx={doc.width / 2}
                       ry={doc.height / 2}
-                      fill={doc.pages.front.background}
+                      fill={page.background}
                     />
                   ) : (
                     <rect
                       width={doc.width}
                       height={doc.height}
-                      fill={
-                        doc.mockupImage ? "#edf1f5" : doc.pages.front.background
-                      }
+                      fill={model ? "#edf1f5" : page.background}
                       rx={doc.shape === "rounded" ? 35 : 0}
                     />
                   )}
-                  {doc.mockupImage && (
+                  {model && (
                     <image
-                      href={asset(doc.mockupImage)}
+                      href={asset(model)}
                       filter={
                         doc.productColour
                           ? `url(#product-colour-${t.id})`
@@ -182,7 +184,7 @@ export function ProductVariations({
                     />
                   )}
                   <g clipPath={`url(#variation-${t.id})`}>
-                    {doc.pages.front.elements.map((e) =>
+                    {page.elements.map((e) =>
                       e.type === "rect" ? (
                         <rect
                           key={e.id}
@@ -191,6 +193,11 @@ export function ProductVariations({
                           width={e.width * e.scaleX}
                           height={e.height * e.scaleY}
                           fill={e.fill}
+                          transform={
+                            e.angle
+                              ? `rotate(${e.angle} ${e.left} ${e.top})`
+                              : undefined
+                          }
                         />
                       ) : e.type === "circle" ? (
                         <circle
@@ -199,6 +206,11 @@ export function ProductVariations({
                           cy={e.top}
                           r={(e.width * e.scaleX) / 2}
                           fill={e.fill}
+                          transform={
+                            e.angle
+                              ? `rotate(${e.angle} ${e.left} ${e.top})`
+                              : undefined
+                          }
                         />
                       ) : e.type === "text" ? (
                         <text
@@ -225,6 +237,11 @@ export function ProductVariations({
                                 : "middle"
                           }
                           dominantBaseline="middle"
+                          transform={
+                            e.angle
+                              ? `rotate(${e.angle} ${e.left} ${e.top})`
+                              : undefined
+                          }
                           fill={e.fill}
                           fontFamily={e.fontFamily}
                           fontSize={(e.fontSize || 20) * e.scaleY}
@@ -250,6 +267,16 @@ export function ProductVariations({
                       ) : null,
                     )}
                   </g>
+                  {model && mockupLighting(model) > 0 && (
+                    <image
+                      href={asset(model)}
+                      width={doc.width}
+                      height={doc.height}
+                      preserveAspectRatio="xMidYMid meet"
+                      opacity={mockupLighting(model)}
+                      style={{ mixBlendMode: "multiply" }}
+                    />
+                  )}
                 </svg>
               </div>
               <div className="border-t bg-white p-3">

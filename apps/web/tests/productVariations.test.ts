@@ -35,7 +35,7 @@ test("every custom product family has real editable variations with safe blank m
       if (parsed.studio!.mockupImage) {
         assert.match(
           parsed.studio!.mockupImage,
-          /^assets\/custom-[a-z-]+\.svg$/,
+          /^assets\/(?:custom-[a-z-]+\.svg|mockups\/[a-z-]+\.webp)$/,
         );
         await readFile(
           new URL(
@@ -73,7 +73,7 @@ test("product changes preserve customer image references and crops in the new ed
   )!;
   assert.equal(image.uploadId, slot.uploadId);
   assert.deepEqual(image.crop, slot.crop);
-  assert.equal(next.studio!.mockupImage, "assets/custom-mug.svg");
+  assert.equal(next.studio!.mockupImage, "assets/mockups/mug.webp");
   assert.equal(
     next.studio!.pages.front.elements.some(
       (e) => e.id === "product-photo-label",
@@ -119,7 +119,7 @@ test("product editor loads only the blank mockup, keeps the editable layers sepa
   globalThis.fetch = async (url, ...args) => {
     if (String(url).startsWith("blob:")) return originalFetch(url, ...args);
     requests.push(String(url));
-    assert.match(String(url), /assets\/custom-mug\.svg$/);
+    assert.match(String(url), /assets\/mockups\/mug\.webp$/);
     return new Response(bytes, { headers: { "Content-Type": "image/png" } });
   };
   globalThis.Image = class extends Image {
@@ -298,4 +298,125 @@ test("changing T-shirt colour and size preserves the design and the selected opt
   assert.deepEqual(next.studio!.pages, original.studio!.pages);
   assert.equal(settings.parse(next).studio!.productOptions!.size, "L");
   assert.equal(next.artworkApproved, false);
+});
+
+test("garment cuts use distinct photographic surfaces and matching back views", async () => {
+  const { mockupSurface, studioMockup } =
+    await import("../src/features/editor/mockupSurfaces.ts");
+  const examples: Record<string, string> = {
+    "Men's Cotton T-Shirts": "crewneck",
+    "Full Sleeve T-Shirts": "long-sleeve",
+    "Men's Polo T-Shirts": "polo",
+    "Custom Hoodies": "hoodie",
+    "Zipper Hoodies": "zip-hoodie",
+    "Half Sleeve Dress Shirts": "short-shirt",
+    "Full Sleeve Lab Coats": "lab-coat",
+    "Half Sleeve Lab Coats": "short-coat",
+    "Women's T-Shirts": "women-crew",
+    "Kids T-Shirts": "kids-crew",
+    "Puffer Jackets": "puffer",
+  };
+  for (const [title, key] of Object.entries(examples)) {
+    const row = catalog.products.find((p: any) => p.title === title);
+    assert.ok(row, title);
+    const surface = mockupSurface(row)!;
+    assert.equal(surface.front, `assets/mockups/${key}.webp`);
+    assert.ok(
+      surface.area.x + surface.area.width <= 1 &&
+        surface.area.y + surface.area.height <= 1,
+    );
+  }
+  const row = catalog.products.find(
+    (p: any) => p.title === "Men's Cotton T-Shirts",
+  );
+  const back = productVariation(
+    { ...row, id: "012345678901234567890123" },
+    { sides: "Back only", colour: "Navy" },
+    "make-it",
+  );
+  assert.equal(
+    studioMockup(back.studio!, "back"),
+    "assets/mockups/crew-back.webp",
+  );
+  assert.equal(back.studio!.pages.front.elements.length, 0);
+  assert.ok(
+    back.studio!.pages.back.elements.some((e) => e.text?.includes("MAKE IT")),
+  );
+  const { printedSides, artworkWarnings } =
+    await import("../src/features/editor/studioActions.ts");
+  assert.deepEqual(printedSides(back.studio!), ["back"]);
+  assert.equal(
+    artworkWarnings(back.studio!).some((w) =>
+      w.includes("front artwork is empty"),
+    ),
+    false,
+  );
+});
+
+test("ready-made designs have real editable artwork and adapt default ink to garment colour", async () => {
+  const { createProductSettings } =
+    await import("../src/features/editor/studioTemplates.ts");
+  const row = catalog.products.find(
+      (p: any) => p.title === "Men's Cotton T-Shirts",
+    ),
+    product = { ...row, id: "012345678901234567890123" };
+  const designs = variationsForProduct(product);
+  assert.equal(designs[0]!.id, "make-it");
+  for (const item of designs.slice(0, 4)) {
+    const draft = productVariation(product, { colour: "White" }, item.id);
+    assert.ok(draft.studio!.pages.front.elements.length >= 2);
+    assert.equal(
+      draft.studio!.pages.front.elements.some(
+        (e) => e.id.includes("placeholder") || e.id === "design-background",
+      ),
+      false,
+    );
+  }
+  const white = productVariation(
+    product,
+    { colour: "White", size: "M" },
+    "make-it",
+  );
+  white.studio!.pages.front.elements.find(
+    (e) => e.id === "product-headline",
+  )!.text = "OUR TEAM";
+  const navy = createProductSettings(
+    product,
+    { colour: "Navy", size: "L" },
+    white,
+  );
+  assert.equal(
+    navy.studio!.pages.front.elements.find((e) => e.id === "product-headline")!
+      .fill,
+    "#fff6e6",
+  );
+  assert.equal(
+    navy.studio!.pages.front.elements.find((e) => e.id === "product-headline")!
+      .text,
+    "OUR TEAM",
+  );
+  const second = createProductSettings(
+    product,
+    { colour: "Black", size: "XL" },
+    navy,
+  );
+  assert.deepEqual(second.studio!.pages, navy.studio!.pages);
+});
+
+test("photographic assets stay small, transparent and usable as local preview resources", async () => {
+  const { readdir } = await import("node:fs/promises"),
+    sharp = (await import("sharp")).default;
+  const root = new URL("../../../public/assets/mockups/", import.meta.url),
+    files = await readdir(root);
+  assert.equal(files.filter((f) => f.endsWith(".webp")).length, 47);
+  let bytes = 0;
+  for (const file of files.filter((f) => f.endsWith(".webp"))) {
+    const data = await readFile(new URL(file, root)),
+      meta = await sharp(data).metadata();
+    bytes += data.length;
+    assert.equal(meta.format, "webp");
+    assert.equal(meta.hasAlpha, true);
+    assert.ok(meta.width! <= 1000 && meta.height! <= 1000);
+  }
+  assert.ok(bytes < 5 * 1024 * 1024);
 });

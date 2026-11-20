@@ -1218,6 +1218,16 @@ test("custom collection seeds additively, preserves source/admin data and filter
     .get("/api/custom-products/categories")
     .expect(200);
   assert.equal(families.body.data.length, 18);
+  for (const family of families.body.data) {
+    assert.deepEqual(Object.keys(family).sort(), [
+      "count",
+      "image",
+      "name",
+      "sampleTitle",
+    ]);
+    assert.equal(typeof family.image, "string");
+    assert.equal(typeof family.sampleTitle, "string");
+  }
   const gifts = await request(app)
     .get("/api/products")
     .query({ group: "Gifting Items", search: "Printed Mugs" })

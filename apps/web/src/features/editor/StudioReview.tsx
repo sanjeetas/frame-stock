@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { ArrowLeft, CheckCircle2, AlertTriangle } from "lucide-react";
 import { StudioPreview } from "./StudioPreview";
-import { artworkWarnings } from "./studioActions";
+import { artworkWarnings, printedSides } from "./studioActions";
 import { Button } from "../../components/ui/button";
 import type { DesignSettings, Product } from "../../types";
 export function StudioReview({
@@ -17,8 +17,13 @@ export function StudioReview({
 }) {
   const [approved, setApproved] = useState(false);
   const warnings = useMemo(
-    () => artworkWarnings(settings.studio!),
-    [settings.studio],
+    () =>
+      artworkWarnings({
+        ...settings.studio!,
+        productOptions:
+          settings.productOptions || settings.studio?.productOptions,
+      }),
+    [settings.studio, settings.productOptions],
   );
   return (
     <section className="studio-review" aria-label="Review and approve artwork">
@@ -64,17 +69,23 @@ export function StudioReview({
           </dl>
         )}
         <div className="mt-7 grid gap-6 md:grid-cols-2">
-          {((settings.studio!.twoSided ?? settings.studio!.format === "card")
-            ? (["front", "back"] as const)
-            : (["front"] as const)
-          ).map((side) => (
-            <div key={side}>
-              <h3 className="mb-3 text-lg font-semibold capitalize">{side}</h3>
-              <div className="rounded-xl border border-slate-200 bg-white p-3">
-                <StudioPreview settings={settings} side={side} />
+          {printedSides(settings.studio!, settings.productOptions).map(
+            (side) => (
+              <div key={side}>
+                <h3 className="mb-3 text-lg font-semibold capitalize">
+                  {side}
+                  {side === "back" &&
+                  settings.studio?.mockupImage &&
+                  !settings.studio.mockupBackImage
+                    ? " artwork"
+                    : ""}
+                </h3>
+                <div className="rounded-xl border border-slate-200 bg-white p-3">
+                  <StudioPreview settings={settings} side={side} />
+                </div>
               </div>
-            </div>
-          ))}
+            ),
+          )}
         </div>
         {warnings.length > 0 && (
           <div className="mt-7 rounded-xl border border-amber-200 bg-amber-50 p-5 text-amber-950">

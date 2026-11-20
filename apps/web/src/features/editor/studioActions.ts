@@ -39,8 +39,12 @@ export function artworkWarnings(document: StudioDocument): string[] {
   const placeholders =
     /^(Company Name|Company Message|Your tagline here|Your brand\. Your story\.|Full Name|Job Title|Email \/ Other|Address Line [12]|Phone \/ Other|Web \/ Other|hello@yourcompany\.com|www\.yourcompany\.com|\+91 00000 00000)$/i;
   for (const [side, page] of Object.entries(document.pages)) {
-    if (side === "front" && !page.elements.length)
-      warnings.push("The front artwork is empty.");
+    if (!printedSides(document).includes(side as "front" | "back")) continue;
+    if (
+      !page.elements.length &&
+      (side === "front" || document.productOptions?.sides === "Back only")
+    )
+      warnings.push(`The ${side} artwork is empty.`);
     if (
       page.elements.some(
         (element) =>
@@ -119,4 +123,15 @@ export function cropPixels(
     width: region.width * width,
     height: region.height * height,
   };
+}
+
+export function printedSides(
+  document: StudioDocument,
+  options = document.productOptions || {},
+): ("front" | "back")[] {
+  if (options.sides === "Front only") return ["front"];
+  if (options.sides === "Back only") return ["back"];
+  return (document.twoSided ?? document.format === "card")
+    ? ["front", "back"]
+    : ["front"];
 }
