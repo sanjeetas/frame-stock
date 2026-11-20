@@ -10,7 +10,7 @@ import {
   productVariation,
   variationsForProduct,
   isCalendarProduct,
-} from "./productVariations";
+} from "./productVariationTemplates";
 
 export function ProductVariations({
   product,

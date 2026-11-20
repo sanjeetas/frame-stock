@@ -1,6 +1,6 @@
 import { ProductOptions } from "./ProductOptions";
 import { ProductVariations } from "./ProductVariations";
-import { productVariation, isProductPhotoSlot } from "./productVariations";
+import { productVariation, isProductPhotoSlot } from "./productVariationTemplates";
 import {
   applyMagnetLayout,
   isMagnetPhotoSlot,

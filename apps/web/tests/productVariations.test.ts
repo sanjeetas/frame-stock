@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import {
   productVariation,
   variationsForProduct,
-} from "../src/features/editor/productVariations.ts";
+} from "../src/features/editor/productVariationTemplates.ts";
 import { settings } from "../../api/src/schemas/index.ts";
 
 const catalog = JSON.parse(
