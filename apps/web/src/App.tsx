@@ -41,6 +41,7 @@ export function App() {
   useScrollReveal();
   const taxonomy = useApiQuery<Category[]>("/categories");
   const [categoryId, setCategoryId] = useState("");
+  const [scrollRequest, setScrollRequest] = useState(0);
   const auth = useAuth(),
     [route, setRoute] = useState(location.hash.slice(1) || "home"),
     [group, setGroup] = useState(
@@ -60,11 +61,27 @@ export function App() {
         setCategoryId("");
       }
       setSelected(null);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      setScrollRequest((value) => value + 1);
     };
     window.addEventListener("hashchange", change);
     return () => window.removeEventListener("hashchange", change);
   }, []);
+  useEffect(() => {
+    if (!scrollRequest) return;
+    const frame = requestAnimationFrame(() => {
+      const targetId = ["catalog", "customised"].includes(route)
+        ? "catalog-results"
+        : route === "library" ? "library-results" : "main-content";
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      const navHeight = document.querySelector(".colour-nav")?.getBoundingClientRect().height || 0;
+      window.scrollTo({
+        top: Math.max(0, window.scrollY + target.getBoundingClientRect().top - navHeight - 16),
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+      });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [route, scrollRequest]);
   useEffect(() => {
     if (notice) {
       const t = setTimeout(() => setNotice(""), 3500);
@@ -74,16 +91,13 @@ export function App() {
   function browse(g: string, category?: string) {
     setGroup(g);
     setCategoryId(category || "");
-    location.hash =
-      g === "Image Library"
-        ? "library"
-        : g === "Customised Products"
-          ? "customised"
-          : "catalog";
-    if (["catalog", "customised"].includes(route) && g !== "Image Library")
-      document
-        .getElementById("catalog")
-        ?.scrollIntoView({ behavior: "smooth" });
+    const nextRoute = g === "Image Library"
+      ? "library" : g === "Customised Products" ? "customised" : "catalog";
+    if (location.hash === "#" + nextRoute) {
+      setScrollRequest((value) => value + 1);
+    } else {
+      location.hash = nextRoute;
+    }
   }
   async function logout() {
     setLogoutError("");

@@ -48,7 +48,7 @@ export function Library({ onOpen }: { onOpen: (product: Product) => void }) {
       {categories.error && (
         <ErrorState message={categories.error} retry={categories.reload} />
       )}
-      <div className="mb-5 flex flex-wrap gap-2" aria-label="Image categories">
+      <div id="library-results" className="mb-5 flex flex-wrap gap-2" aria-label="Image categories">
         <Button
           variant={category ? "outline" : "default"}
           aria-pressed={!category}

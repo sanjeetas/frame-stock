@@ -176,7 +176,7 @@ export function Catalog({
           </span>
         </nav>
       )}
-      <div className="mb-7 grid gap-3 rounded-2xl border border-cyan-100 bg-[#edf6fc] p-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
+      <div id="catalog-results" className="mb-7 grid gap-3 rounded-2xl border border-cyan-100 bg-[#edf6fc] p-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
         <div className="relative">
           <label htmlFor="catalog-search" className="sr-only">
             Search catalog
