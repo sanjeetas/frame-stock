@@ -1,3 +1,4 @@
+import { LetterShine } from "./LetterShine";
 import { AnimatedPrinter } from "./AnimatedPrinter";
 import { BannerLogo } from "./BannerLogo";
 import { useId } from "react";
@@ -43,6 +44,7 @@ export function OrbitBanner() {
         <circle className="phulo-orbit-halo banner-animated" cx="908" cy="253" r="98" fill="none" stroke="#08bde3" strokeWidth="3" />
         <g className="phulo-centre-logo-motion banner-animated">
           <image href={source} width="1600" height="750" clipPath={`url(#${id}-centre)`} />
+          <LetterShine source={source} x={844} y={284} width={134} height={18} />
         </g>
         <g className="phulo-orbit-track">
           {photos.map((photo, index) => {

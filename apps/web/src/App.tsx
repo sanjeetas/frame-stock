@@ -1,3 +1,4 @@
+import { HeaderLogo } from "./components/LetterShine";
 import { useEffect, useState } from "react";
 import {
   ArrowUpRight,
@@ -142,11 +143,7 @@ export function App() {
             href="#home"
             className="header-logo rounded-xl bg-white/85 px-3 py-1"
           >
-            <img
-              src={asset("assets/logo.png")}
-              alt="PHULO Multi Graphics"
-              className="h-24 w-44 object-contain"
-            />
+            <HeaderLogo />
           </a>
           <p className="header-tagline hidden rounded-full bg-white/90 px-6 py-3 text-xl font-semibold lg:block">
             Printing & Personalization

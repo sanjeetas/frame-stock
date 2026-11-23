@@ -1,3 +1,4 @@
+import { LetterShine } from "./LetterShine";
 import { useId } from "react";
 
 // Reuse the logo region of the original banner as an SVG layer. The original
@@ -14,6 +15,10 @@ export function BannerLogo({ source, variant }: {
     <defs><clipPath id={`${id}-brand`}><rect x={box.x} y={box.y} width={box.width} height={box.height} /></clipPath></defs>
     <g className="phulo-brand-motion banner-animated" style={{ transformOrigin: box.origin }} aria-hidden="true">
       <image href={source} width="1600" height="750" clipPath={`url(#${id}-brand)`} />
+      {variant === "printing"
+        ? <LetterShine source={source} x={150} y={357} width={475} height={42} />
+        : <LetterShine source={source} x={90} y={301} width={450} height={44} />}
+
     </g>
   </>;
 }

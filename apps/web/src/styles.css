@@ -1174,3 +1174,12 @@
   70%, 86% { transform: translateY(0); opacity: 1; }
   100% { transform: translateY(0); opacity: 0; }
 }
+
+/* One slow rainbow ray crosses only the small MULTIGRAPHICS letter shapes. */
+.letter-shine-ray { animation: phulo-letter-light 4.8s ease-in-out infinite; }
+@keyframes phulo-letter-light {
+  0%, 12% { transform: translateX(0); }
+  80%, 100% { transform: translateX(var(--shine-travel)); }
+}
+.print-header:has(.ink-rain[data-paused="true"]) .letter-shine-ray { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .letter-shine { display: none; } }
