@@ -1,12 +1,10 @@
+import { PrintSlider } from "../../components/PrintSlider";
 import { useEffect, useState } from "react";
 import {
   Search,
   ChevronLeft,
   ChevronRight,
   Heart,
-  Printer,
-  Palette,
-  Sparkles,
 } from "lucide-react";
 import { useApiQuery } from "../../hooks/useApiQuery";
 import { useDebouncedValue } from "../../hooks/useDebouncedValue";
@@ -59,76 +57,13 @@ export function Catalog({
   const category = categories.find((item) => String(item.id) === categoryId);
   return (
     <section id="catalog" className="mx-auto max-w-7xl px-5 py-10">
-      <div className="collection-banner mb-7 grid items-center gap-8 rounded-3xl p-7 text-white md:grid-cols-[1.3fr_1fr] md:p-10">
-        <div className="relative z-10">
-          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-xs font-bold tracking-[.16em] text-cyan-100">
-            <Sparkles size={18} /> THE PRINT & PERSONALISE COLLECTION
-          </p>
-          <h2
-            key={group}
-            className="collection-title text-4xl font-bold leading-tight sm:text-5xl"
-          >
-            {category ? (
-              category.name
-            ) : group === "All products" ? (
-              <>
-                Big ideas.
-                <br />
-                <span className="text-[#ffe16a]">Full colour.</span>
-              </>
-            ) : (
-              group
-            )}
-          </h2>
-          <p className="mt-4 max-w-lg text-base leading-7 text-blue-100">
-            {custom
-              ? "Choose your product and specifications. Start with a template or upload, personalise your design, approve the preview and send your order request."
-              : "Print it. Gift it. Make it yours. Discover standout prints, personalised products and designs for every idea."}
-          </p>
-          <div className="mt-6 flex flex-wrap items-center gap-3 text-sm">
-            <span className="rounded-full bg-white px-4 py-2 font-semibold text-primary">
-              Made for your imagination
-            </span>
-            {data && (
-              <span className="rounded-full border border-white/30 px-4 py-2">
-                {data.meta?.total} results to explore
-              </span>
-            )}
-          </div>
+      <PrintSlider />
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="mb-1 text-xs font-bold tracking-[.16em] text-accent">PRINT · PERSONALISE · INSPIRE</p>
+          <h2 className="text-2xl font-bold text-primary sm:text-3xl">{category?.name || (group === "All products" ? "Explore our products" : group)}</h2>
         </div>
-        <div
-          className="print-art relative mx-auto h-60 w-full max-w-80"
-          aria-hidden="true"
-        >
-          <div className="ink-orbit ink-cyan" />
-          <div className="ink-orbit ink-pink" />
-          <div className="ink-orbit ink-yellow" />
-          <div className="print-sheet absolute inset-x-9 top-5 rounded-2xl bg-white p-5 text-primary shadow-2xl">
-            <div className="mb-5 flex items-center justify-between">
-              <Printer size={30} />
-              <span className="text-xs font-bold tracking-widest">
-                CREATE / PRINT
-              </span>
-            </div>
-            <div className="flex gap-2">
-              {["#08bde3", "#ef3b96", "#ffd548", "#113655"].map((color) => (
-                <span
-                  key={color}
-                  className="h-14 flex-1 rounded-lg"
-                  style={{ backgroundColor: color }}
-                />
-              ))}
-            </div>
-            <p className="mt-4 text-2xl font-black tracking-tight">
-              GOOD IDEAS.
-              <br />
-              GREAT IMPRESSIONS.
-            </p>
-          </div>
-          <div className="print-sticker absolute -right-1 bottom-0 flex items-center gap-2 rounded-xl bg-[#ffe16a] px-4 py-3 text-sm font-bold text-primary shadow-xl">
-            <Palette size={22} /> A little more colour.
-          </div>
-        </div>
+        {data && <p className="rounded-full bg-cyan-50 px-4 py-2 text-sm font-semibold text-primary">{data.meta?.total} results to explore</p>}
       </div>
       {custom && (
         <div className="mb-7 rounded-2xl border border-cyan-100 bg-white p-5">

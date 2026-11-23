@@ -1006,3 +1006,64 @@
   box-shadow: none;
 }
 .magnet-gallery { min-height: 100%; background: #fff; }
+
+/* Original PHULO banners stay intact, including on narrow screens. */
+.phulo-slider {
+  padding: 4px;
+  border-radius: 22px;
+  background: linear-gradient(115deg, #06b6d4, #258ee7 24%, #ec008c 53%, #ffb92d 80%, #f7dc47);
+  box-shadow: 0 14px 35px -20px #11365566;
+}
+.phulo-slider-window {
+  position: relative;
+  aspect-ratio: 1600 / 750;
+  overflow: hidden;
+  border-radius: 18px 18px 0 0;
+  background: #062e52;
+  touch-action: pan-y pinch-zoom;
+}
+.phulo-slider-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 600ms ease, visibility 600ms;
+}
+.phulo-slider-slide[data-active="true"] { opacity: 1; visibility: visible; }
+.phulo-slider-slide img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.phulo-slider-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 0 0 18px 18px;
+  background: linear-gradient(100deg, #edfbff, #fff3fb 65%, #fff8da);
+}
+.phulo-slider-arrow, .phulo-slider-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: #113655;
+  cursor: pointer;
+}
+.phulo-slider-arrow { background: #fff; border: 1px solid #dce7ef; }
+.phulo-slider-arrow:hover { background: #d9f6ff; }
+.phulo-slider-arrow:disabled { opacity: .5; cursor: default; }
+.phulo-slider-dot { width: 30px; }
+.phulo-slider-dot span { width: 9px; height: 9px; border-radius: 20px; background: #9cacc0; transition: width 200ms; }
+.phulo-slider-dot[aria-current="true"] span { width: 24px; background: linear-gradient(90deg, #00a8d1, #e60083); }
+.phulo-slider button:focus-visible { outline: 3px solid #a80a71; outline-offset: 2px; }
+@media (max-width: 480px) {
+  .phulo-slider { border-radius: 16px; padding: 3px; }
+  .phulo-slider-window { border-radius: 13px 13px 0 0; }
+  .phulo-slider-controls { padding: 5px 6px; gap: 2px; border-radius: 0 0 13px 13px; }
+  .phulo-slider-controls p { font-size: 11px; }
+  .phulo-slider-dot { width: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .phulo-slider-slide, .phulo-slider-dot span { transition: none; }
+}
