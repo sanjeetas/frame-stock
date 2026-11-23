@@ -1009,6 +1009,8 @@
 
 /* Original PHULO banners stay intact, including on narrow screens. */
 .phulo-slider {
+  min-width: 0;
+  max-width: 100%;
   padding: 4px;
   border-radius: 22px;
   background: linear-gradient(115deg, #06b6d4, #258ee7 24%, #ec008c 53%, #ffb92d 80%, #f7dc47);
@@ -1088,4 +1090,23 @@
   .category-slide h3 { margin: 8px 0 12px; -webkit-line-clamp: 3; }
   .category-slide-action { padding: 6px 10px; }
   .category-slide-art { padding: 5px; border-radius: 10px; }
+}
+
+/* Keep long category names, product copy and controls readable on phones. */
+.category-slide-copy { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  .phulo-slider-controls { flex-wrap: wrap; justify-content: center; gap: 4px; }
+  .phulo-slider-controls p {
+    flex-basis: 100%; font-size: 13px; line-height: 1.4; text-align: center;
+    white-space: normal; overflow: visible; text-overflow: clip; padding: 3px 6px;
+  }
+  .phulo-slider-dot { width: 32px; }
+  .phulo-slider-window[data-category="true"] { height: auto; }
+  .phulo-slider-window[data-category="true"] .phulo-slider-slide { position: relative; display: none; }
+  .phulo-slider-window[data-category="true"] .phulo-slider-slide[data-active="true"] { display: block; }
+  .category-slide { position: relative; min-height: 240px; padding: 16px; gap: 12px; }
+  .category-slide h3 { display: block; font-size: clamp(18px, 4.6vw, 25px); line-height: 1.2; -webkit-line-clamp: unset; }
+  .category-slide-category { font-size: 12px; }
+  .category-slide-action { max-width: 100%; font-size: 13px; padding: 8px 10px; }
+  .category-slide-art { align-self: stretch; height: auto; min-height: 180px; max-height: none; }
 }

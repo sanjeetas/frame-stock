@@ -254,11 +254,11 @@ export function Catalog({
         <ErrorState message={error} retry={reload} />
       ) : data?.data.length ? (
         <>
-          <div className="grid gap-x-5 gap-y-8 grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-x-4 gap-y-6 min-[360px]:grid-cols-2 lg:grid-cols-4">
             {data.data.map((p) => (
               <article
                 key={p.id}
-                className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm transition-shadow hover:shadow-lg"
+                className="min-w-0 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm transition-shadow hover:shadow-lg"
               >
                 <div className="relative aspect-[1.1] overflow-hidden rounded-lg bg-slate-100">
                   <button
@@ -293,7 +293,7 @@ export function Catalog({
                 </div>
                 <p className="mt-3 text-sm text-slate-500">{p.category}</p>
                 <button
-                  className="mt-1 min-h-10 text-left text-base font-semibold"
+                  className="mt-1 min-h-10 max-w-full break-words text-left text-base font-semibold"
                   onClick={() => onOpen(p)}
                 >
                   {p.title}
@@ -309,7 +309,7 @@ export function Catalog({
                       {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
                     </span>
                   </span>
-                  <Button variant="outline" size="sm" onClick={() => onOpen(p)}>
+                  <Button className="w-full min-w-0 whitespace-normal px-2 text-center" variant="outline" size="sm" onClick={() => onOpen(p)}>
                     {p.customisation ? "Choose & customise ↗" : "View ↗"}
                   </Button>
                 </div>
