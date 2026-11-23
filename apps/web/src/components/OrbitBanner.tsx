@@ -1,3 +1,4 @@
+import { BannerLogo } from "./BannerLogo";
 import { useId } from "react";
 import { asset } from "../lib/utils";
 
@@ -30,12 +31,16 @@ export function OrbitBanner() {
         })}
       </defs>
       <image href={source} width="1600" height="750" />
+      <BannerLogo source={source} variant="printing" />
       <g className="phulo-orbit-art" aria-hidden="true">
         <circle cx="908" cy="253" r="225" fill="#fff" stroke="#bceefa" strokeWidth="3" />
         <circle cx="908" cy="253" r="214" fill="#e4f6fc" />
-        <circle className="phulo-orbit-guide" cx="908" cy="253" r="158" fill="none" stroke="#89c7dc" strokeWidth="2" strokeDasharray="8 8" />
+        <circle className="phulo-orbit-guide banner-animated" cx="908" cy="253" r="158" fill="none" stroke="#89c7dc" strokeWidth="2" strokeDasharray="8 8" />
         <circle cx="908" cy="253" r="99" fill="#fff" />
-        <image href={source} width="1600" height="750" clipPath={`url(#${id}-centre)`} />
+        <circle className="phulo-orbit-halo banner-animated" cx="908" cy="253" r="98" fill="none" stroke="#08bde3" strokeWidth="3" />
+        <g className="phulo-centre-logo-motion banner-animated">
+          <image href={source} width="1600" height="750" clipPath={`url(#${id}-centre)`} />
+        </g>
         <g className="phulo-orbit-track">
           {photos.map((photo, index) => {
             const angle = (index * 45 - 90) * Math.PI / 180;

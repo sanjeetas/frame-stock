@@ -1,3 +1,4 @@
+import { SignageBanner } from "./BannerLogo";
 import { OrbitBanner } from "./OrbitBanner";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
@@ -27,7 +28,7 @@ export const originalSlides = [
   title: slide.title,
   kind: "original",
   duration: slide.image === "phulo-printing.webp" ? 24000 : 6500,
-  content: slide.image === "phulo-printing.webp" ? <OrbitBanner /> : <img src={asset(`assets/slides/${slide.image}`)} alt={slide.alt} width={1600} height={750} decoding="async" draggable={false} />,
+  content: slide.image === "phulo-printing.webp" ? <OrbitBanner /> : <SignageBanner source={asset(`assets/slides/${slide.image}`)} alt={slide.alt} />,
 }));
 
 export function PrintSlider({ slides = originalSlides, label = "PHULO printing highlights" }: {
