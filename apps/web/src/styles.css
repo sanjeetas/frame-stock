@@ -1114,14 +1114,14 @@
 
 /* The service photos orbit; their inner counter-rotation keeps each photo upright. */
 .phulo-orbit-banner { display: block; width: 100%; height: 100%; }
-.phulo-orbit-track { transform-origin: 908px 253px; animation: phulo-orbit-turn 24s linear infinite; }
-.phulo-orbit-upright { animation: phulo-orbit-upright 24s linear infinite; }
-.phulo-orbit-focus { animation: phulo-orbit-focus 24s ease-in-out infinite; }
-.phulo-orbit-highlight { stroke: #08bfe9; opacity: 0; animation: phulo-orbit-highlight 24s ease-in-out infinite; }
+.phulo-orbit-track { transform-origin: 908px 253px; animation: phulo-orbit-turn 18s linear infinite; }
+.phulo-orbit-upright { animation: phulo-orbit-upright 18s linear infinite; }
+.phulo-orbit-focus { animation: phulo-orbit-focus 18s ease-in-out infinite; }
+.phulo-orbit-highlight { stroke: #08bfe9; opacity: 0; animation: phulo-orbit-highlight 18s ease-in-out infinite; }
 @keyframes phulo-orbit-turn { to { transform: rotate(360deg); } }
 @keyframes phulo-orbit-upright { to { transform: rotate(-360deg); } }
 @keyframes phulo-orbit-focus {
-  0%, 7% { transform: scale(1.14); }
+  0%, 7% { transform: scale(1.22); }
   12%, 100% { transform: scale(1); }
 }
 @keyframes phulo-orbit-highlight {
@@ -1165,4 +1165,12 @@
   .phulo-slider-slide { transform: none; transition: none; }
   .phulo-brand-motion { display: none; }
   .banner-animated { animation: none !important; }
+}
+
+/* The printed sheet emerges from the front slot into the output tray. */
+.phulo-printer-paper { animation: phulo-paper-print 2.8s ease-in-out infinite; }
+@keyframes phulo-paper-print {
+  0%, 8% { transform: translateY(-152px); opacity: 1; }
+  70%, 86% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0; }
 }

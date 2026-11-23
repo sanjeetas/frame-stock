@@ -27,7 +27,7 @@ export const originalSlides = [
   id: slide.image,
   title: slide.title,
   kind: "original",
-  duration: slide.image === "phulo-printing.webp" ? 24000 : 6500,
+  duration: slide.image === "phulo-printing.webp" ? 18000 : 6500,
   content: slide.image === "phulo-printing.webp" ? <OrbitBanner /> : <SignageBanner source={asset(`assets/slides/${slide.image}`)} alt={slide.alt} />,
 }));
 
@@ -37,6 +37,7 @@ export function PrintSlider({ slides = originalSlides, label = "PHULO printing h
 } = {}) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [motionPaused, setMotionPaused] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [hidden, setHidden] = useState(document.hidden);
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -47,7 +48,7 @@ export function PrintSlider({ slides = originalSlides, label = "PHULO printing h
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     const motion = () => {
       setReducedMotion(media.matches);
-      if (media.matches) setPaused(true);
+      if (media.matches) { setPaused(true); setMotionPaused(true); }
     };
     const visibility = () => setHidden(document.hidden);
     motion();
@@ -75,7 +76,7 @@ export function PrintSlider({ slides = originalSlides, label = "PHULO printing h
       className="phulo-slider mb-6"
       aria-label={label}
       aria-roledescription="carousel"
-      data-motion={!paused && !hovered && !hidden && !reducedMotion}
+      data-motion={!motionPaused && !hidden && !reducedMotion}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocusCapture={() => setPaused(true)}
@@ -139,11 +140,11 @@ export function PrintSlider({ slides = originalSlides, label = "PHULO printing h
         <button
           type="button"
           className="phulo-slider-arrow"
-          aria-label={paused ? "Play banners" : "Pause banners"}
-          onClick={() => setPaused((value) => !value)}
+          aria-label={motionPaused ? "Play banners" : "Pause banners"}
+          onClick={() => { setMotionPaused(!motionPaused); setPaused(!motionPaused); }}
           disabled={reducedMotion}
           title={reducedMotion ? "Automatic slides are off for reduced motion" : undefined}
-        >{paused ? <Play size={17} /> : <Pause size={17} />}</button>
+        >{motionPaused ? <Play size={17} /> : <Pause size={17} />}</button>
       </div>}
     </section>
   );

@@ -1,3 +1,4 @@
+import { AnimatedPrinter } from "./AnimatedPrinter";
 import { BannerLogo } from "./BannerLogo";
 import { useId } from "react";
 import { asset } from "../lib/utils";
@@ -19,7 +20,7 @@ export function OrbitBanner() {
   const id = useId().replace(/:/g, "");
   const source = asset("assets/slides/phulo-printing.webp");
   return (
-    <svg className="phulo-orbit-banner" viewBox="0 0 1600 750" role="img" aria-label="PHULO Multi Graphics: eight printing service photos orbit the company logo, with each photo highlighted and gently enlarged in turn. Contact 7400006069 or 8451010020.">
+    <svg className="phulo-orbit-banner" viewBox="0 0 1600 750" role="img" aria-label="PHULO Multi Graphics: a photo printer produces a colourful sheet while eight service photos orbit the company logo, with each photo highlighted and enlarged in turn. Contact 7400006069 or 8451010020.">
       <defs>
         <clipPath id={`${id}-centre`}><circle cx="908" cy="253" r="91" /></clipPath>
         <clipPath id={`${id}-offer`}><circle cx="753" cy="494" r="116" /></clipPath>
@@ -31,8 +32,10 @@ export function OrbitBanner() {
         })}
       </defs>
       <image href={source} width="1600" height="750" />
+      <AnimatedPrinter original={source} />
       <BannerLogo source={source} variant="printing" />
       <g className="phulo-orbit-art" aria-hidden="true">
+        <circle cx="908" cy="253" r="232" fill="#002b55" />
         <circle cx="908" cy="253" r="225" fill="#fff" stroke="#bceefa" strokeWidth="3" />
         <circle cx="908" cy="253" r="214" fill="#e4f6fc" />
         <circle className="phulo-orbit-guide banner-animated" cx="908" cy="253" r="158" fill="none" stroke="#89c7dc" strokeWidth="2" strokeDasharray="8 8" />
@@ -48,7 +51,7 @@ export function OrbitBanner() {
             const y = 253 + Math.sin(angle) * 158;
             const origin = `${x}px ${y}px`;
             return <g key={photo.name} className="phulo-orbit-upright" style={{ transformOrigin: origin }}>
-              <g className="phulo-orbit-focus" style={{ transformOrigin: origin, animationDelay: `${-index * 3}s` }}>
+              <g className="phulo-orbit-focus" style={{ transformOrigin: origin, animationDelay: `${-index * 2.25}s` }}>
                 <title>{photo.name}</title>
                 <circle cx={x} cy={y} r="59" fill="white" />
                 <g clipPath={`url(#${id}-photo-${index})`}>
@@ -56,7 +59,7 @@ export function OrbitBanner() {
                     <image href={source} width="1600" height="750" />
                   </svg>
                 </g>
-                <circle className="phulo-orbit-highlight" cx={x} cy={y} r="59" fill="none" strokeWidth="5" style={{ animationDelay: `${-index * 3}s` }} />
+                <circle className="phulo-orbit-highlight" cx={x} cy={y} r="59" fill="none" strokeWidth="5" style={{ animationDelay: `${-index * 2.25}s` }} />
               </g>
             </g>;
           })}
