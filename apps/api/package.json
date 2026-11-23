@@ -9,7 +9,8 @@
     "start": "node --env-file-if-exists=../../.env dist/server.js",
     "test": "tsx --test --test-concurrency=1 tests/*.test.ts",
     "seed": "tsx --env-file=../../.env src/scripts/seed.ts",
-    "admin:create": "tsx --env-file=../../.env src/scripts/create-admin.ts"
+    "admin:create": "tsx --env-file=../../.env src/scripts/create-admin.ts",
+    "doctor": "tsx --env-file-if-exists=../../.env src/scripts/doctor.ts"
   },
   "dependencies": {
     "argon2": "^0.45.2",

@@ -16,7 +16,8 @@
     "test": "npm run test -w apps/api && node --import tsx --test apps/web/tests/*.test.ts",
     "start": "npm run start -w apps/api",
     "seed": "npm run seed -w apps/api",
-    "admin:create": "npm run admin:create -w apps/api"
+    "admin:create": "npm run admin:create -w apps/api",
+    "doctor": "npm run doctor -w apps/api"
   },
   "devDependencies": {
     "concurrently": "^10.0.7"
