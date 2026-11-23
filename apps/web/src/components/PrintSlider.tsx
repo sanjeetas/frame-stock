@@ -1,8 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { asset } from "../lib/utils";
 
-const slides = [
+export interface PrintSlide {
+  id: string;
+  title: string;
+  content: ReactNode;
+}
+
+const originalSlides = [
   {
     image: "phulo-printing.webp",
     title: "Print with PHULO",
@@ -13,9 +19,17 @@ const slides = [
     title: "Make your brand stand out",
     alt: "PHULO graphic designing, vinyl and canvas, flex banners, laser cutting, acrylic and MDF, branding, signage and fabrication.",
   },
-];
+].map((slide): PrintSlide => ({
+  id: slide.image,
+  title: slide.title,
+  content: <img src={asset(`assets/slides/${slide.image}`)} alt={slide.alt} width={1600} height={750} decoding="async" draggable={false} />,
+}));
 
-export function PrintSlider() {
+export function PrintSlider({ slides = originalSlides, label = "PHULO printing highlights", category = false }: {
+  slides?: PrintSlide[];
+  label?: string;
+  category?: boolean;
+} = {}) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -40,10 +54,10 @@ export function PrintSlider() {
   }, []);
 
   useEffect(() => {
-    if (paused || hovered || hidden) return;
+    if (paused || hovered || hidden || slides.length < 2) return;
     const timer = window.setInterval(() => setActive((value) => (value + 1) % slides.length), 5500);
     return () => window.clearInterval(timer);
-  }, [paused, hovered, hidden]);
+  }, [paused, hovered, hidden, slides.length]);
 
   function select(index: number) {
     setPaused(true);
@@ -53,7 +67,7 @@ export function PrintSlider() {
   return (
     <section
       className="phulo-slider mb-6"
-      aria-label="PHULO printing highlights"
+      aria-label={label}
       aria-roledescription="carousel"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -67,6 +81,7 @@ export function PrintSlider() {
     >
       <div
         className="phulo-slider-window"
+        data-category={category}
         onTouchStart={(event) => { touchStart.current = event.touches[0]?.clientX ?? null; }}
         onTouchEnd={(event) => {
           const end = event.changedTouches[0]?.clientX;
@@ -78,29 +93,22 @@ export function PrintSlider() {
       >
         {slides.map((slide, index) => (
           <div
-            key={slide.image}
+            key={slide.id}
             className="phulo-slider-slide"
             role="group"
             aria-roledescription="slide"
             aria-label={`${index + 1} of ${slides.length}: ${slide.title}`}
-            aria-hidden={active !== index}
-            data-active={active === index}
+            aria-hidden={active % slides.length !== index}
+            inert={active % slides.length !== index}
+            data-active={active % slides.length === index}
           >
-            <img
-              src={asset(`assets/slides/${slide.image}`)}
-              alt={slide.alt}
-              width={1600}
-              height={750}
-              decoding="async"
-              fetchPriority={index === 0 ? "high" : "auto"}
-              draggable={false}
-            />
+            {slide.content}
           </div>
         ))}
       </div>
-      <div className="phulo-slider-controls">
+      {slides.length > 1 && <div className="phulo-slider-controls">
         <p aria-live={paused ? "polite" : "off"} className="min-w-0 flex-1 truncate text-sm font-semibold text-primary">
-          {slides[active]!.title}
+          {slides[active % slides.length]!.title}
         </p>
         <button type="button" className="phulo-slider-arrow" aria-label="Previous banner" onClick={() => select(active - 1)}>
           <ChevronLeft size={20} />
@@ -108,11 +116,11 @@ export function PrintSlider() {
         <div className="flex items-center gap-1" aria-label="Choose banner">
           {slides.map((slide, index) => (
             <button
-              key={slide.image}
+              key={slide.id}
               type="button"
               className="phulo-slider-dot"
               aria-label={`Show banner ${index + 1}: ${slide.title}`}
-              aria-current={active === index ? "true" : undefined}
+              aria-current={active % slides.length === index ? "true" : undefined}
               onClick={() => select(index)}
             ><span /></button>
           ))}
@@ -128,7 +136,7 @@ export function PrintSlider() {
           disabled={reducedMotion}
           title={reducedMotion ? "Automatic slides are off for reduced motion" : undefined}
         >{paused ? <Play size={17} /> : <Pause size={17} />}</button>
-      </div>
+      </div>}
     </section>
   );
 }

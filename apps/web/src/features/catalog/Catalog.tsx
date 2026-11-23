@@ -1,4 +1,4 @@
-import { PrintSlider } from "../../components/PrintSlider";
+import { CategorySlider } from "../../components/CategorySlider";
 import { useEffect, useState } from "react";
 import {
   Search,
@@ -55,13 +55,21 @@ export function Catalog({
   );
   const showFamilies = custom && !customFamily && !query;
   const category = categories.find((item) => String(item.id) === categoryId);
+  const title = (custom && customFamily) || category?.name || (group === "All products" ? "Explore our products" : group);
+  const bannerParams = new URLSearchParams(params);
+  bannerParams.delete("page");
+  bannerParams.set("limit", "3");
+  bannerParams.set("sort", "featured");
+  const bannerPath = group === "All products" && !categoryId && !query
+    ? null : "/products?" + bannerParams;
+
   return (
     <section id="catalog" className="mx-auto max-w-7xl px-5 py-10">
-      <PrintSlider />
+      <CategorySlider key={bannerPath || "phulo-originals"} path={bannerPath} title={title} onOpen={onOpen} />
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="mb-1 text-xs font-bold tracking-[.16em] text-accent">PRINT · PERSONALISE · INSPIRE</p>
-          <h2 className="text-2xl font-bold text-primary sm:text-3xl">{category?.name || (group === "All products" ? "Explore our products" : group)}</h2>
+          <h2 className="text-2xl font-bold text-primary sm:text-3xl">{title}</h2>
         </div>
         {data && <p className="rounded-full bg-cyan-50 px-4 py-2 text-sm font-semibold text-primary">{data.meta?.total} results to explore</p>}
       </div>

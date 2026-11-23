@@ -1067,3 +1067,25 @@
 @media (prefers-reduced-motion: reduce) {
   .phulo-slider-slide, .phulo-slider-dot span { transition: none; }
 }
+
+.phulo-slider-window[data-category="true"] { aspect-ratio: auto; width: 100%; height: clamp(210px, 35vw, 470px); }
+.category-slide {
+  position: absolute; inset: 0; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: center; gap: clamp(10px, 3vw, 40px); padding: clamp(14px, 4vw, 52px);
+  color: white; background: radial-gradient(ellipse at 95% 10%, #06b6d488, transparent 65%), linear-gradient(115deg, #062e52, #12677b);
+}
+.category-slide[data-colour="1"] { background: radial-gradient(ellipse at 90% 15%, #f36bc966, transparent 65%), linear-gradient(115deg, #34114f, #a40970); }
+.category-slide[data-colour="2"] { background: radial-gradient(ellipse at 90% 5%, #ffdc5966, transparent 65%), linear-gradient(115deg, #562208, #ad4b05); }
+.category-slide-category { font-size: clamp(10px, 1.3vw, 16px); font-weight: 700; letter-spacing: .04em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.category-slide h3 { margin: 10px 0 18px; font-size: clamp(18px, 3vw, 42px); font-weight: 800; line-height: 1.12; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.category-slide-art { min-width: 0; height: 100%; max-height: 340px; padding: 8px; background: white; border-radius: 16px; box-shadow: 0 12px 36px #0003; overflow: hidden; }
+.category-slide-action { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 8px 16px; border-radius: 30px; background: #fff; color: #113655; font-size: clamp(11px, 1.2vw, 16px); font-weight: 700; cursor: pointer; }
+.category-slide-action:hover { background: #ffe776; }
+.category-slide-status { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 4px; }
+.category-slide-status p:last-child { font-size: 14px; }
+@media (max-width: 480px) {
+  .category-slide { gap: 12px; padding: 14px; }
+  .category-slide h3 { margin: 8px 0 12px; -webkit-line-clamp: 3; }
+  .category-slide-action { padding: 6px 10px; }
+  .category-slide-art { padding: 5px; border-radius: 10px; }
+}
