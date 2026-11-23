@@ -89,6 +89,7 @@ interface Props {
   initial?: DesignSettings;
   existingId?: string;
   product?: Product;
+  quantity?: number;
   onApply?: (settings: DesignSettings) => void;
   onSaved?: () => void;
   onSignIn: () => void;
@@ -191,6 +192,7 @@ export default function StudioEditor({
   initial,
   existingId,
   product,
+  quantity,
   onApply,
   onSaved,
   onSignIn,
@@ -1172,6 +1174,13 @@ export default function StudioEditor({
                       onChange={changeProductOptions}
                     />
                   )}
+                  {document.surface === "magnet" && selectedProductOptions.shape === "Custom shape" && <label className="my-3 block text-sm font-semibold">
+                    Custom cut preview (subject to quote)
+                    <select className="mt-2 w-full" aria-label="Custom magnet cut" value={document.shape === "starburst" ? "starburst" : "heart"} disabled={loading || busy} onChange={(e) => {
+                      commit();
+                      replace({ ...documentRef.current, shape: e.target.value as "heart" | "starburst", specification: `Custom ${e.target.value} magnet — confirm cut and finished size with PHULO` }, true);
+                    }}><option value="heart">Heart</option><option value="starburst">Starburst</option></select>
+                  </label>}
                   {document.surface === "magnet" && (
                     <Button
                       className="w-full"
@@ -1655,17 +1664,15 @@ export default function StudioEditor({
               {tab === "templates" && document.surface === "magnet" && (
                 <MagnetTemplates
                   product={product}
+                  scene={document}
+                  quantity={quantity}
                   selected={document.template}
                   disabled={loading || busy || loadFailed}
                   onSelect={(id, year) => {
                     commit();
                     replace(
                       applyMagnetLayout(
-                        {
-                          ...resizeStudio(documentRef.current, 1200, 900),
-                          specification:
-                            "Landscape magnet artwork — confirm your finished size",
-                        },
+                        documentRef.current,
                         id,
                         year,
                       ),
@@ -2229,6 +2236,7 @@ export default function StudioEditor({
       {review && (
         <StudioReview
           product={product}
+          quantity={quantity}
           settings={savedSettings()}
           onBack={() => setReview(false)}
           onConfirm={() => {

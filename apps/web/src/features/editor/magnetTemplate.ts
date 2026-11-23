@@ -134,6 +134,7 @@ export function magnetTemplate(
   height: number,
   id = "photo-caption",
   year = new Date().getUTCFullYear() + 1,
+  shape?: StudioDocument["shape"],
 ): StudioDocument["pages"]["front"] {
   const t = magnetTemplates.find((t) => t.id === id) || magnetTemplates[0];
   const elements = [];
@@ -210,8 +211,8 @@ export function magnetTemplate(
       element("text", {
         id: "magnet-caption",
         left: width / 2,
-        top: height * (t.photos ? 0.79 : 0.5),
-        width: width * 0.72,
+        top: height * (t.photos ? shape === "heart" ? 0.70 : 0.79 : 0.5),
+        width: width * (shape === "heart" ? 0.5 : 0.72),
         height: 60,
         text:
           t.photos === 0
@@ -219,7 +220,7 @@ export function magnetTemplate(
             : t.photos === 1
               ? "Our favourite moment"
               : t.name,
-        fontSize: 38,
+        fontSize: shape === "heart" ? 32 : 38,
         fontFamily: "Georgia",
         textAlign: "center",
         fill: t.ink,
@@ -283,7 +284,7 @@ export function applyMagnetLayout(
   id: string,
   year?: number,
 ): StudioDocument {
-  const page = magnetTemplate(document.width, document.height, id, year);
+  const page = magnetTemplate(document.width, document.height, id, year, document.shape);
   const photos = document.pages.front.elements.filter(
     (e) => e.type === "image",
   );

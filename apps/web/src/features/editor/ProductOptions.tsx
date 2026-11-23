@@ -14,9 +14,14 @@ export function ProductOptions({
 }) {
   const fields =
     product.customisation?.options.filter(
-      (o) => o.key === "size" || o.key === "colour",
+      (o) => o.key === "size" || o.key === "colour" || (product.customisation?.family === "Magnets" && ["orientation", "shape"].includes(o.key)),
     ) || [];
   if (!fields.length) return null;
+  function update(key: string, value: string) {
+    const next = { ...options, [key]: value };
+    if (product.customisation?.family === "Magnets" && key === "shape" && ["Circle", "Custom shape"].includes(value)) next.orientation = "Square";
+    onChange(next);
+  }
   return (
     <div
       className="my-4 space-y-4 rounded-2xl border border-cyan-100 bg-white p-4"
@@ -56,10 +61,10 @@ export function ProductOptions({
             <select
               aria-label={`Product ${field.key}`}
               className="mt-2 min-h-10 w-full rounded-lg border bg-white p-2"
-              disabled={disabled}
+              disabled={disabled || (product.customisation?.family === "Magnets" && field.key === "orientation" && ["Circle", "Custom shape"].includes(options.shape || ""))}
               value={options[field.key] || field.values[0]}
               onChange={(e) =>
-                onChange({ ...options, [field.key]: e.target.value })
+                update(field.key, e.target.value)
               }
             >
               {field.values.map((value) => (

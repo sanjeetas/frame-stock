@@ -15,6 +15,7 @@ interface Props {
   initial?: DesignSettings;
   existingId?: string;
   product?: Product;
+  quantity?: number;
   onApply?: (settings: DesignSettings) => void;
   onSaved?: () => void;
   onSignIn: () => void;

@@ -7,11 +7,13 @@ import type { DesignSettings, Product } from "../../types";
 export function StudioReview({
   settings,
   product,
+  quantity,
   onBack,
   onConfirm,
 }: {
   settings: DesignSettings;
   product?: Product;
+  quantity?: number;
   onBack: () => void;
   onConfirm: () => void;
 }) {
@@ -25,6 +27,7 @@ export function StudioReview({
       }),
     [settings.studio, settings.productOptions],
   );
+  const sides = printedSides(settings.studio!, settings.productOptions);
   return (
     <section className="studio-review" aria-label="Review and approve artwork">
       <div className="mx-auto w-full max-w-5xl p-5 sm:p-10">
@@ -34,12 +37,14 @@ export function StudioReview({
         </Button>
         <h2 className="mt-6 text-3xl font-bold">Review your artwork</h2>
         <p className="mt-3 leading-7 text-slate-600">
-          Check spelling, contact details, image placement and both sides before
-          applying this design to your order.
+          {sides.length > 1
+            ? "Check spelling, contact details, image placement and both sides before applying this design to your order."
+            : "Check spelling, your photo placement and the finished shape before applying this design to your order."}
         </p>
         {(product || settings.productOptions) && (
           <div className="mt-5 flex flex-wrap items-center gap-3 rounded-xl border border-cyan-100 bg-cyan-50 p-4">
             {product && <p className="font-bold">{product.title}</p>}
+            {quantity !== undefined && <span className="rounded-full bg-white px-4 py-2 font-semibold">Quantity: {quantity}</span>}
             {settings.productOptions?.size && (
               <span className="rounded-full bg-white px-4 py-2 font-semibold">
                 Size: {settings.productOptions.size}
@@ -68,8 +73,9 @@ export function StudioReview({
             ))}
           </dl>
         )}
-        <div className="mt-7 grid gap-6 md:grid-cols-2">
-          {printedSides(settings.studio!, settings.productOptions).map(
+        {settings.studio?.surface === "magnet" && ["heart", "starburst"].includes(settings.studio.shape || "") && <p className="mt-4 text-sm font-semibold text-primary">Custom cut: {settings.studio.shape} — subject to PHULO quote confirmation.</p>}
+        <div className={`mt-7 grid gap-6 ${sides.length > 1 ? "md:grid-cols-2" : "mx-auto max-w-xl"}`}>
+          {sides.map(
             (side) => (
               <div key={side}>
                 <h3 className="mb-3 text-lg font-semibold capitalize">

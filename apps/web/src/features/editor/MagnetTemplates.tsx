@@ -1,9 +1,9 @@
+import { MagnetThumbnail } from "./MagnetThumbnail";
+import type { StudioDocument } from "./studioTypes";
 import { useEffect, useState } from "react";
 import { Heart, Search, SlidersHorizontal, Upload } from "lucide-react";
 import {
   filterMagnetTemplates,
-  isMagnetPhotoSlot,
-  magnetTemplate,
   magnetTemplates,
 } from "./magnetTemplate";
 import { magnetFavouriteKey, parseMagnetFavourites } from "./magnetFavourites";
@@ -17,10 +17,14 @@ export function MagnetTemplates({
   product,
   onSelect,
   onUpload,
+  scene,
+  quantity = 1,
 }: {
   selected: string;
   disabled: boolean;
   product?: Product;
+  scene?: StudioDocument;
+  quantity?: number;
   onSelect: (id: string, year: number) => void;
   onUpload: () => void;
 }) {
@@ -46,7 +50,7 @@ export function MagnetTemplates({
     }
   }, [favourites]);
   const results = filterMagnetTemplates(photos, colour, style, search).filter(
-    (t) => !onlyFavourites || favourites.includes(t.id),
+    (t) => (!onlyFavourites || favourites.includes(t.id)) && (!["circle", "heart", "starburst"].includes(scene?.shape || "") || !t.id.startsWith("calendar-")),
   );
   function clearFilters() {
     setPhotos("all");
@@ -67,7 +71,7 @@ export function MagnetTemplates({
               Photo magnet designs
             </h2>
             <p className="mt-1 text-sm text-slate-600">
-              Choose a design. Make every photo and word yours.
+              Choose a single-magnet layout, then replace its photos and text.
             </p>
           </div>
           <Button variant="outline" disabled={disabled} onClick={onUpload}>
@@ -75,6 +79,9 @@ export function MagnetTemplates({
             Upload your own design
           </Button>
         </div>
+        {scene && <p className="mb-4 rounded-xl bg-cyan-50 px-4 py-3 text-sm text-primary" role="status">
+          {scene.productOptions?.shape === "Custom shape" ? `Custom ${scene.shape || "cut"}` : scene.productOptions?.shape || "Rectangle"} · {scene.productOptions?.orientation || "Landscape"} · {scene.productOptions?.size || "Selected size"} · {quantity} {quantity === 1 ? "unit" : "units"}
+        </p>}
         <div className="sticky top-0 z-10 -mx-4 flex gap-2 border-y bg-white px-4 py-3 sm:mx-0 sm:rounded-xl sm:border">
           <label className="flex min-w-0 flex-1 items-center gap-2 rounded-xl border border-slate-300 bg-white px-3">
             <span className="sr-only">Search templates</span>
@@ -193,8 +200,7 @@ export function MagnetTemplates({
         )}
         <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4">
           {results.map((t) => {
-            const page = magnetTemplate(1200, 900, t.id, year),
-              saved = favourites.includes(t.id);
+            const saved = favourites.includes(t.id);
             return (
               <article
                 key={t.id}
@@ -209,94 +215,7 @@ export function MagnetTemplates({
                   onClick={() => onSelect(t.id, year)}
                 >
                   <div className="flex aspect-[1/1.25] items-center px-3 pt-12 sm:px-4">
-                    <svg
-                      viewBox="0 0 1200 900"
-                      role="img"
-                      aria-label={`${t.name}: ${t.photos} photos`}
-                      className="w-full drop-shadow-sm"
-                    >
-                      <rect
-                        x="96"
-                        y="72"
-                        width="1008"
-                        height="756"
-                        rx="4"
-                        fill={page.background}
-                        stroke="#cccccc"
-                        strokeWidth="3"
-                      />
-                      {page.elements.map((e) => {
-                        if (e.id.startsWith("magnet-photo-label")) return null;
-                        if (e.type === "rect" && isMagnetPhotoSlot(e.id))
-                          return (
-                            <svg
-                              key={e.id}
-                              x={e.left - e.width / 2}
-                              y={e.top - e.height / 2}
-                              width={e.width}
-                              height={e.height}
-                              viewBox="0 0 200 140"
-                              preserveAspectRatio="none"
-                            >
-                              <rect width="200" height="140" fill="#d6d6d6" />
-                              <rect
-                                x="12"
-                                y="12"
-                                width="176"
-                                height="116"
-                                rx="4"
-                                fill="none"
-                                stroke="#aeb8c1"
-                                strokeWidth="1.5"
-                                strokeDasharray="5 4"
-                              />
-                              <text
-                                x="100"
-                                y="72"
-                                textAnchor="middle"
-                                fontFamily="Arial"
-                                fontSize="12"
-                                fill="#777"
-                              >
-                                YOUR PHOTO HERE
-                              </text>
-                            </svg>
-                          );
-                        if (e.type === "rect")
-                          return (
-                            <rect
-                              key={e.id}
-                              x={e.left - e.width / 2}
-                              y={e.top - e.height / 2}
-                              width={e.width}
-                              height={e.height}
-                              fill={e.fill}
-                            />
-                          );
-                        return (
-                          <text
-                            key={e.id}
-                            x={e.left}
-                            y={e.top}
-                            textAnchor="middle"
-                            dominantBaseline="middle"
-                            fontFamily={e.fontFamily}
-                            fontSize={e.fontSize}
-                            fill={e.fill}
-                          >
-                            {(e.text || "").split("\n").map((line, i) => (
-                              <tspan
-                                key={i}
-                                x={e.left}
-                                dy={i ? (e.fontSize || 20) * 1.2 : 0}
-                              >
-                                {line}
-                              </tspan>
-                            ))}
-                          </text>
-                        );
-                      })}
-                    </svg>
+                    <MagnetThumbnail scene={scene} template={t.id} year={year} name={t.name} />
                   </div>
                   <div className="px-4 pb-5 pt-3">
                     <p className="mb-3 text-sm font-medium">{t.name}</p>
@@ -308,7 +227,7 @@ export function MagnetTemplates({
                         "Request quote"
                       )}
                     </p>
-                    <p className="mt-1 text-sm text-slate-500">1 unit</p>
+                    <p className="mt-1 text-sm text-slate-500">Quantity: {quantity} {quantity === 1 ? "unit" : "units"}</p>
                   </div>
                 </button>
                 <button

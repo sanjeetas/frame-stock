@@ -169,7 +169,7 @@ const studioDocument = z
       .string()
       .regex(/^#[a-f\d]{6}$/i)
       .optional(),
-    shape: z.enum(["circle", "oval", "rounded"]).optional(),
+    shape: z.enum(["circle", "oval", "rounded", "heart", "starburst"]).optional(),
     printArea: customisation.shape.profile.shape.printArea,
     specification: z.string().max(150).optional(),
     width: z.number().int().min(200).max(2400),

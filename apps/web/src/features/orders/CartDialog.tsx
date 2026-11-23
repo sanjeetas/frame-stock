@@ -114,7 +114,7 @@ export function CartDialog({
             <div>
               <h3 className="text-sm font-semibold">{i.title}</h3>
               <p className="mt-1 text-xs text-slate-500">
-                {i.quantity} {i.unit} · {money(i.price)}
+                {i.quantity} {i.customization.design?.studio?.surface === "magnet" ? i.quantity === 1 ? "magnet" : "magnets" : i.unit} · {money(i.price)}
                 {i.customization.design ? " · Custom design" : ""}
               </p>
               {i.customization.options && (
@@ -124,6 +124,7 @@ export function CartDialog({
                     .join(" · ")}
                 </p>
               )}
+              {i.customization.design?.studio?.surface === "magnet" && ["heart", "starburst"].includes(i.customization.design.studio.shape || "") && <p className="mt-1 text-xs text-primary">Custom cut: {i.customization.design.studio.shape} · Confirm with PHULO</p>}
               <p className="text-xs text-slate-500">
                 {i.customization.requirements}
               </p>

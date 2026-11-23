@@ -19,7 +19,7 @@ import { Price } from "./Price";
 import { createProductSettings } from "../editor/studioTemplates";
 import { MagnetTemplates } from "../editor/MagnetTemplates";
 import { applyMagnetLayout } from "../editor/magnetTemplate";
-import { resizeStudio } from "../editor/studioActions";
+import type { CustomMagnetCut } from "../editor/magnetCuts";
 interface Props {
   product: Product | null;
   onClose: () => void;
@@ -29,15 +29,20 @@ interface Props {
 export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
   const isMagnet =
     p?.customisation?.family === "Magnets" && p.title !== "Magnet Calendars";
-  const [choosingTemplate, setChoosingTemplate] = useState(!!p?.customisation);
-  const [options, setOptions] = useState<Record<string, string>>(() =>
-    Object.fromEntries(
-      (p?.customisation?.options || []).map((option) => [
-        option.key,
-        option.values[0]!,
-      ]),
-    ),
-  );
+  const [choosingTemplate, setChoosingTemplate] = useState(!!p?.customisation && !isMagnet);
+  const [options, setOptions] = useState<Record<string, string>>(() => {
+    const fields = p?.customisation?.options || [];
+    const initial = Object.fromEntries(fields.map((field) => [field.key, field.values[0]!]));
+    if (isMagnet) {
+      const acrylic = /acrylic/i.test(p?.title || "");
+      for (const [key, value] of [["orientation", acrylic ? "Square" : "Landscape"], ["shape", acrylic ? "Circle" : "Rectangle"]])
+        if (fields.find((field) => field.key === key)?.values.includes(value!)) initial[key!] = value!;
+    }
+    return initial;
+  });
+  const [quantity, setQuantity] = useState("1");
+  const [customCut, setCustomCut] = useState<CustomMagnetCut>("heart");
+  const validQuantity = Number.isInteger(Number(quantity)) && Number(quantity) >= 1 && Number(quantity) <= 10000;
   const [proofSide, setProofSide] = useState<"front" | "back">("front");
   const artworkRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState(false);
@@ -45,8 +50,8 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
     [design, setDesign] = useState<DesignSettings | undefined>(),
     [error, setError] = useState("");
   const startingDesign = useMemo(
-    () =>
-      p?.customisation
+    () => {
+      const settings = p?.customisation
         ? createProductSettings(p, options)
         : {
             ...initialDesign,
@@ -57,8 +62,11 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
               : p
                 ? { baseProductId: p.id }
                 : {}),
-          },
-    [p?.id, options],
+          };
+      if (isMagnet && options.shape === "Custom shape" && settings.studio) settings.studio.shape = customCut;
+      return settings;
+    },
+    [p?.id, options, customCut],
   );
   function chooseProductVariation(settings: DesignSettings) {
     setProofSide(
@@ -70,27 +78,12 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
   }
   function chooseMagnetVariation(id: string, year: number) {
     if (!p || !startingDesign.studio) return;
-    const nextOptions = { ...options, orientation: "Landscape" };
-    const configured = createProductSettings(
-      p,
-      nextOptions,
-      design || startingDesign,
-    );
-    const scene = resizeStudio(configured.studio!, 1200, 900);
+    const configured = createProductSettings(p, options, design || startingDesign);
+    const scene = { ...configured.studio!, ...(options.shape === "Custom shape" ? { shape: customCut } : {}) };
     setDesign({
       ...configured,
-      productOptions: nextOptions,
-      studio: applyMagnetLayout(
-        {
-          ...scene,
-          specification:
-            "Landscape magnet artwork — confirm your finished size",
-        },
-        id,
-        year,
-      ),
+      studio: applyMagnetLayout(scene, id, year),
     });
-    setOptions(nextOptions);
     setChoosingTemplate(false);
     setEditor(true);
   }
@@ -210,6 +203,8 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
               {isMagnet ? (
                 <MagnetTemplates
                   product={p}
+                  scene={startingDesign.studio}
+                  quantity={Number(quantity)}
                   selected={design?.studio?.template || ""}
                   disabled={false}
                   onSelect={chooseMagnetVariation}
@@ -247,6 +242,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                   <p className="mb-2 text-xs tracking-widest text-cyan-700">
                     {p.category}
                   </p>
+                  {isMagnet && <p className="mb-3 text-sm font-semibold text-cyan-700">1. Specifications → 2. Design → 3. Edit → 4. Review</p>}
                   <DialogTitle className="text-2xl font-bold">
                     {p.title}
                   </DialogTitle>
@@ -288,11 +284,13 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                                     id={id}
                                     className="w-full"
                                     value={options[option.key]}
+                                    disabled={isMagnet && option.key === "orientation" && ["Circle", "Custom shape"].includes(options.shape || "")}
                                     onChange={(e) => {
                                       const next = {
                                         ...options,
                                         [option.key]: e.target.value,
                                       };
+                                      if (isMagnet && option.key === "shape" && ["Circle", "Custom shape"].includes(e.target.value)) next.orientation = "Square";
                                       setOptions(next);
                                       if (design)
                                         setDesign(
@@ -313,6 +311,14 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                               </Field>
                             ))}
                           </div>
+                          {isMagnet && options.shape === "Custom shape" && <label className="block text-sm font-semibold">
+                            Custom cut preview (subject to quote)
+                            <select className="mt-2 w-full" value={customCut} onChange={(e) => {
+                              const cut = e.target.value as CustomMagnetCut;
+                              setCustomCut(cut);
+                              if (design?.studio) setDesign({ ...design, artworkApproved: false, studio: { ...design.studio, shape: cut } });
+                            }}><option value="heart">Heart</option><option value="starburst">Starburst</option></select>
+                          </label>}
                           {design?.studio &&
                             (design.studio.twoSided ||
                               design.studio.format === "card") && (
@@ -344,7 +350,8 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                             id={id}
                             name="quantity"
                             type="number"
-                            defaultValue={1}
+                            value={quantity}
+                            onChange={(e) => setQuantity(e.target.value)}
                             min={1}
                             max={10000}
                           />
@@ -356,7 +363,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                             id={id}
                             name="requirements"
                             maxLength={2000}
-                            placeholder="e.g. 3 × 6 ft, outdoor, matte finish"
+                            placeholder={isMagnet ? "Finished dimensions, material, occasion or any special cut requirements" : "e.g. 3 × 6 ft, outdoor, matte finish"}
                           />
                         )}
                       </Field>
@@ -367,6 +374,10 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                             : "Options changed — review your artwork again."}
                         </p>
                       )}
+                      {isMagnet && !design && <div className="grid gap-3 sm:grid-cols-2">
+                        <Button type="button" disabled={!validQuantity} onClick={() => setChoosingTemplate(true)}>Browse designs</Button>
+                        <Button type="button" variant="outline" disabled={!validQuantity} onClick={() => chooseMagnetVariation("full-photo", new Date().getUTCFullYear() + 1)}>Upload design</Button>
+                      </div>}
                       <Button
                         className="w-full"
                         disabled={!!p.customisation && !design?.artworkApproved}
@@ -388,7 +399,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                             : "Download free preview"}
                         </Button>
                       )}
-                      {(p.customisation ||
+                      {!(isMagnet && !design) && (p.customisation ||
                         p.editable ||
                         p.group === "Customised Products" ||
                         /visiting.?card|business.?card/i.test(p.title)) && (
@@ -439,6 +450,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
       <DesignEditor
         startInEditor={!!p?.customisation}
         product={p || undefined}
+        quantity={validQuantity ? Number(quantity) : undefined}
         open={editor}
         onOpenChange={setEditor}
         initial={design || startingDesign}
@@ -447,6 +459,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
             settings.productOptions?.sides === "Back only" ? "back" : "front",
           );
           setDesign(settings);
+          if (settings.studio?.shape === "heart" || settings.studio?.shape === "starburst") setCustomCut(settings.studio.shape);
           if (p?.customisation && settings.productOptions)
             setOptions(settings.productOptions);
         }}

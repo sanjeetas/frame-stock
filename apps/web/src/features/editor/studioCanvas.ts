@@ -1,3 +1,4 @@
+import { magnetCutPoints } from "./magnetCuts";
 import { studioMockup, mockupLighting } from "./mockupSurfaces.ts";
 import {
   getEnv,
@@ -6,6 +7,7 @@ import {
   StaticCanvas,
   Textbox,
   Rect,
+  Polygon,
   Circle,
   FabricImage,
   Shadow,
@@ -313,7 +315,9 @@ export async function renderStudioPage(
       shadow: new Shadow({ color: "#10375926", blur: 16, offsetY: 8 }),
     };
     canvas.add(
-      document.shape === "circle" || document.shape === "oval"
+      magnetCutPoints(document.shape, options.width, options.height)
+        ? new Polygon(magnetCutPoints(document.shape, options.width, options.height)!, options)
+        : document.shape === "circle" || document.shape === "oval"
         ? new Ellipse({
             ...options,
             rx: options.width / 2,
@@ -386,7 +390,9 @@ export function applyStudioClip(
     fill: "#000000",
   };
   object.clipPath =
-    document.shape === "circle" || document.shape === "oval"
+    magnetCutPoints(document.shape, width, height)
+      ? new Polygon(magnetCutPoints(document.shape, width, height)!, common)
+      : document.shape === "circle" || document.shape === "oval"
       ? new Ellipse({ ...common, rx: width / 2, ry: height / 2 })
       : new Rect({
           ...common,

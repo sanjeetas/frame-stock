@@ -405,7 +405,11 @@ export function createProductSettings(
   if (config.family === "Magnets" && product.title !== "Magnet Calendars") {
     doc.surface = "magnet";
     doc.shape =
-      options.shape === "Rectangle" ? undefined : doc.shape || "rounded";
+      options.shape === "Rectangle" ? undefined
+        : options.shape === "Custom shape"
+          ? ["heart", "starburst"].includes(previous?.studio?.shape || "") ? previous!.studio!.shape : "heart"
+          : doc.shape || "rounded";
+    doc.specification = `${options.shape === "Custom shape" ? "Custom " + (doc.shape || "cut") : options.shape || "Rectangular"} magnet — ${options.orientation || "selected orientation"}; confirm finished size and cut with PHULO`;
     doc.printArea = { x: 0.08, y: 0.08, width: 0.84, height: 0.84 };
     if (!previous?.studio) {
       doc.template = "photo-caption";

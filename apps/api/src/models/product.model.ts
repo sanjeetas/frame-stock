@@ -1,3 +1,4 @@
+import { productImage } from "../product-images.js";
 import { Schema, model } from "mongoose";
 const option = new Schema(
   {
@@ -93,7 +94,7 @@ export function productDto(p: any) {
     unit: p.unit,
     description: p.description,
     kind: p.kind,
-    image: p.image,
+    image: productImage(p),
     editable: p.editable,
     published: p.published,
     bg: p.bg,

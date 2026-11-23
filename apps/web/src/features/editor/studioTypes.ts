@@ -41,7 +41,7 @@ export interface StudioDocument {
   twoSided?: boolean;
   productColour?: string;
   productOptions?: Record<string, string>;
-  shape?: "circle" | "oval" | "rounded";
+  shape?: "circle" | "oval" | "rounded" | "heart" | "starburst";
   printArea?: { x: number; y: number; width: number; height: number };
   specification?: string;
   width: number;

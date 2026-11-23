@@ -1,3 +1,4 @@
+import { productImage } from "../product-images.js";
 import { pipeline } from "node:stream/promises";
 import { bucket, storageStatus } from "../services/blob.service.js";
 import express, { Router } from "express";
@@ -150,7 +151,7 @@ export function resourceRoutes(auth: AuthService, config: Config) {
   r.get("/custom-products/categories", async (_req, res) =>
     ok(
       res,
-      await Product.aggregate([
+      (await Product.aggregate([
         {
           $match: {
             published: true,
@@ -177,7 +178,7 @@ export function resourceRoutes(auth: AuthService, config: Config) {
             sampleTitle: 1,
           },
         },
-      ]),
+      ])).map((row) => ({ ...row, image: productImage({ image: row.image, title: row.sampleTitle, customisation: { family: row.name } }) })),
     ),
   );
   r.get("/categories", catalog.categories);
