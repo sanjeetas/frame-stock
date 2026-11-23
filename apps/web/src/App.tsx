@@ -1,3 +1,4 @@
+import { WelcomeVoice } from "./components/WelcomeVoice";
 import { HeaderLogo } from "./components/LetterShine";
 import { useEffect, useState } from "react";
 import {
@@ -202,6 +203,7 @@ export function App() {
           </div>
         </div>
       </header>
+      <WelcomeVoice />
       <Navigation
         categories={taxonomy.data?.data || []}
         route={route}

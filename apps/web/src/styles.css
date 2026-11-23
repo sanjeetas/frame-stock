@@ -1183,3 +1183,12 @@
 }
 .print-header:has(.ink-rain[data-paused="true"]) .letter-shine-ray { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .letter-shine { display: none; } }
+
+.welcome-voice-control {
+  position: fixed; z-index: 45; left: 16px; bottom: 16px;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 30px; padding: 3px 10px;
+  border: 1px solid #d4dfeb; border-radius: 20px; background: #ffffffed; color: #113655;
+  font-size: 12px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 16px #11365526;
+}
+.welcome-voice-control:focus-visible { outline: 3px solid #a80a71; outline-offset: 2px; }
+.welcome-voice-control:disabled { cursor: default; color: #526477; }

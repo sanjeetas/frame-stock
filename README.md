@@ -215,3 +215,9 @@ No new environment variables, services or dependencies are required. Existing Mo
 
 
 Product reference photos are mapped by SKU in `public/custom-image-corrections.json`. Square/oval/leaf/rounded and finish-specific cards, mugs/bottles, bags, tags and packaging use matching product previews. The additive migration changes only known previous image paths, preserving admin uploads, prices, categories and hidden status. New database seeds use the same photos. Editing continues to use separate blank local mockups, so preprinted reference artwork never becomes the customer's design. Catalogue photos are public HTTPS CDN previews; the existing admin preview upload can replace them with PHULO's own photos. No new dependencies, environment variables, paid storage or services are required. Run `npm run check`, `npm test`, and `npm run build` as usual.
+
+## Welcome voice
+
+The browser's built-in speech synthesis says “फूलो मल्टीग्राफिक्स में आपका स्वागत है।” after the visitor's first click/tap or keyboard interaction. Browsers commonly block audible autoplay on page load, so the app does not promise sound before interaction. It prefers an available Hindi voice (`hi-IN`), with quality and availability depending on the device. No microphone, external TTS service, API key or paid audio dependency is used.
+
+A floating Voice control can stop/mute the greeting or enable/retry it. The greeting repeats at ten-minute intervals while the tab is visible, never queues multiple copies, and does not speak in background tabs. Its last-played time and mute choice are stored in sessionStorage for the current tab, so refreshing or navigating does not cause repeated immediate greetings. Unsupported browsers disable the control; playback failures allow a manual retry.
