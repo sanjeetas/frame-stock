@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
-import { PrintSlider, type PrintSlide } from "./PrintSlider";
+import { PrintSlider, originalSlides, type PrintSlide } from "./PrintSlider";
 import { useApiQuery } from "../hooks/useApiQuery";
 import { Artwork } from "../features/catalog/Artwork";
 import type { Product } from "../types";
@@ -16,6 +16,7 @@ export function CategorySlider({ path, title, onOpen }: {
 
   const slides: PrintSlide[] = (data?.data || []).map((product, index) => ({
     id: product.id,
+    kind: "category",
     title: product.title,
     content: (
       <div className="category-slide" data-colour={index % 3}>
@@ -33,6 +34,7 @@ export function CategorySlider({ path, title, onOpen }: {
 
   if (!slides.length) slides.push({
     id: "category-status",
+    kind: "category",
     title,
     content: <div className="category-slide category-slide-status" data-colour="0">
       <p className="category-slide-category">PHULO COLLECTION</p>
@@ -41,5 +43,5 @@ export function CategorySlider({ path, title, onOpen }: {
     </div>,
   });
 
-  return <PrintSlider category label={`${title} highlights`} slides={slides} />;
+  return <PrintSlider label={`${title} highlights`} slides={[...originalSlides, ...slides]} />;
 }

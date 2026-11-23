@@ -1,3 +1,4 @@
+import { OrbitBanner } from "./OrbitBanner";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { asset } from "../lib/utils";
@@ -6,9 +7,11 @@ export interface PrintSlide {
   id: string;
   title: string;
   content: ReactNode;
+  kind?: "original" | "category";
+  duration?: number;
 }
 
-const originalSlides = [
+export const originalSlides = [
   {
     image: "phulo-printing.webp",
     title: "Print with PHULO",
@@ -22,13 +25,14 @@ const originalSlides = [
 ].map((slide): PrintSlide => ({
   id: slide.image,
   title: slide.title,
-  content: <img src={asset(`assets/slides/${slide.image}`)} alt={slide.alt} width={1600} height={750} decoding="async" draggable={false} />,
+  kind: "original",
+  duration: slide.image === "phulo-printing.webp" ? 24000 : 6500,
+  content: slide.image === "phulo-printing.webp" ? <OrbitBanner /> : <img src={asset(`assets/slides/${slide.image}`)} alt={slide.alt} width={1600} height={750} decoding="async" draggable={false} />,
 }));
 
-export function PrintSlider({ slides = originalSlides, label = "PHULO printing highlights", category = false }: {
+export function PrintSlider({ slides = originalSlides, label = "PHULO printing highlights" }: {
   slides?: PrintSlide[];
   label?: string;
-  category?: boolean;
 } = {}) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -36,6 +40,7 @@ export function PrintSlider({ slides = originalSlides, label = "PHULO printing h
   const [hidden, setHidden] = useState(document.hidden);
   const [reducedMotion, setReducedMotion] = useState(false);
   const touchStart = useRef<number | null>(null);
+  const current = slides[active % slides.length]!;
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -55,9 +60,9 @@ export function PrintSlider({ slides = originalSlides, label = "PHULO printing h
 
   useEffect(() => {
     if (paused || hovered || hidden || slides.length < 2) return;
-    const timer = window.setInterval(() => setActive((value) => (value + 1) % slides.length), 5500);
-    return () => window.clearInterval(timer);
-  }, [paused, hovered, hidden, slides.length]);
+    const timer = window.setTimeout(() => setActive((value) => (value + 1) % slides.length), current.duration || 5500);
+    return () => window.clearTimeout(timer);
+  }, [paused, hovered, hidden, slides.length, active, current.duration]);
 
   function select(index: number) {
     setPaused(true);
@@ -69,6 +74,7 @@ export function PrintSlider({ slides = originalSlides, label = "PHULO printing h
       className="phulo-slider mb-6"
       aria-label={label}
       aria-roledescription="carousel"
+      data-motion={!paused && !hovered && !hidden && !reducedMotion}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocusCapture={() => setPaused(true)}
@@ -81,7 +87,7 @@ export function PrintSlider({ slides = originalSlides, label = "PHULO printing h
     >
       <div
         className="phulo-slider-window"
-        data-category={category}
+        data-category={current.kind === "category"}
         onTouchStart={(event) => { touchStart.current = event.touches[0]?.clientX ?? null; }}
         onTouchEnd={(event) => {
           const end = event.changedTouches[0]?.clientX;
@@ -101,6 +107,7 @@ export function PrintSlider({ slides = originalSlides, label = "PHULO printing h
             aria-hidden={active % slides.length !== index}
             inert={active % slides.length !== index}
             data-active={active % slides.length === index}
+            data-kind={slide.kind || "original"}
           >
             {slide.content}
           </div>

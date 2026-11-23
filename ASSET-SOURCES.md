@@ -160,3 +160,5 @@ VistaPrint's public T-shirt, full-sleeve, tote-bag and personalised-mug product/
 ### PHULO catalogue slider
 
 The two original banners from phulo.in were retrieved on 2026-11-23 from `https://phulo.in/wp-content/uploads/2026/08/A1.jpg` and `https://phulo.in/wp-content/uploads/2026/08/B1.jpg`, as requested by the site owner. Local copies are `public/assets/slides/phulo-printing.webp` and `phulo-signage.webp`. They retain the original 1600 × 750 layout without cropping, artificial upscaling or altered artwork, encoded as quality-95 WebP. The responsive slider adds a colourful CSS frame and accessible navigation; source artwork quality is limited to the original files.
+
+The printing banner's eight existing circular photos are animated using SVG viewports referencing the same original image. The service-photo ring rotates while photos counter-rotate to stay upright, with a sequential focus scale and outline. The centre logo and original offer remain stationary. No source photo pixels are rewritten; reduced-motion mode displays the unchanged source artwork. Both original banners precede category-specific slides.

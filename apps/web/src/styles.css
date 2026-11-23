@@ -1101,6 +1101,7 @@
     white-space: normal; overflow: visible; text-overflow: clip; padding: 3px 6px;
   }
   .phulo-slider-dot { width: 32px; }
+  .phulo-slider-controls > div[aria-label="Choose banner"] { order: 2; flex-basis: 100%; justify-content: center; }
   .phulo-slider-window[data-category="true"] { height: auto; }
   .phulo-slider-window[data-category="true"] .phulo-slider-slide { position: relative; display: none; }
   .phulo-slider-window[data-category="true"] .phulo-slider-slide[data-active="true"] { display: block; }
@@ -1109,4 +1110,33 @@
   .category-slide-category { font-size: 12px; }
   .category-slide-action { max-width: 100%; font-size: 13px; padding: 8px 10px; }
   .category-slide-art { align-self: stretch; height: auto; min-height: 180px; max-height: none; }
+}
+
+/* The service photos orbit; their inner counter-rotation keeps each photo upright. */
+.phulo-orbit-banner { display: block; width: 100%; height: 100%; }
+.phulo-orbit-track { transform-origin: 908px 253px; animation: phulo-orbit-turn 24s linear infinite; }
+.phulo-orbit-upright { animation: phulo-orbit-upright 24s linear infinite; }
+.phulo-orbit-focus { animation: phulo-orbit-focus 24s ease-in-out infinite; }
+.phulo-orbit-highlight { stroke: #08bfe9; opacity: 0; animation: phulo-orbit-highlight 24s ease-in-out infinite; }
+@keyframes phulo-orbit-turn { to { transform: rotate(360deg); } }
+@keyframes phulo-orbit-upright { to { transform: rotate(-360deg); } }
+@keyframes phulo-orbit-focus {
+  0%, 7% { transform: scale(1.14); }
+  12%, 100% { transform: scale(1); }
+}
+@keyframes phulo-orbit-highlight {
+  0%, 7% { opacity: 1; stroke: #08bfe9; }
+  4% { stroke: #ef3097; }
+  12%, 100% { opacity: 0; }
+}
+.phulo-slider[data-motion="false"] .phulo-orbit-track,
+.phulo-slider[data-motion="false"] .phulo-orbit-upright,
+.phulo-slider[data-motion="false"] .phulo-orbit-focus,
+.phulo-slider[data-motion="false"] .phulo-orbit-highlight,
+.phulo-slider-slide:not([data-active="true"]) .phulo-orbit-track,
+.phulo-slider-slide:not([data-active="true"]) .phulo-orbit-upright,
+.phulo-slider-slide:not([data-active="true"]) .phulo-orbit-focus,
+.phulo-slider-slide:not([data-active="true"]) .phulo-orbit-highlight { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .phulo-orbit-art { display: none; }
 }
