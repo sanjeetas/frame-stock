@@ -2,7 +2,7 @@ import type { Product } from "../../types";
 import { money } from "../../lib/utils";
 
 export function Price({ product }: { product: Product }) {
-  if (product.group === "Gifting Items" && (product.customisation?.quoteRequired || product.price === null)) {
+  if (product.group === "Gifting Items") {
     return <>Price based on discussion</>;
   }
   if (product.customisation?.quoteRequired) return <>Price on request</>;

@@ -153,7 +153,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
       productId: p.id,
       title: p.title,
       unit: p.unit,
-      price: p.customisation?.quoteRequired ? null : p.price,
+      price: p.group === "Gifting Items" || p.customisation?.quoteRequired ? null : p.price,
       quantity,
       customization: {
         requirements: String(form.get("requirements") || ""),
@@ -252,7 +252,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                   <p className="mb-5 text-xl font-bold text-primary">
                     {<Price product={p} />}{" "}
                     <span className="text-xs font-normal">
-                      {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
+                      {p.group !== "Gifting Items" && p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
                     </span>
                   </p>
                   {p.libraryCategory ? (

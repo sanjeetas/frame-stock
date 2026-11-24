@@ -1487,3 +1487,14 @@ test("single magnet correction replaces fridge scenes once and preserves admin i
     false,
   );
 });
+
+test("gifting orders require discussion even when the stored catalogue has a price", async () => {
+  const { createOrder } = await import("../src/services/order.service.js");
+  const { orderBody } = await import("../src/schemas/index.js");
+  const gift = await Product.create({ slug: "discussion-price-gift", title: "Gift pricing check", category: "GIFTING ITEMS", group: "Gifting Items", kind: "product", price: 799, priceDisplay: "₹ 799.00", published: true });
+  const placed = await createOrder(aliceId, orderBody.parse({ name: "Alice", phone: "9876543210", items: [{ productId: String(gift._id), quantity: 2 }] }));
+  assert.equal(placed.needsQuote, true);
+  assert.equal(placed.items[0]!.unitPrice, null);
+  assert.equal(placed.total, 0);
+  assert.equal((await Product.findById(gift._id))!.price, 799);
+});

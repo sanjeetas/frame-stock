@@ -302,7 +302,7 @@ export function Catalog({
                   <span className="text-sm font-bold text-primary">
                     {<Price product={p} />}
                     <span className="ml-1 text-xs font-normal text-slate-500">
-                      {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
+                      {p.group !== "Gifting Items" && p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
                     </span>
                   </span>
                   <Button className="w-full min-w-0 whitespace-normal px-2 text-center" variant="outline" size="sm" onClick={() => onOpen(p)}>

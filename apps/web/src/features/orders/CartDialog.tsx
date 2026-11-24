@@ -114,7 +114,7 @@ export function CartDialog({
             <div>
               <h3 className="text-sm font-semibold">{i.title}</h3>
               <p className="mt-1 text-xs text-slate-500">
-                {i.quantity} {i.customization.design?.studio?.surface === "magnet" ? i.quantity === 1 ? "magnet" : "magnets" : i.unit} · {money(i.price)}
+                {i.quantity} {i.customization.design?.studio?.surface === "magnet" ? i.quantity === 1 ? "magnet" : "magnets" : i.unit} · {i.price === null ? "Price based on discussion" : money(i.price)}
                 {i.customization.design ? " · Custom design" : ""}
               </p>
               {i.customization.options && (
@@ -154,10 +154,10 @@ export function CartDialog({
           <>
             <p className="my-5 text-sm font-semibold">
               Estimated subtotal:{" "}
-              {money(
+              {items.every((i) => i.price === null) ? "Price based on discussion" : money(
                 items.reduce((s, i) => s + (i.price || 0) * i.quantity, 0),
               )}
-              {items.some((i) => i.price === null) ? " + quote items" : ""}
+              {items.some((i) => i.price === null) && items.some((i) => i.price !== null) ? " + quote items" : ""}
             </p>
             {!user ? (
               <Button onClick={onSignIn}>Sign in to submit your order</Button>

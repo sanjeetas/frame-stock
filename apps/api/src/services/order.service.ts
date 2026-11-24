@@ -73,7 +73,7 @@ export async function createOrder(
       title: p.title,
       kind: p.kind,
       unit: p.unit,
-      unitPrice: config?.quoteRequired ? null : p.price,
+      unitPrice: p.group === "Gifting Items" || config?.quoteRequired ? null : p.price,
       quantity: i.quantity,
       customization: i.customization,
     };
