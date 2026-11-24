@@ -250,11 +250,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
                     {p.description}
                   </DialogDescription>
                   <p className="mb-5 text-xl font-bold text-primary">
-                    {p.customisation?.quoteRequired ? (
-                      "Price on request"
-                    ) : (
-                      <Price product={p} />
-                    )}{" "}
+                    {<Price product={p} />}{" "}
                     <span className="text-xs font-normal">
                       {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
                     </span>

@@ -300,11 +300,7 @@ export function Catalog({
                 </button>
                 <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
                   <span className="text-sm font-bold text-primary">
-                    {p.customisation?.quoteRequired ? (
-                      "Price on request"
-                    ) : (
-                      <Price product={p} />
-                    )}
+                    {<Price product={p} />}
                     <span className="ml-1 text-xs font-normal text-slate-500">
                       {p.price !== null && !p.priceDisplay ? "/ " + p.unit : ""}
                     </span>
