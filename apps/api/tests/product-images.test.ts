@@ -11,3 +11,19 @@ test("magnet photography replaces shipped placeholders while preserving admin im
   }
   assert.equal(productImage({ title: "Magnet Calendars", customisation: { family: "Magnets" }, image: "assets/single-photo-magnet.svg" }), "assets/single-photo-magnet.svg");
 });
+
+
+test("gifting cards use PHULO photos while preserving admin uploads and other categories", () => {
+  for (const [id, image, name] of [
+    [29406, "assets/source-29406.png", "jhula"],
+    [29399, "assets/source-29399.jpeg", "heart"],
+    [29378, "assets/source-29378.jpeg", "lamp"],
+    [29314, "https://m.media-amazon.com/images/I/71uEq90y3WL.jpg", "frame"],
+    [29311, "assets/source-29311.webp", "mugs"],
+  ] as const) {
+    const p = { group: "Gifting Items", sourceProductId: id, image };
+    assert.equal(productImage(p), `assets/gift-${name}.webp`);
+    assert.equal(productImage({ ...p, image: "/api/previews/administrator-photo.png" }), "/api/previews/administrator-photo.png");
+    assert.equal(productImage({ ...p, group: "Printing Products" }), image);
+  }
+});
