@@ -32,6 +32,7 @@ export interface Product {
   libraryCategory?: string;
   sourceProductId?: number;
   categoryIds?: number[];
+  pricingMode?: "fixed" | "discussion";
   priceDisplay?: string;
   id: string;
   slug: string;

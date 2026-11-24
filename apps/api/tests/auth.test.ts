@@ -693,20 +693,19 @@ test("source catalog preserves WooCommerce prices and parent/subcategory members
         if (included.has(category.parent)) included.add(category.id);
     const expected = rows.filter(
       (row: any) =>
-        row.sourceProductId &&
-        row.categoryIds.some((id: number) => included.has(id)),
+        row.categoryIds?.some((id: number) => included.has(id)),
     );
     const response = await request(app)
       .get(`/api/products?categoryId=${categoryId}&limit=100`)
       .expect(200);
     assert.equal(response.body.meta.total, expected.length);
     assert.deepEqual(
-      response.body.data.map((row: any) => row.sourceProductId),
-      expected.map((row: any) => row.sourceProductId),
+      response.body.data.map((row: any) => row.slug),
+      expected.map((row: any) => row.id),
     );
     for (const row of response.body.data) {
       const source = expected.find(
-        (item: any) => item.sourceProductId === row.sourceProductId,
+        (item: any) => item.id === row.slug,
       );
       // A previous test intentionally changed p1's price; this migration must preserve later admin edits.
       if (row.slug !== "p1") assert.equal(row.price, source.price);
@@ -1497,4 +1496,34 @@ test("gifting orders require discussion even when the stored catalogue has a pri
   assert.equal(placed.items[0]!.unitPrice, null);
   assert.equal(placed.total, 0);
   assert.equal((await Product.findById(gift._id))!.price, 799);
+});
+
+
+test("explicit fixed-price gifts keep the owner-set price in cart orders", async () => {
+  const { createOrder } = await import("../src/services/order.service.js");
+  const { orderBody } = await import("../src/schemas/index.js");
+  const gift = await Product.create({ slug: "fixed-price-gift-check", title: "Fixed gift", category: "GIFTING ITEMS", group: "Gifting Items", kind: "product", pricingMode: "fixed", price: 4000, published: true });
+  const placed = await createOrder(aliceId, orderBody.parse({ name: "Alice", phone: "9876543210", items: [{ productId: String(gift._id), quantity: 2 }] }));
+  assert.equal(placed.needsQuote, false);
+  assert.equal(placed.items[0]!.unitPrice, 4000);
+  assert.equal(placed.total, 8000);
+});
+
+
+test("approved gift import is additive and preserves later administrator edits", async () => {
+  const { seedRequestedGiftProducts } = await import("../src/services/bootstrap.service.js");
+  await Product.deleteOne({ slug: "gift-owner-fdda-trophy" });
+  const before = await Product.countDocuments();
+  await seedRequestedGiftProducts();
+  assert.equal(await Product.countDocuments(), before + 1);
+  const trophy = await Product.findOne({ slug: "gift-owner-fdda-trophy" });
+  assert.equal(trophy!.price, 4000);
+  assert.equal(trophy!.pricingMode, "fixed");
+  await Product.updateOne({ _id: trophy!._id }, { $set: { price: 4500, published: false, image: "/api/previews/admin-trophy.png" } });
+  await seedRequestedGiftProducts();
+  const edited = await Product.findById(trophy!._id);
+  assert.equal(edited!.price, 4500);
+  assert.equal(edited!.published, false);
+  assert.equal(edited!.image, "/api/previews/admin-trophy.png");
+  assert.equal(await Product.countDocuments(), before + 1);
 });

@@ -1,5 +1,138 @@
 [
   {
+    "id": "gift-casting-couch-led-board",
+    "title": "Casting Couch LED Sign Board",
+    "category": "GIFTING ITEMS",
+    "group": "Gifting Items",
+    "pricingMode": "fixed",
+    "price": 4000,
+    "priceDisplay": "₹4,000",
+    "unit": "item",
+    "description": "Illuminated decorative sign board with film-inspired lettering, clapperboard and reel details, based on the supplied PHULO product photo. Confirm final dimensions and installation requirements with PHULO.",
+    "kind": "product",
+    "image": "assets/gift-casting-couch.webp",
+    "editable": false,
+    "published": true,
+    "categoryIds": [
+      227
+    ],
+    "sourceOrder": 0
+  },
+  {
+    "id": "gift-cafe-neon-board",
+    "title": "Café Neon Sign Board",
+    "category": "GIFTING ITEMS",
+    "group": "Gifting Items",
+    "pricingMode": "fixed",
+    "price": 4000,
+    "priceDisplay": "₹4,000",
+    "unit": "item",
+    "description": "Warm amber Café script illuminated sign board, based on the supplied PHULO product photo. Confirm final dimensions and installation requirements with PHULO.",
+    "kind": "product",
+    "image": "assets/gift-cafe-neon.webp",
+    "editable": false,
+    "published": true,
+    "categoryIds": [
+      227
+    ],
+    "sourceOrder": 0
+  },
+  {
+    "id": "gift-owner-presentation-box",
+    "title": "Decorative Presentation Gift Box",
+    "category": "GIFTING ITEMS",
+    "group": "Gifting Items",
+    "pricingMode": "fixed",
+    "price": 4000,
+    "priceDisplay": "₹4,000",
+    "unit": "item",
+    "description": "Open decorative white presentation box with architectural illustration and gold border details, based on the supplied product photograph. Confirm final dimensions and specifications with PHULO.",
+    "kind": "product",
+    "image": "assets/gift-invitation-box.webp",
+    "editable": false,
+    "published": true,
+    "categoryIds": [
+      227
+    ],
+    "sourceOrder": 0
+  },
+  {
+    "id": "gift-owner-round-led-plaque",
+    "title": "Round LED Logo Plaque",
+    "category": "GIFTING ITEMS",
+    "group": "Gifting Items",
+    "pricingMode": "fixed",
+    "price": 4000,
+    "priceDisplay": "₹4,000",
+    "unit": "item",
+    "description": "Round dark logo plaque with raised gold details and warm illuminated edge, based on the supplied product photograph. Final logo artwork can be discussed with PHULO. Confirm final dimensions and specifications with PHULO.",
+    "kind": "product",
+    "image": "assets/gift-round-led.webp",
+    "editable": false,
+    "published": true,
+    "categoryIds": [
+      227
+    ],
+    "sourceOrder": 0
+  },
+  {
+    "id": "gift-owner-nine-arch-display",
+    "title": "Nine-Arch Illuminated Display",
+    "category": "GIFTING ITEMS",
+    "group": "Gifting Items",
+    "pricingMode": "fixed",
+    "price": 4000,
+    "priceDisplay": "₹4,000",
+    "unit": "item",
+    "description": "Gold-framed decorative display with nine arches arranged in a three-by-three grid and warm coral illumination, based on the supplied product photograph. Confirm final dimensions and specifications with PHULO.",
+    "kind": "product",
+    "image": "assets/gift-arch-display.webp",
+    "editable": false,
+    "published": true,
+    "categoryIds": [
+      227
+    ],
+    "sourceOrder": 0
+  },
+  {
+    "id": "gift-owner-fdda-trophy",
+    "title": "FDDA Award Trophy",
+    "category": "GIFTING ITEMS",
+    "group": "Gifting Items",
+    "pricingMode": "fixed",
+    "price": 4000,
+    "priceDisplay": "₹4,000",
+    "unit": "item",
+    "description": "Black-and-gold award trophy with curved silhouette, star details and clear stepped base, based on the supplied product photograph. Discuss custom award wording with PHULO. Confirm final dimensions and specifications with PHULO.",
+    "kind": "product",
+    "image": "assets/gift-trophy.webp",
+    "editable": false,
+    "published": true,
+    "categoryIds": [
+      227
+    ],
+    "sourceOrder": 0
+  },
+  {
+    "id": "gift-owner-tiger-artwork-print",
+    "title": "Custom Tiger Artwork Print",
+    "category": "GIFTING ITEMS",
+    "group": "Gifting Items",
+    "pricingMode": "fixed",
+    "price": 4000,
+    "priceDisplay": "₹4,000",
+    "unit": "item",
+    "description": "Printed oval artwork with a roaring tiger, gold sun motif and red background, based on the supplied printing sample. Confirm finished dimensions, print material and use with PHULO. Confirm final dimensions and specifications with PHULO.",
+    "kind": "product",
+    "image": "assets/gift-tiger-print.webp",
+    "editable": false,
+    "published": true,
+    "categoryIds": [
+      227
+    ],
+    "sourceOrder": 0
+  },
+  {
     "id": "wp-29406",
     "title": "Decorative Krishna Jhula for Laddu Gopal | Premium White Swing Mandir",
     "category": "GIFTING ITEMS",

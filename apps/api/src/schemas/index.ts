@@ -68,6 +68,7 @@ export const productBody = z
     sourceOrder: z.number().int().min(0).optional(),
     sourceProductId: z.number().int().positive().optional(),
     categoryIds: z.array(z.number().int().positive()).max(16).optional(),
+    pricingMode: z.enum(["fixed", "discussion"]).optional(),
     priceDisplay: z.string().max(250).optional(),
     price: z.number().min(0).max(1e8).nullable(),
     unit: z.string().trim().min(1).max(30),

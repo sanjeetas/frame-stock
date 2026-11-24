@@ -243,3 +243,24 @@ export async function applySingleMagnetCorrections() {
     { ordered: false },
   );
 }
+
+
+/** Add the seven owner-approved photo products without reseeding the catalogue. */
+export async function seedRequestedGiftProducts() {
+  const approvedSlugs = new Set([
+    "gift-casting-couch-led-board", "gift-cafe-neon-board",
+    "gift-owner-presentation-box", "gift-owner-round-led-plaque",
+    "gift-owner-nine-arch-display", "gift-owner-fdda-trophy",
+    "gift-owner-tiger-artwork-print",
+  ]);
+  const rows = JSON.parse(await readFile(new URL("../../../../public/catalog.json", import.meta.url), "utf8")) as Record<string, unknown>[];
+  const gifts = rows.filter((row) => approvedSlugs.has(String(row.id)));
+  if (gifts.length !== approvedSlugs.size) throw new Error("Approved gift catalogue entries are missing.");
+  await Product.bulkWrite(gifts.map(({ id, kind, hasFile, ...candidate }) => ({
+    updateOne: {
+      filter: { slug: String(id) },
+      update: { $setOnInsert: { ...productBody.parse(candidate), slug: String(id), kind: "product", hasFile: false, sourceVersion: "phulo-source-v1" } },
+      upsert: true,
+    },
+  })), { ordered: false });
+}

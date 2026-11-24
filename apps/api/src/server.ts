@@ -1,6 +1,6 @@
 import { startupFailure } from "./config/startup-error.js";
 import { seedImageLibrary } from "./services/library-seed.service.js";
-import { bootstrapApplication } from "./services/bootstrap.service.js";
+import { bootstrapApplication, seedRequestedGiftProducts } from "./services/bootstrap.service.js";
 import { User } from "./models/user.model.js";
 import { Session, RefreshToken } from "./models/session.model.js";
 import { Product } from "./models/product.model.js";
@@ -25,6 +25,7 @@ async function start() {
     Design.init(),
   ]);
   await bootstrapApplication(process.env);
+  await seedRequestedGiftProducts();
   if (process.env.AUTO_SEED === "true") await seedImageLibrary(config);
   const app = await createApp(config);
   const server = app.listen(config.PORT, () =>
