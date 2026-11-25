@@ -258,9 +258,9 @@ export function Catalog({
             {data.data.map((p) => (
               <article
                 key={p.id}
-                className={"min-w-0 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm transition-shadow hover:shadow-lg " + (["gift-casting-couch-led-board", "gift-cafe-neon-board", "gift-owner-presentation-box", "gift-owner-round-led-plaque", "gift-owner-nine-arch-display", "gift-owner-fdda-trophy", "gift-owner-tiger-artwork-print"].includes(p.slug) ? "col-span-full lg:col-span-2" : "")}
+                className="min-w-0 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm transition-shadow hover:shadow-lg"
               >
-                <div className={"relative overflow-hidden rounded-lg bg-slate-100 " + (["gift-casting-couch-led-board", "gift-cafe-neon-board"].includes(p.slug) ? "aspect-[4/3] [&_img]:object-cover" : "aspect-[1.1]")}>
+                <div className="relative aspect-[1.1] overflow-hidden rounded-lg bg-slate-100">
                   <button
                     className="size-full"
                     onClick={() => onOpen(p)}

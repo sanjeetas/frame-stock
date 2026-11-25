@@ -230,7 +230,7 @@ export function ProductDialog({ product: p, onClose, onAdd, onSignIn }: Props) {
               <div className="grid gap-6 md:grid-cols-2">
                 <div
                   ref={artworkRef}
-                  className={"overflow-hidden rounded-lg bg-slate-100 " + (["gift-casting-couch-led-board", "gift-cafe-neon-board"].includes(p.slug) ? "aspect-[4/3] [&_img]:object-cover" : "aspect-square")}
+                  className="aspect-square overflow-hidden rounded-lg bg-slate-100"
                 >
                   {design ? (
                     <ProofCanvas settings={design} side={proofSide} />
